@@ -15,12 +15,12 @@
             $this->valid = (boolean) true;
 
             if($this->valid) {
-                $verif_password = $DB->prepare("SELECT password FROM personnel WHERE Identifiant = ?");
+                $verif_password = $DB->prepare("SELECT Mot_de_passe FROM personnel WHERE Identifiant = ?");
                 $verif_password->execute(array($identifiant));
                 $verif_password = $verif_password->fetch();
 
-                if(isset($verif_password['password'])) {
-                    if(!password_verify($password, $verif_password['password'])) {
+                if(isset($verif_password['Mot_de_passe'])) {
+                    if(!password_verify($password, $verif_password['Mot_de_passe'])) {
                         $this->valid = false;
                         $this->erreur = '
                         <ul class="notifications">
@@ -78,7 +78,7 @@
                 }
 
                 if($this->valid) {
-                    $connexion = $DB->prepare("SELECT * FROM personnel WHERE pseudo = ?");
+                    $connexion = $DB->prepare("SELECT * FROM personnel WHERE Identifiant = ?");
                     $connexion->execute(array($identifiant));
                     $connexion = $connexion->fetch();
 

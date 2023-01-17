@@ -6,19 +6,15 @@
 
     switch ($_SESSION['personnel'][5]) {
         case "secretaire":
-            $rang_utilisateur = array(0, 'Utilisateur');
+            $rang_utilisateur = array(1, 'Secrétaire');
             break;
         
         case "medecin":
-            $rang_utilisateur = array(1, 'Modérateur');
+            $rang_utilisateur = array(2, 'Médecin');
             break;
 
         case "admin":
-            $rang_utilisateur = array(2, 'Administrateur');
-            break;
-
-        case 3:
-            $rang_utilisateur = array(3, 'Super Administrateur');
+            $rang_utilisateur = array(3, 'Administrateur');
             break;
 
         default:
