@@ -15,7 +15,7 @@
             $this->valid = (boolean) true;
 
             if($this->valid) {
-                $verif_password = $DB->prepare("SELECT password FROM utilisateurs WHERE pseudo = ?");
+                $verif_password = $DB->prepare("SELECT password FROM personnel WHERE Identifiant = ?");
                 $verif_password->execute(array($identifiant));
                 $verif_password = $verif_password->fetch();
 
@@ -78,24 +78,18 @@
                 }
 
                 if($this->valid) {
-                    $connexion = $DB->prepare("SELECT * FROM utilisateurs WHERE pseudo = ?");
+                    $connexion = $DB->prepare("SELECT * FROM personnel WHERE pseudo = ?");
                     $connexion->execute(array($identifiant));
                     $connexion = $connexion->fetch();
 
-                    if(isset($connexion['id'])) {
-                        $_SESSION['utilisateur'] = array(
-                            $connexion['id'], //0
-                            $connexion['pseudo'], //1
-                            $connexion['nom'], //2
-                            $connexion['prenom'], //3
-                            $connexion['localisation'], //4
-                            $connexion['biographie'], //5
-                            $connexion['email'], //6
-                            $connexion['avatar'], //7
-                            $connexion['banniere'], //8
-                            $connexion['add-friend'], //9
-                            $connexion['show-loca'], //10
-                            $connexion['rang']); //11
+                    if(isset($connexion['Code_personnel'])) {
+                        $_SESSION['personnel'] = array(
+                            $connexion['Code_personnel'], //0
+                            $connexion['Nom'], //1
+                            $connexion['Identifiant'], //2
+                            $connexion['Mot_de_passe'], //3
+                            $connexion['Service'], //4
+                            $connexion['role'],); //5
 
                         header('Location: ./pages/panel.php');
                         exit;

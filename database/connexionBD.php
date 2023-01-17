@@ -4,7 +4,7 @@
   class connexionDB {
 
     private $host    = 'localhost'; //nom de l'host  
-    private $name    = 'DocTur';    //nom de la base de donnée
+    private $name    = 'clinique';    //nom de la base de donnée
     private $user    = 'root';      //utilisateur 
     private $pass    = '';          //mot de passe de la BDD
     private $connexion;

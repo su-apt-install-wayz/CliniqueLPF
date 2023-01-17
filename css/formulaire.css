@@ -21,7 +21,7 @@ body {
 }
 
 .left .logo span {
-    background: var(--c-linear-gradient);
+    background: var(--c-radial-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -85,30 +85,6 @@ body {
     color: var(--c-blue);
 }
 
-.very-weak {
-    width: 5%;
-    background: var(--c-dark-blue);
-}
-
-.weak {
-    width: 30%;
-    background: var(--c-error);
-}
-
-.average {
-    width: 60%;
-    background: var(--c-warning);
-}
-
-.strong {
-    width: 80%;
-    background: var(--c-success);
-}
-
-.very-strong {
-    width: 100%;
-    background: var(--c-blue);
-}
 
 .left form .div-input {
     position: relative;
@@ -139,27 +115,19 @@ body {
     justify-content: center;
 }
 
-.left form .account {
-    margin: 0 auto;
-    color: var(--c-dark-blue);
-}
-
 .right {
     margin: auto;
     display: flex;
     width: 100%;
     height: 100vh;
     position: relative;
-    background: url(../images/public/fond-droit.svg);
-    background-attachment: fixed;
-    background-size: cover;
-    background-position: center center;
+    background: var(--c-radial-gradient);
 }
 
 .right .desc {
     position: absolute;
-    width: 70%;
-    height: 70%;
+    width: 50%;
+    height: 50%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -169,39 +137,11 @@ body {
     backdrop-filter: blur(27.5333px);
 }
 
-.right .desc .slogan {
+.right .desc img {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.right .desc .slogan .slog-item {
-    margin: auto;
-    display: flex;
-    width: max-content;
-    align-items: center;
-    gap: 30px;
-}
-
-.right .desc .slogan .slog-item .play-svg {
-    width: 50px;
-    fill: white;
-    vertical-align: bottom;
-}
-
-.right .desc .slogan .slog-item h1 {
-    color: white;
-    font-size: max(3vw,20px);
-    width: max-content;
-}
-
-.right .desc .slogan .slog-item h1 span {
-    color: black;
 }
 
 @media (max-width:860px) {
