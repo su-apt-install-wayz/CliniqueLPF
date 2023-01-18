@@ -34,7 +34,7 @@
         <div class="left">
             <h1 class="logo">Clinique <span>LPF</span></h1>
             <form method="POST">
-                <h1>Se connecter 👋</h1>
+                <h1>Se connecter 🖐</h1>
                 <p>Renseignez votre identifiant pour continuer sur le panel.</p>
                 <label for="identifiant">Votre identifiant</label>
 
