@@ -9,7 +9,7 @@
         <ul class="list">
 
         <?php
-            if($rang_utilisateur[0]==1) {
+            if($rang_utilisateur[0]=1) {
         ?>
 
             <li class="list-item">
