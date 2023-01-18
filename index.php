@@ -26,16 +26,16 @@
     <link rel="stylesheet" href="css/formulaire.css">
     <link rel="stylesheet" href="css/notification.css">
 
-    <title>Connexion à DocTur</title>
+    <title>Clinique LPF</title>
 
 </head>
 
     <body>
         <div class="left">
-            <h1 class="logo">LP<span>F</span></h1>
+            <h1 class="logo">Clinique <span>LPF</span></h1>
             <form method="POST">
-                <h1>Bon retour parmi nous ! 👋</h1>
-                <p>Renseignez vos informations pour continuer sur le site.</p>
+                <h1>Se connecter 👋</h1>
+                <p>Renseignez votre identifiant pour continuer sur le panel.</p>
                 <label for="identifiant">Votre identifiant</label>
 
                 <?php if(isset($erreur)) { echo $erreur; } ?>
@@ -51,9 +51,7 @@
             </form>
         </div>
         <div class="right">
-            <div class="desc">
-                <img src="./images/public/ICONE.svg" alt="">
-            </div>
+            <img src="./images/public/ICONE.svg" alt="">
         </div>
 
         <script src="./js/password.js"></script>
