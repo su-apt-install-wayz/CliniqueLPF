@@ -15,7 +15,7 @@
             <li class="list-item">
                 <a href="panel.php">
                     <div class="icon">
-                        <span class="material-symbols-rounded">dashboard</span>
+                        <span class="material-symbols-rounded">person_add</span>
                     </div>
                     <div class="lien">
                         <p>Pré-admission</p>
@@ -25,7 +25,7 @@
             <li class="list-item">
                 <a href="#">
                     <div class="icon">
-                        <span class="material-symbols-rounded">star</span>
+                        <span class="material-symbols-rounded">edit_note</span>
                     </div>
                     <div class="lien">
                         <p>Modifier admission</p>
@@ -44,7 +44,7 @@
             <li class="list-item">
                 <a href="#">
                     <div class="icon">
-                        <span class="material-symbols-rounded">person</span>
+                        <span class="material-symbols-rounded">query_stats</span>
                     </div>
                     <div class="lien">
                         <p>Statistiques</p>
