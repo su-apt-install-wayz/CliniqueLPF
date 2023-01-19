@@ -15,10 +15,11 @@
 <html lang="fr">
 <head>
 
-    <?php require_once('include/link.php') ?>
+    <?php require_once('./include/link.php') ?>
 
     <link rel="stylesheet" href="css/formulaire.css">
     <link rel="stylesheet" href="css/notification.css">
+    <link rel="shortcut icon" href="./images/public/LPF.svg" type="image/x-icon">
 
     <title>Clinique LPF</title>
 

@@ -1,11 +1,5 @@
 @import url('initialisations.css');
 
-body {
-    margin: 0 auto;
-    display: flex;
-    background: var(--c-background);
-}
-
 .left {
     margin: auto;
     display: flex;

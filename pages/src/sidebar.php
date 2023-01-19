@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="#">
+                <a href="updateAdmission.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">edit_note</span>
                     </div>
