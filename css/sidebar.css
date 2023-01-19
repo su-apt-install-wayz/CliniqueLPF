@@ -16,13 +16,15 @@ aside .titre h1 {
     position: absolute;
     top: 45px;
     left: 50%;
+    width: 100%;
+    text-align: center;
     transform: translate(-50%);
     text-transform: uppercase;
     transition: all 0.3s ease-in-out;
 }
 
 aside .titre h1 span {
-    background: var(--c-linear-gradient);
+    background: var(--c-radial-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

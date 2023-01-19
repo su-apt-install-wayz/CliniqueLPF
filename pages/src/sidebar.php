@@ -4,12 +4,12 @@
 
     <aside>
         <div class="titre">
-            <h1>Doc<span class="degrade">Tur</span></h1>
+            <h1>Clinique<span class="degrade"> LPF</span></h1>
         </div>
         <ul class="list">
 
         <?php
-            if($rang_utilisateur[0]=1) {
+            if($rang_utilisateur[0]==1) {
         ?>
 
             <li class="list-item">
@@ -28,13 +28,17 @@
                         <span class="material-symbols-rounded">star</span>
                     </div>
                     <div class="lien">
-                        <p>Modifier pré-admission</p>
+                        <p>Modifier admission</p>
                     </div>
                 </a>
             </li>
 
         <?php
             }
+        ?>
+
+        <?php
+            if($rang_utilisateur[0]==2) {
         ?>
         
             <li class="list-item">
@@ -47,6 +51,39 @@
                     </div>
                 </a>
             </li>
+        <?php
+            }
+        ?>
+
+        <?php
+            if($rang_utilisateur[0]==3) {
+        ?>
+
+            <li class="list-item">
+                <a href="#">
+                    <div class="icon">
+                        <span class="material-symbols-rounded">person</span>
+                    </div>
+                    <div class="lien">
+                        <p>Ajouter un personnel</p>
+                    </div>
+                </a>
+            </li>
+
+            <li class="list-item">
+                <a href="#">
+                    <div class="icon">
+                        <span class="material-symbols-rounded">person</span>
+                    </div>
+                    <div class="lien">
+                        <p>Ajouter un service</p>
+                    </div>
+                </a>
+            </li>
+
+        <?php
+            }
+        ?>
             <!-- <li class="list-item">
                 <a href="#">
                     <div class="icon">

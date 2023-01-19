@@ -3,12 +3,6 @@
 	ini_set("display_errors", 1);
     include_once('include.php');
 
-    if(isset($_SESSION['utilisateur'][0])) {
-        header('Location: pages/panel.php');
-        exit;
-    }
-
-
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['connexion'])) {
