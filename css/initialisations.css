@@ -31,7 +31,7 @@ svg {
     --c-error: #CF0000;
 
     /*!--------- Gradient ---------!*/
-    --c-radial-gradient: radial-gradient(50% 3796.94% at 50% 50%, #597EFF 0%, #59C3FF 87.27%);
+    --c-radial-gradient: radial-gradient(50% 3796.94% at 50% 50%, #476ae6 0%, #59C3FF 87.27%);
 
     /*!--------- Boîtes d'ombres ---------!*/
     --c-box-shadow-grey: 5px 5px 20px var(--c-grey);
