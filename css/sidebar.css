@@ -41,7 +41,7 @@ aside ul.list {
 ul.list .list-item {
     margin: auto;
     display: flex;
-    width: 90%;
+    width: 100%;
     height: 70px;
     align-items: center;
     border-radius: 10px;
@@ -51,21 +51,10 @@ ul.list .list-item {
 
 ul.list .btn-deco {
     position: absolute;
-    width: 80%;
+    width: 90%;
     left: 50%;
     transform: translate(-50%);
     bottom: 5%;
-}
-
-ul.list .list-item:active:after {
-    content: "";
-    position: absolute;
-    right: -30px;
-    width: 5px;
-    height: 100%;
-    background: var(--c-blue);
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
 }
 
 ul.list .list-item:active {

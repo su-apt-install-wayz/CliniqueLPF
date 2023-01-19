@@ -62,7 +62,7 @@
             <li class="list-item">
                 <a href="#">
                     <div class="icon">
-                        <span class="material-symbols-rounded">person</span>
+                        <span class="material-symbols-rounded">person_add</span>
                     </div>
                     <div class="lien">
                         <p>Ajouter un personnel</p>
@@ -73,7 +73,7 @@
             <li class="list-item">
                 <a href="#">
                     <div class="icon">
-                        <span class="material-symbols-rounded">person</span>
+                        <span class="material-symbols-rounded">post_add</span>
                     </div>
                     <div class="lien">
                         <p>Ajouter un service</p>

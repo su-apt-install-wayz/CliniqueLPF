@@ -22,7 +22,7 @@ body {
 }
 
 .left .logo span {
-    background: var(--c-radial-gradient);
+    background: var(--c-blue);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -110,7 +110,7 @@ body {
     font-weight: 500;
     outline: none;
     border: none;
-    background: var(--c-radial-gradient);
+    background: var(--c-blue);
     border-radius: 10px;
     cursor: pointer;
     justify-content: center;
@@ -124,7 +124,7 @@ body {
     position: relative;
     border-top-left-radius: 50%;
     border-bottom-left-radius: 50%;
-    background: var(--c-radial-gradient);
+    background: var(--c-blue);
 }
 
 .right img {
