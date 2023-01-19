@@ -24,7 +24,7 @@ aside .titre h1 {
 }
 
 aside .titre h1 span {
-    background: var(--c-radial-gradient);
+    background: var(--c-blue);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
