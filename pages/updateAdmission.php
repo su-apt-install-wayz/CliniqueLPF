@@ -32,8 +32,11 @@
     ?>
 
     <section class="global">
-        <form action="" method="post">
-            
+        <form style="margin:auto;" action="" method="post">
+            <label style="margin:auto;" for="num-secu">Numéro de sécurité sociale :</label><br>
+            <input style="margin:auto;" class="moyen" type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br>
+
+            <input style="margin:auto;" class="btn-envoi moyen" type="submit" value="Rechercher" name="submit">
         </form>
     </section>
     

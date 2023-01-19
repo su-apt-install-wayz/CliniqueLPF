@@ -132,6 +132,7 @@ form h2 {
 
 .grand {
     width: 100%;
+    max-width: 900px;
     background-color: white;
     border: none;
     outline: none;
@@ -162,9 +163,10 @@ form h2 {
 }
 
 input[type='submit'] {
-    margin: 40px 0 10px 0;
+    margin: 50px auto 0;
     display: flex;
     width: 100%;
+    max-width: 900px;
     height: 55px;
     background-color: white;
     color: white;
