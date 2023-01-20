@@ -8,6 +8,16 @@
     }
 
     require_once('./src/info_user.php');
+
+    if(!empty($_POST)) {
+        extract($_POST);
+        if(isset($_POST['submit'])) {
+
+            $insert_patient = $DB->prepare("INSERT INTO personnel (Nom, Identifiant, Mot_de_passe, role) VALUES(?, ?, ?, 'secretaire')");
+            $insert_patient->execute(array($identifiant, $identifiant, $crypt_password));
+
+        }
+    }
 ?>
 
 <!DOCTYPE html>
