@@ -13,7 +13,7 @@
         ?>
 
             <li class="list-item">
-                <a href="panel.php">
+                <a href="panel">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_add</span>
                     </div>
@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="updateAdmission.php">
+                <a href="updateAdmission">
                     <div class="icon">
                         <span class="material-symbols-rounded">edit_note</span>
                     </div>

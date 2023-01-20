@@ -63,20 +63,20 @@
 
 
         <form action="" method="post" enctype="multipart/form-data">
-            <label for="carte-id">Carte d'identité (recto/verso) :</label><br>
+            <label for="carte-id">Carte d'identité (recto/verso) :</label>
             <input class="grand" type="file" title="" name="carte-id" id="carte-id" required="required"><br>
 
-            <label for="carte-vitale">Carte vitale :</label><br>
+            <label for="carte-vitale">Carte vitale :</label>
             <input class="grand" type="file" title="" name="carte-vitale" id="carte-vitale" required="required"><br>
 
-            <label for="carte-mutuelle">Carte de mutuelle :</label><br>
+            <label for="carte-mutuelle">Carte de mutuelle :</label>
             <input class="grand" type="file" title="" name="carte-mutuelle" id="carte-mutuelle" required="required"><br>
                     
             <!-- <?php     
                 include_once('./php/config.php');
                 if($_SESSION['mineur']==1) {
             ?> -->
-                <label for="livret">Livret de famille (mineurs) :</label><br>
+                <label for="livret">Livret de famille (mineurs) :</label>
                 <input class="grand" type="file" title="" name="livret" id="livret" required="required"><br>
             <!-- <?php
                 }

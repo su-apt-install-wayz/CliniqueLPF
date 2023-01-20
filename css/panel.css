@@ -118,16 +118,20 @@
 }
 
 form {
-    margin: 0 auto;
+    margin: auto;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1300px;
+    max-width: 900px;
     padding: 1rem;
 }
 
 form h2 {
     color: var(--c-blue);
+}
+
+label {
+    margin: 10px 10px;
 }
 
 .grand {
@@ -162,8 +166,19 @@ form h2 {
     box-shadow: 5px 5px 20px rgb(153 153 153 / 25%);
 }
 
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
 input[type='submit'] {
-    margin: 50px auto 0;
+    margin: 50px 0;
     display: flex;
     width: 100%;
     max-width: 900px;

@@ -8,8 +8,8 @@
 
             global $DB;
 
-            $identifiant = (String) trim($identifiant);
-            $password = (String) trim($password);
+            $identifiant = (String) htmlspecialchars(trim($identifiant));
+            $password = (String) htmlspecialchars(trim($password));
 
             $this->erreur = (String) "";
             $this->valid = (boolean) true;
@@ -91,7 +91,7 @@
                             $connexion['Service'], //4
                             $connexion['role'],); //5
 
-                        header('Location: pages/panel.php');
+                        header('Location: pages/panel');
                         exit;
                     }
                 }
