@@ -13,11 +13,85 @@
         extract($_POST);
         if(isset($_POST['submit'])) {
 
-            $insert_patient = $DB->prepare("INSERT INTO personnel (Nom, Identifiant, Mot_de_passe, role) VALUES(?, ?, ?, 'secretaire')");
-            $insert_patient->execute(array($identifiant, $identifiant, $crypt_password));
+            if ($nom_prevenir == $nom_confiance){
+                $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                $insert_prevenir->execute(array($nom_prevenir, $prenom_prevenir, $tel_prevenir, $adresse_prevenir));
+            }
+            else{
+                $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                $insert_prevenir->execute(array($nom_prevenir, $prenom_prevenir, $tel_prevenir, $adresse_prevenir));
+                
+                $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                $insert_confiance->execute(array($nom_confiance, $prenom_confiance, $tel_confiance, $adresse_confiance));
+            }
 
+            $code_prevenir = $DB->prepare("SELECT code_contact FROM contact WHERE Nom = ? and Prenom = ?");
+            $code_prevenir->execute(array($nom_prevenir, $prenom_prevenir));
+            $code_prevenir = $code_prevenir->fetch();
+
+            $code_confiance = $DB->prepare("SELECT code_contact FROM contact WHERE Nom = ? and Prenom = ?");
+            $code_confiance->execute(array($nom_confiance, $prenom_confiance));
+            $code_confiance = $code_confiance->fetch();
+
+            if(!empty($code_prevenir['code_contact']) && !empty($code_confiance['code_contact'])) {
+                $insert_patient = $DB->prepare("INSERT INTO patient VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                $insert_patient->execute(array($num_secu, $civilite, $nom_naissance, $nom_epouse, $prenom, $date_naissance, $adresse, $CP, $tel, $ville, $email, 0, $code_prevenir['code_contact'], $code_confiance['code_contact']));
+            }
+
+            $patient = $DB->prepare("SELECT * FROM patient WHERE Num_secu = ?");
+            $patient->execute(array($num_secu));
+            $patient = $patient->fetch();
+
+            if(isset($patient['Num_secu'])) {
+                $_SESSION['patient'] = array(
+                    $patient['Num_secu'], //0
+                    $patient['Civilité'], //1
+                    $patient['Nom_Naissance'], //2
+                    $patient['Nom_Epouse'], //3
+                    $patient['Prenom'], //4
+                    $patient['Date_naissance'], //5
+                    $patient['Adresse'], //6
+                    $patient['Code_postal'], //7
+                    $patient['Téléphone'], //8
+                    $patient['Ville'], //9
+                    $patient['Email'], //10
+                    $patient['Mineur'], //11
+                    $patient['code_prevenir'], //12
+                    $patient['code_confiance'],); //13
+
+                header('Location: hospitalisation');
+                exit;
+            }
         }
     }
+
+
+    // $aujourdhui = date("Y-m-d");
+    // $diff = date_diff(date_create($date_naissance_patient), date_create($aujourdhui));
+    // if ($diff->format('%y') >= 18){
+    //     $age = 0;
+    // }
+    // else{
+    //     $age = 1;
+    // }
+
+    // $_SESSION['mineur'] = $age;
+
+    // if ($nom_prevenir == $nom_confiance){
+    //     $query2 = "INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES ('{$nom_prevenir}','{$prenom_prevenir}','{$tel_prevenir}','{$adresse_prevenir}')";
+    //     mysqli_query($mysqli, $query2);
+    // }
+    // else{
+    //     $query2 = "INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES ('{$nom_prevenir}','{$prenom_prevenir}','{$tel_prevenir}','{$adresse_prevenir}')";
+    //     mysqli_query($mysqli, $query2);
+    
+    //     $query3 = "INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES ('{$nom_confiance}','{$prenom_confiance}','{$tel_confiance}','{$adresse_confiance}')";
+    //     mysqli_query($mysqli, $query3); 
+    
+    // }
+    
+    // $query1 = "INSERT INTO patient VALUES ('{$num_secu}','{$civilite_patient}','{$nom_patient}','{$nom_epouse}','{$prenom_patient}','{$date_naissance_patient}','{$adresse_patient}', '{$cp_patient}','{$telephone_patient}','{$ville_patient}','{$email_patient}','{$age}',(select code_contact from contact where Nom='{$nom_prevenir}' ),(select code_contact from contact where Nom='{$nom_confiance}' ))";
+    // mysqli_query($mysqli, $query1);
 ?>
 
 <!DOCTYPE html>
@@ -87,19 +161,19 @@
             </select><br>
 
             <label for="nom-naissance">Nom de naissance :</label>
-            <input type="text" class="grand" name="nom-naissance" id="nom-naissance" required="required"><br>
+            <input type="text" class="grand" name="nom_naissance" id="nom-naissance" required="required"><br>
 
             <label for="nom-epouse">Nom d'épouse :</label>
-            <input type="text" class="grand" name="nom-epouse" id="nom-epouse"><br>
+            <input type="text" class="grand" name="nom_epouse" id="nom-epouse"><br>
             
             <label for="prenom">Prénom :</label>
             <input type="text" class="grand" name="prenom" id="prenom" required="required"><br>
 
             <label for="num-secu">Numéro de sécurité sociale :</label>
-            <input type="text" class="moyen" name="num-secu" id="num-secu" maxlength="15" required="required"><br>
+            <input type="text" class="moyen" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
 
             <label for="date-naissance">Date de naissance :</label>
-            <input type="date" class="petit" name="date-naissance" id="date-naissance" required="required"><br>
+            <input type="date" class="petit" name="date_naissance" id="date-naissance" required="required"><br>
 
             <label for="adresse">Adressse :</label>
             <input type="text" class="grand" name="adresse" id="adresse" required="required"><br>
@@ -119,30 +193,30 @@
             <h2>Coordonnées Personne à prévenir</h2><br>
 
             <label for="nom-prevenir">Nom :</label>
-            <input type="text" class="grand" name="nom-prevenir" id="nom-prevenir" required="required"><br>
+            <input type="text" class="grand" name="nom_prevenir" id="nom-prevenir" required="required"><br>
             
             <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" name="prenom-prevenir" id="prenom" required="required"><br>
+            <input type="text" class="grand" name="prenom_prevenir" id="prenom" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" name="tel-prevenir" id="tel" maxlength="10" required="required"><br>
+            <input type="tel" class="petit" name="tel_prevenir" id="tel" maxlength="10" required="required"><br>
 
             <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" name="adresse-prevenir" id="adresse" required="required"><br><br><br>
+            <input type="text" class="grand" name="adresse_prevenir" id="adresse" required="required"><br><br><br>
 
             <h2>Coordonnées Personne de confiance</h2><br>
 
             <label for="nom-confiance">Nom :</label>
-            <input type="text" class="grand" name="nom-confiance" id="nom-confiance" required="required"><br>
+            <input type="text" class="grand" name="nom_confiance" id="nom-confiance" required="required"><br>
             
             <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" name="prenom-confiance" id="prenom" required="required"><br>
+            <input type="text" class="grand" name="prenom_confiance" id="prenom" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" name="tel-confiance" id="tel" maxlength="10" required="required"><br>
+            <input type="tel" class="petit" name="tel_confiance" id="tel" maxlength="10" required="required"><br>
 
             <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" name="adresse-confiance" id="adresse" required="required"><br>
+            <input type="text" class="grand" name="adresse_confiance" id="adresse" required="required"><br>
 
             <input class="btn-envoi" type="submit" name="submit">
         </form>
