@@ -3,7 +3,7 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index.php');
+        header('Location: ../index');
         exit;
     }
 
@@ -74,24 +74,6 @@
     // else{
     //     $age = 1;
     // }
-
-    // $_SESSION['mineur'] = $age;
-
-    // if ($nom_prevenir == $nom_confiance){
-    //     $query2 = "INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES ('{$nom_prevenir}','{$prenom_prevenir}','{$tel_prevenir}','{$adresse_prevenir}')";
-    //     mysqli_query($mysqli, $query2);
-    // }
-    // else{
-    //     $query2 = "INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES ('{$nom_prevenir}','{$prenom_prevenir}','{$tel_prevenir}','{$adresse_prevenir}')";
-    //     mysqli_query($mysqli, $query2);
-    
-    //     $query3 = "INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES ('{$nom_confiance}','{$prenom_confiance}','{$tel_confiance}','{$adresse_confiance}')";
-    //     mysqli_query($mysqli, $query3); 
-    
-    // }
-    
-    // $query1 = "INSERT INTO patient VALUES ('{$num_secu}','{$civilite_patient}','{$nom_patient}','{$nom_epouse}','{$prenom_patient}','{$date_naissance_patient}','{$adresse_patient}', '{$cp_patient}','{$telephone_patient}','{$ville_patient}','{$email_patient}','{$age}',(select code_contact from contact where Nom='{$nom_prevenir}' ),(select code_contact from contact where Nom='{$nom_confiance}' ))";
-    // mysqli_query($mysqli, $query1);
 ?>
 
 <!DOCTYPE html>

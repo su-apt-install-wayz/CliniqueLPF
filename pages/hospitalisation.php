@@ -3,11 +3,34 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index.php');
+        header('Location: ../index');
         exit;
     }
 
     require_once('./src/info_user.php');
+    include_once('hospitalisation.php');
+
+    $medecins_liste = $DB->prepare("SELECT * FROM personnel where role='medecin'");
+    $medecins_liste->execute();
+    $medecins_liste = $medecins_liste->fetchAll();
+
+    if(!empty($_POST)) {
+        extract($_POST);
+        if(isset($_POST['submit'])) {
+
+            $medecin = $DB->prepare("SELECT Code_personnel FROM personnel WHERE Nom = ?");
+            $medecin->execute(array($nom_medecin));
+            $medecin = $medecin->fetch();
+
+            if(!empty($medecin['Code_pesonnel'])) {
+                $insert_admission = $DB->prepare("INSERT INTO hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu) VALUES (?, ?, ?, ?, ?)");
+                $insert_admission->execute(array($pre_admission, $date_hospitalisation, $heure_intervention, $medecin['Code_personnel'], $_SESSION['patient'][0]));
+            }
+
+            // header('Location: couverture');
+            // exit();
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -62,8 +85,8 @@
         </div>
 
         <form action="" method="post">
-            <label for="pre-admission">Pré-admission :</label><br>
-            <select class="moyen" name="pre-admission" id="pre-admission" required="required">
+            <label for="pre-admission">Pré-admission :</label>
+            <select class="moyen" name="pre_admission" id="pre_admission" required="required">
                 <option value="Ambulatoire">Ambulatoire</option>
                 <option value="Hospitalisation">Hospitalisation</option>
 
@@ -72,21 +95,28 @@
             <!-- <label for="num-secu">Numéro de sécurité sociale :</label><br>
             <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br> -->
 
-            <label for="date-hospitalisation">Date d'hospitalisation</label><br>
-            <input class="petit" type="date" name="date-hospitalisation" id="date-hospitalisation" required="required">
+            <label for="date-hospitalisation">Date d'hospitalisation</label>
+            <input class="petit" type="date" name="date_hospitalisation" id="date_hospitalisation" required="required">
 
             <br>
 
-            <label for="heure-intervention">Heure d'intervention</label><br>
-            <input class="petit" type="time" name="heure-intervention" id="heure-intervention" required="required">
+            <label for="heure-intervention">Heure d'intervention</label>
+            <input class="petit" type="time" name="heure_intervention" id="heure_intervention" required="required">
 
             <br>
+
                     
-            <label for="nom-medecin">Nom du medecin</label><br>
-            <select class="moyen" name='nom-medecin' size='1' id='nom-medecin' required='required'>
-                <option value="">aa</option>
-                <option value="">bb</option>
+            <label for="nom-medecin">Nom du medecin</label>
+            <select class="moyen" name='nom_medecin' size='1' id='nom_medecin' required='required'>
+                <?php 
+                    foreach ($medecins_liste as $liste) {
+                ?>
+                <option value="<?= $liste['Nom']?>"><?= $liste['Nom']?></option>
+                <?php
+                    }
+                ?>
             </select><br>
+        
 
             <input class="btn-envoi" type="submit" name="submit">
         </form>
