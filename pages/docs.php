@@ -11,12 +11,12 @@
 
     if(!empty($_POST)) {
         extract($_POST);
-        
+
         $valid = true;
             
         $num_secu = $_SESSION['patient'][0];
             
-        if(isset($_FILES['carte-id']) && !empty($_FILES['carte-id']['name']) && isset($_FILES['carte-vitale']) && !empty($_FILES['carte-vitale']['name']) && isset($_FILES['carte-mutuelle']) && !empty($_FILES['carte-mutuelle']['name'])) {
+        if(isset($_FILES['carte_id']) && !empty($_FILES['carte_id']['name']) && isset($_FILES['carte_vitale']) && !empty($_FILES['carte_vitale']['name']) && isset($_FILES['carte_mutuelle']) && !empty($_FILES['carte_mutuelle']['name'])) {
             $filename_petit = $_FILES['carte-id']['tmp_name'];
 
             $extensionValides = array('jpg', 'png', 'jpeg');
@@ -49,8 +49,8 @@
 
                 if(is_readable($chemin_CNI) && is_readable($chemin_CV) && is_readable($chemin_CM)) {
 
-                    $query1 = "INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Num_secu)  VALUES ('{$img_CNI}','{$img_CV}', '{$img_CM}', '{$num_secu}')";
-                    mysqli_query($mysqli, $query1);
+                    $insert_files = $DB->prepare("INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Num_secu)  VALUES (?, ?, ?, ?);");
+                    $insert_admission->execute(array($carte_id, $carte_vitale, $carte_mutuelle, $num_secu));
                     $valid = true;
                 } else {
                     $valid = false;
@@ -116,13 +116,13 @@
 
         <form action="" method="post" enctype="multipart/form-data">
             <label for="carte-id">Carte d'identité (recto/verso) :</label>
-            <input class="grand" type="file" title="" name="carte-id" id="carte-id" required="required"><br>
+            <input class="grand" type="file" title="" name="carte_id" id="carte_id" required="required"><br>
 
             <label for="carte-vitale">Carte vitale :</label>
-            <input class="grand" type="file" title="" name="carte-vitale" id="carte-vitale" required="required"><br>
+            <input class="grand" type="file" title="" name="carte_vitale" id="carte_vitale" required="required"><br>
 
             <label for="carte-mutuelle">Carte de mutuelle :</label>
-            <input class="grand" type="file" title="" name="carte-mutuelle" id="carte-mutuelle" required="required"><br>
+            <input class="grand" type="file" title="" name="carte_mutuelle" id="carte_mutuelle" required="required"><br>
                     
             <!-- <?php     
                 include_once('./php/config.php');
