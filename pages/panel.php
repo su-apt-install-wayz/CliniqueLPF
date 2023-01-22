@@ -42,7 +42,7 @@
             $patient->execute(array($num_secu));
             $patient = $patient->fetch();
 
-            if(isset($patient['Num_secu'])) {
+            if(empty($patient['Num_secu'])) {
                 $_SESSION['patient'] = array(
                     $patient['Num_secu'], //0
                     $patient['Civilité'], //1
