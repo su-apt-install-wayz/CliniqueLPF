@@ -12,25 +12,11 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-            $insert_couverture = $DB->prepare("INSERT INTO clinique.secu (Num_secu, organisme, assure, Ald, Nom_mutuelle, num_adherent, chambre_particuliere) VALUES(?, ?, ?, ?, ?, ?, ?);");
-            $insert_couverture->execute(array($_SESSION['patient'][0], $orga_secu, $assure, $ALD, $nom_mutuelle, $num_adherent, $chambre));
+            $secu_update = $DB->prepare("UPDATE clinique.secu SET organisme=?, assure=?, Ald=?, Nom_mutuelle=?, num_adherent=?, chambre_particuliere=? WHERE Num_secu=?];");
+            $secu_update->execute(array($orga_secu, $assure, $ALD, $nom_mutuelle, $num_adherent, $chambre, $_SESSION['patient'][0]));
 
-            $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
-            $secu->execute(array($_SESSION['patient'][0]));
-            $secu = $secu->fetch();
-
-            if(isset($secu['Num_secu'])) {
-                $_SESSION['couverture'] = array(
-                    $secu['organisme'], //0
-                    $secu['assure'], //1
-                    $secu['Ald'], //2
-                    $secu['Nom_mutuelle'], //3
-                    $secu['num_adherent'], //4
-                    $secu['chambre_particuliere']); //5
-
-                header('Location: docs');
-                exit;
-            }
+            header('Location: docs');
+            exit;
         }
     }
 ?>
@@ -88,32 +74,29 @@
 
         <form action="" method="post">
             <label for="orga-secu">Organisme de sécurité sociale :</label><br>
-            <input class="grand" type="text" name="orga_secu" id="orga-secu" required="required"><br>
-
-            <!-- <label for="num-secu">Numéro de sécurité sociale :</label><br>
-            <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required" value=""><br> -->
+            <input class="grand" type="text" value="<?= $_SESSION['couverture'][0]?>" name="orga_secu" id="orga-secu" required="required"><br>
 
             <label for="assuré">Le patient est-il assuré ?</label><br>
             <select class="petit" name="assure" id="assure" required="required">
-                <option value="oui">Oui</option>
+                <option value="<?= $_SESSION['couverture'][1]?>"><?= $_SESSION['couverture'][1]?></option>
                 <option value="non">Non</option>
             </select><br>
 
             <label for="ALD">Le patient est-il en ALD ?</label><br>
             <select class="petit" name="ALD" id="ALD" required="required">
-                <option value="non">Non</option>
+                <option value="<?= $_SESSION['couverture'][2]?>"><?= $_SESSION['couverture'][2]?></option>
                 <option value="oui">Oui</option>
             </select><br>
 
             <label for="nom-mutuelle">Nom de la mutuelle ou l'assurance:</label><br>
-            <input class="grand" type="text" name="nom_mutuelle" id="nom_mutuelle" required="required"><br>
+            <input class="grand" value="<?= $_SESSION['couverture'][3]?>" type="text" name="nom_mutuelle" id="nom_mutuelle" required="required"><br>
                             
             <label for="num-adherent">Numéro d'adhérent :</label><br>
-            <input class="moyen" type="text" name="num_adherent" id="num_adherent" required="required"><br>
+            <input class="moyen" value="<?= $_SESSION['couverture'][4]?>" type="text" name="num_adherent" id="num_adherent" required="required"><br>
 
             <label for="chambre">Chambre particulière ?</label><br>
             <select class="petit" name="chambre" id="chambre" required="required">
-                <option value="non">Non</option>
+                <option value="<?= $_SESSION['couverture'][5]?>"><?= $_SESSION['couverture'][5]?></option>
                 <option value="oui">Oui</option>
             </select>
 
