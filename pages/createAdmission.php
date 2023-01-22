@@ -16,28 +16,13 @@
             $patient->execute(array($num_secu));
             $patient = $patient->fetch();
 
-            if(isset($patient['Num_secu'])) {
-                $_SESSION['patient'] = array(
-                    $patient['Num_secu'], //0
-                    $patient['Civilité'], //1
-                    $patient['Nom_Naissance'], //2
-                    $patient['Nom_Epouse'], //3
-                    $patient['Prenom'], //4
-                    $patient['Date_naissance'], //5
-                    $patient['Adresse'], //6
-                    $patient['Code_postal'], //7
-                    $patient['Téléphone'], //8
-                    $patient['Ville'], //9
-                    $patient['Email'], //10
-                    $patient['Mineur'], //11
-                    $patient['code_prevenir'], //12
-                    $patient['code_confiance'],); //13
-
-                header('Location: panel');
-                exit;
+            if(!empty($patient['Num_secu'])) {
+                header('Location: patient');
+                exit;                
             }
             else {
-                echo "aaaaaaa";
+                header('Location: patient_existant');
+                exit; 
             }
         }
     }
