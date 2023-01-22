@@ -62,6 +62,32 @@
                 header('Location: hospitalisation');
                 exit;
             }
+
+            $prevenir = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
+            $prevenir->execute(array($code_prevenir['code_contact']));
+            $prevenir = $prevenir->fetch();
+
+            if(isset($prevenir['code_contact'])) {
+                $_SESSION['prevenir'] = array(
+                    $prevenir['code_contact'], //0
+                    $prevenir['Nom'], //1
+                    $prevenir['Prenom'], //2
+                    $prevenir['Téléphone'], //3
+                    $prevenir['Adresse']); //4
+            }
+
+            $confiance = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
+            $confiance->execute(array($code_confiance['code_contact']));
+            $confiance = $confiance->fetch();
+
+            if(isset($confiance['code_contact'])) {
+                $_SESSION['confiance'] = array(
+                    $confiance['code_contact'], //0
+                    $confiance['Nom'], //1
+                    $confiance['Prenom'], //2
+                    $confiance['Téléphone'], //3
+                    $confiance['Adresse']); //4
+            }
         }
     }
 

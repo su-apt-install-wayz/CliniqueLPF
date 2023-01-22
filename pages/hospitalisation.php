@@ -24,7 +24,7 @@
 
             if(!empty($medecin['Code_personnel'])) {
                 $insert_admission = $DB->prepare("INSERT INTO clinique.hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu) VALUES(?, ?, ?, ?, ?);");
-                $insert_admission->execute(array($pre_admission, $date_hospitalisation, $heure_intervention, $medecin['Code_personnel'], $_SESSION['patient'][0]));
+                $insert_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $medecin['Code_personnel'], $_SESSION['patient'][0]));
 
                 header('Location: couverture');
                 exit();

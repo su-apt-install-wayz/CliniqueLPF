@@ -13,7 +13,7 @@
         ?>
 
             <li class="list-item">
-                <a href="panel">
+                <a href="createAdmission">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_add</span>
                     </div>
