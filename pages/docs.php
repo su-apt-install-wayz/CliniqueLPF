@@ -8,6 +8,58 @@
     }
 
     require_once('./src/info_user.php');
+
+    if(!empty($_POST)) {
+        extract($_POST);
+        
+        $valid = true;
+            
+        $num_secu = $_SESSION['patient'][0];
+            
+        if(isset($_FILES['carte-id']) && !empty($_FILES['carte-id']['name']) && isset($_FILES['carte-vitale']) && !empty($_FILES['carte-vitale']['name']) && isset($_FILES['carte-mutuelle']) && !empty($_FILES['carte-mutuelle']['name'])) {
+            $filename_petit = $_FILES['carte-id']['tmp_name'];
+
+            $extensionValides = array('jpg', 'png', 'jpeg');
+
+
+            $extensionUpload_CNI = strtolower(substr(strrchr($_FILES['carte-id']['name'], '.'), 1));
+            $extensionUpload_CV = strtolower(substr(strrchr($_FILES['carte-vitale']['name'], '.'), 1));
+            $extensionUpload_CM = strtolower(substr(strrchr($_FILES['carte-mutuelle']['name'], '.'), 1));
+            $extensionUpload_livret = strtolower(substr(strrchr($_FILES['carte-mutuelle']['name'], '.'), 1));
+
+                if(in_array($extensionUpload_CNI, $extensionValides) && in_array($extensionUpload_CV, $extensionValides) && in_array($extensionUpload_CM, $extensionValides)) {
+                    $dossier_CNI = '../images/private/patients/';
+                    $dossier_CV = '../images/private/patients/';
+                    $dossier_CM = '../images/private/patients/';
+
+                    var_dump($num_secu);
+                    $img_CNI = $num_secu . '_cni.' . $extensionUpload_CNI;
+                    $img_CV = $num_secu . '_cv.' . $extensionUpload_CV;
+                    $img_CM = $num_secu . '_cm.' . $extensionUpload_CM;
+                        
+                    $chemin_CNI = $dossier_CNI . $img_CNI;
+                    $chemin_CV = $dossier_CV . $img_CV;
+                    $chemin_CM = $dossier_CM . $img_CM;
+
+                    $resultat_CNI = move_uploaded_file($_FILES['carte-id']['tmp_name'], $chemin_CNI);
+                    $resultat_CV = move_uploaded_file($_FILES['carte-vitale']['tmp_name'], $chemin_CV);
+                    $resultat_CM = move_uploaded_file($_FILES['carte-mutuelle']['tmp_name'], $chemin_CM);
+
+                }
+
+                if(is_readable($chemin_CNI) && is_readable($chemin_CV) && is_readable($chemin_CM)) {
+
+                    $query1 = "INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Num_secu)  VALUES ('{$img_CNI}','{$img_CV}', '{$img_CM}', '{$num_secu}')";
+                    mysqli_query($mysqli, $query1);
+                    $valid = true;
+                } else {
+                    $valid = false;
+                }
+            }
+
+        header('Location: patient');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
