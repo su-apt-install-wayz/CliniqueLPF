@@ -8,7 +8,6 @@
     }
 
     require_once('./src/info_user.php');
-    include_once('hospitalisation.php');
 
     $medecins_liste = $DB->prepare("SELECT * FROM personnel where role='medecin'");
     $medecins_liste->execute();

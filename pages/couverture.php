@@ -3,11 +3,22 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index.php');
+        header('Location: ../index');
         exit;
     }
 
     require_once('./src/info_user.php');
+
+    if(!empty($_POST)) {
+        extract($_POST);
+        if(isset($_POST['submit'])) {
+            $insert_couverture = $DB->prepare("INSERT INTO clinique.secu (Num_secu, organisme, assure, Ald, Nom_mutuelle, num_adherent, chambre_particuliere) VALUES(?, ?, ?, ?, ?, ?, ?);");
+            $insert_couverture->execute(array($_SESSION['patient'][0], $orga_secu, $assure, $ALD, $nom_mutuelle, $num_adherent, $chambre));
+
+            header('Location: docs');
+            exit();
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -63,13 +74,13 @@
 
         <form action="" method="post">
             <label for="orga-secu">Organisme de sécurité sociale :</label><br>
-            <input class="grand" type="text" name="orga-secu" id="orga-secu" required="required"><br>
+            <input class="grand" type="text" name="orga_secu" id="orga-secu" required="required"><br>
 
             <!-- <label for="num-secu">Numéro de sécurité sociale :</label><br>
             <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required" value=""><br> -->
 
             <label for="assuré">Le patient est-il assuré ?</label><br>
-            <select class="petit" name="assuré" id="assuré" required="required">
+            <select class="petit" name="assure" id="assure" required="required">
                 <option value="oui">Oui</option>
                 <option value="non">Non</option>
             </select><br>
@@ -81,10 +92,10 @@
             </select><br>
 
             <label for="nom-mutuelle">Nom de la mutuelle ou l'assurance:</label><br>
-            <input class="grand" type="text" name="nom-mutuelle" id="nom-mutuelle" required="required"><br>
+            <input class="grand" type="text" name="nom_mutuelle" id="nom_mutuelle" required="required"><br>
                             
             <label for="num-adherent">Numéro d'adhérent :</label><br>
-            <input class="moyen" type="text" name="num-adherent" id="num-adherent" required="required"><br>
+            <input class="moyen" type="text" name="num_adherent" id="num_adherent" required="required"><br>
 
             <label for="chambre">Chambre particulière ?</label><br>
             <select class="petit" name="chambre" id="chambre" required="required">

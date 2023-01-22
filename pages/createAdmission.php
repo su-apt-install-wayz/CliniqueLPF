@@ -16,12 +16,13 @@
             $patient->execute(array($num_secu));
             $patient = $patient->fetch();
 
-            if(!empty($patient['Num_secu'])) {
-                header('Location: patient');
+            if(isset($patient['Num_secu'])) {
+                header('Location: patient_existant');
                 exit;                
             }
             else {
-                header('Location: patient_existant');
+                $_SESSION['num'] = $num_secu;
+                header('Location: patient');
                 exit; 
             }
         }

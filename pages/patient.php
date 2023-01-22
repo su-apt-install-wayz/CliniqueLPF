@@ -25,11 +25,11 @@
                 $insert_confiance->execute(array($nom_confiance, $prenom_confiance, $tel_confiance, $adresse_confiance));
             }
 
-            $code_prevenir = $DB->prepare("SELECT code_contact FROM contact WHERE Nom = ? and Prenom = ?");
+            $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom = ?");
             $code_prevenir->execute(array($nom_prevenir, $prenom_prevenir));
             $code_prevenir = $code_prevenir->fetch();
 
-            $code_confiance = $DB->prepare("SELECT code_contact FROM contact WHERE Nom = ? and Prenom = ?");
+            $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom = ?");
             $code_confiance->execute(array($nom_confiance, $prenom_confiance));
             $code_confiance = $code_confiance->fetch();
 
@@ -58,9 +58,6 @@
                     $patient['Mineur'], //11
                     $patient['code_prevenir'], //12
                     $patient['code_confiance'],); //13
-
-                header('Location: hospitalisation');
-                exit;
             }
 
             $prevenir = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
@@ -88,6 +85,9 @@
                     $confiance['Téléphone'], //3
                     $confiance['Adresse']); //4
             }
+
+            header('Location: hospitalisation');
+            exit;
         }
     }
 
@@ -178,7 +178,7 @@
             <input type="text" class="grand" name="prenom" id="prenom" required="required"><br> 
 
             <label for="num-secu">Numéro de sécurité sociale :</label>
-            <input type="text" class="moyen" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
+            <input type="text" class="moyen" value="<?= $_SESSION['num']?>" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
 
             <label for="date-naissance">Date de naissance :</label>
             <input type="date" class="petit" name="date_naissance" id="date-naissance" required="required"><br>
