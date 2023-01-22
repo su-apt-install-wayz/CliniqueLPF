@@ -91,7 +91,7 @@
                             $connexion['Service'], //4
                             $connexion['role'],); //5
 
-                        header('Location: pages/createAdmission');
+                        header('Location: pages/panel');
                         exit;
                     }
                 }

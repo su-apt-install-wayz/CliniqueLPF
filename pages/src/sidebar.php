@@ -4,7 +4,7 @@
 
     <aside>
         <div class="titre">
-            <h1>Clinique<span class="degrade"> LPF</span></h1>
+            <a href="panel"><h1>Clinique<span class="degrade"> LPF</span></h1></a>
         </div>
         <ul class="list">
 
@@ -29,6 +29,16 @@
                     </div>
                     <div class="lien">
                         <p>Modifier admission</p>
+                    </div>
+                </a>
+            </li>
+            <li class="list-item">
+                <a href="deleteAdmission">
+                    <div class="icon">
+                        <span class="material-symbols-rounded">person_remove</span>
+                    </div>
+                    <div class="lien">
+                        <p>Supprimer admission</p>
                     </div>
                 </a>
             </li>

@@ -23,6 +23,10 @@ aside .titre h1 {
     transition: all 0.3s ease-in-out;
 }
 
+aside .titre a {
+    color: var(--c-dark-blue);
+}
+
 aside .titre h1 span {
     background: var(--c-blue);
     -webkit-background-clip: text;
