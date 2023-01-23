@@ -48,9 +48,6 @@
                     <h5 class="count"><p>24 <span>patients</span></p></h5>
                 </div>
             </div>
-            <div class="right">
-                <img src="../images/public/illustration.png" alt="">
-            </div>
         </div>
     </section>
     
