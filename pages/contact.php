@@ -43,10 +43,11 @@
                 $prenom_confiance, //2
                 $tel_confiance, //3
                 $adresse_confiance); //4
+
+            header('Location: hospitalisation');
+            exit;
         }
     }
-
-    $aujourdhui = date("Y-m-d");
 ?>
 
 <!DOCTYPE html>

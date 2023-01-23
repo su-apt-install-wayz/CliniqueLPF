@@ -13,31 +13,19 @@
     $medecins_liste->execute();
     $medecins_liste = $medecins_liste->fetchAll();
 
+    $aujourdhui = date("Y-m-d");
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-
-            $medecin = $DB->prepare("SELECT Code_personnel FROM personnel WHERE Nom = ?");
-            $medecin->execute(array($nom_medecin));
-            $medecin = $medecin->fetch();
-
-            if(!empty($medecin['Code_personnel'])) {
-                $insert_admission = $DB->prepare("INSERT INTO clinique.hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu) VALUES(?, ?, ?, ?, ?);");
-                $insert_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $medecin['Code_personnel'], $_SESSION['patient'][0]));
-            }
-
-            $patient = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
-            $patient->execute(array($_SESSION['patient'][0]));
-            $patient = $patient->fetch();
-
-            if(isset($patient['Num_secu'])) {
-                header('Location: couverture_existant');
-                exit;                
-            }
-            else {
-                header('Location: couverture');
-                exit; 
-            }
+            $_SESSION['hospitalisation'] = array(
+                $pre_admission, //0
+                $date_hospitalisation, //1
+                $heure_intervention, //2
+                $nom_medecin); //3
+            
+            header('Location: couverture');
+            exit;
         }
     }
 ?>
@@ -105,7 +93,7 @@
             <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br> -->
 
             <label for="date-hospitalisation">Date d'hospitalisation</label>
-            <input class="petit" type="date" name="date_hospitalisation" id="date_hospitalisation" required="required">
+            <input class="petit" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
 
             <br>
 

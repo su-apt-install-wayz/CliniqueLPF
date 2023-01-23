@@ -71,6 +71,23 @@
                     $_SESSION['confiance'] = array("", "", "", "", "");
                 }
 
+                $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
+                $secu->execute(array($_SESSION['patient'][0]));
+                $secu = $secu->fetch();
+
+                if(isset($secu['Num_secu'])) {
+                    $_SESSION['couverture'] = array(
+                        $secu['organisme'], //0
+                        $secu['assure'], //1
+                        $secu['Ald'], //2
+                        $secu['Nom_mutuelle'], //3
+                        $secu['num_adherent'], //4
+                        $secu['chambre_particuliere']); //5                
+                }
+                else {
+                    $_SESSION['couverture'] = array("", "", "", "", "", "");
+                }
+
                 header('Location: patient');
                 exit;                
             }
@@ -78,6 +95,7 @@
                 $_SESSION['patient'] = array($num_secu, "", "", "", "", "", "", "", "", "", "", "", "", "", $patient_existant = false);
                 $_SESSION['prevenir'] = array("", "", "", "", "");
                 $_SESSION['confiance'] = array("", "", "", "", "");
+                $_SESSION['couverture'] = array("", "", "", "", "", "");
                 header('Location: patient');
                 exit; 
             }

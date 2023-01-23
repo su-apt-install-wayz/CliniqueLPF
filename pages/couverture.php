@@ -9,28 +9,41 @@
 
     require_once('./src/info_user.php');
 
+    if ($_SESSION['couverture'][1] = 'oui' || $_SESSION['couverture'][2] = 'oui') {
+        $oui = "selected";
+        $non = "";
+    }
+    else if  ($_SESSION['couverture'][1] = 'non' || $_SESSION['couverture'][2] = 'non'){
+        $oui = "";
+        $non = "selected";
+    }
+    else {
+        $oui = "";
+        $non = "";
+    }
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-            $insert_couverture = $DB->prepare("INSERT INTO clinique.secu (Num_secu, organisme, assure, Ald, Nom_mutuelle, num_adherent, chambre_particuliere) VALUES(?, ?, ?, ?, ?, ?, ?);");
-            $insert_couverture->execute(array($_SESSION['patient'][0], $orga_secu, $assure, $ALD, $nom_mutuelle, $num_adherent, $chambre));
+            // $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
+            // $secu->execute(array($_SESSION['patient'][0]));
+            // $secu = $secu->fetch();
 
-            $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
-            $secu->execute(array($_SESSION['patient'][0]));
-            $secu = $secu->fetch();
+            // if(isset($secu['Num_secu'])) {
+            //     $_SESSION['couverture'] = array(
+            //         $secu['organisme'], //0
+            //         $secu['assure'], //1
+            //         $secu['Ald'], //2
+            //         $secu['Nom_mutuelle'], //3
+            //         $secu['num_adherent'], //4
+            //         $secu['chambre_particuliere']); //5                
+            // }
+            // else {
+            //     $_SESSION['couverture'] = array("", "", "", "", "", "");
+            // }
 
-            if(isset($secu['Num_secu'])) {
-                $_SESSION['couverture'] = array(
-                    $secu['organisme'], //0
-                    $secu['assure'], //1
-                    $secu['Ald'], //2
-                    $secu['Nom_mutuelle'], //3
-                    $secu['num_adherent'], //4
-                    $secu['chambre_particuliere']); //5
-
-                header('Location: docs');
-                exit;
-            }
+            header('Location: docs');
+            exit;
         }
     }
 ?>
@@ -87,34 +100,39 @@
         </div>
 
         <form action="" method="post">
-            <label for="orga-secu">Organisme de sécurité sociale :</label><br>
-            <input class="grand" type="text" name="orga_secu" id="orga-secu" required="required"><br>
+            <label for="orga-secu">Organisme de sécurité sociale :</label>
+            <input class="grand" value="<?= $_SESSION['couverture'][0]?>" type="text" name="orga_secu" id="orga-secu" required="required"><br>
 
-            <!-- <label for="num-secu">Numéro de sécurité sociale :</label><br>
-            <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required" value=""><br> -->
-
-            <label for="assuré">Le patient est-il assuré ?</label><br>
+            <label for="assuré">Le patient est-il assuré ?</label>
             <select class="petit" name="assure" id="assure" required="required">
-                <option value="oui">Oui</option>
-                <option value="non">Non</option>
+                <option value="Vide" hidden>Choisir une réponse</option>
+                <option value="oui" <?= $oui?> >Oui</option>
+                <option value="non" <?= $non?> >Non</option>
             </select><br>
 
-            <label for="ALD">Le patient est-il en ALD ?</label><br>
+            <label for="ALD">Le patient est-il en ALD ?</label>
             <select class="petit" name="ALD" id="ALD" required="required">
-                <option value="non">Non</option>
-                <option value="oui">Oui</option>
+                <option value="Vide" hidden>Choisir une réponse</option>
+                <option value="oui" <?= $oui?> >Oui</option>
+                <option value="non" <?= $non?> >Non</option>
             </select><br>
 
-            <label for="nom-mutuelle">Nom de la mutuelle ou l'assurance:</label><br>
-            <input class="grand" type="text" name="nom_mutuelle" id="nom_mutuelle" required="required"><br>
+            <label for="nom-mutuelle">Nom de la mutuelle ou l'assurance:</label>
+            <input class="grand" value="<?= $_SESSION['couverture'][3]?>" type="text" name="nom_mutuelle" id="nom_mutuelle" required="required"><br>
                             
-            <label for="num-adherent">Numéro d'adhérent :</label><br>
-            <input class="moyen" type="text" name="num_adherent" id="num_adherent" required="required"><br>
+            <label for="num-adherent">Numéro d'adhérent :</label>
+            <input class="moyen" value="<?= $_SESSION['couverture'][4]?>" type="text" name="num_adherent" id="num_adherent" required="required"><br>
 
-            <label for="chambre">Chambre particulière ?</label><br>
+            <label for="chambre">Chambre :</label>
             <select class="petit" name="chambre" id="chambre" required="required">
-                <option value="non">Non</option>
-                <option value="oui">Oui</option>
+                <optgroup label="Avec équipements">
+                    <option value=1>Individuelle</option>
+                    <option value=2>Partagée</option>
+                </optgroup>
+                <optgroup label="Sans équipements">
+                    <option value=3>Individuelle</option>
+                    <option value=4>Partagée</option>
+                </optgroup>
             </select>
 
             <input class="btn-envoi" type="submit" name="submit">
