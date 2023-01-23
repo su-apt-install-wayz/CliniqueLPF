@@ -154,7 +154,7 @@
             <label for="tel">Téléphone :</label>
             <input type="tel" class="petit" value="<?= $_SESSION['patient'][8]?>" name="tel" id="tel" maxlength="10" required="required"><br><br><br>
 
-            <input class="btn-envoi" type="submit" name="submit">
+            <input class="btn-envoi" type="submit" value="Suivant" name="submit">
         </form>
     </section>
     

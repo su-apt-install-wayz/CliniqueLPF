@@ -1,23 +1,23 @@
 <?php 
 
-$insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
-$insert_prevenir->execute(array($nom_prevenir, $prenom_prevenir, $tel_prevenir, $adresse_prevenir));
+// $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+// $insert_prevenir->execute(array($nom_prevenir, $prenom_prevenir, $tel_prevenir, $adresse_prevenir));
 
-$insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
-$insert_confiance->execute(array($nom_confiance, $prenom_confiance, $tel_confiance, $adresse_confiance));
+// $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+// $insert_confiance->execute(array($nom_confiance, $prenom_confiance, $tel_confiance, $adresse_confiance));
 
-$insert_patient = $DB->prepare("INSERT INTO patient VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-$insert_patient->execute(array($num_secu, $civilite, $nom_naissance, $nom_epouse, $prenom, $date_naissance, $adresse, $CP, $tel, $ville, $email, 0, $code_prevenir['code_contact'], $code_confiance['code_contact']));
+// $insert_patient = $DB->prepare("INSERT INTO patient VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+// $insert_patient->execute(array($num_secu, $civilite, $nom_naissance, $nom_epouse, $prenom, $date_naissance, $adresse, $CP, $tel, $ville, $email, 0, $code_prevenir['code_contact'], $code_confiance['code_contact']));
 
-$insert_admission = $DB->prepare("INSERT INTO clinique.hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu) VALUES(?, ?, ?, ?, ?);");
-$insert_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $medecin['Code_personnel'], $_SESSION['patient'][0]));
+// $insert_admission = $DB->prepare("INSERT INTO clinique.hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu) VALUES(?, ?, ?, ?, ?);");
+// $insert_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $medecin['Code_personnel'], $_SESSION['patient'][0]));
 
-$insert_couverture = $DB->prepare("INSERT INTO clinique.secu (Num_secu, organisme, assure, Ald, Nom_mutuelle, num_adherent, chambre_particuliere) VALUES(?, ?, ?, ?, ?, ?, ?);");
-            $insert_couverture->execute(array($_SESSION['patient'][0], $orga_secu, $assure, $ALD, $nom_mutuelle, $num_adherent, $chambre));
+// $insert_couverture = $DB->prepare("INSERT INTO clinique.secu (Num_secu, organisme, assure, Ald, Nom_mutuelle, num_adherent, chambre_particuliere) VALUES(?, ?, ?, ?, ?, ?, ?);");
+// $insert_couverture->execute(array($_SESSION['patient'][0], $orga_secu, $assure, $ALD, $nom_mutuelle, $num_adherent, $chambre));
 
 
-$patient_update = $DB->prepare("UPDATE clinique.patient SET Civilité=?, Nom_Naissance=?, Nom_Epouse=?, Prenom=?, Date_naissance=?, Adresse=?, Code_postal=?, Téléphone=?, Ville=?, Email=?, Mineur=0, code_prevenir=?, code_confiance=? WHERE Num_secu=$num_secu;");
-$patient_update->execute(array($civilite, $nom_naissance, $nom_epouse, $prenom, $date_naissance, $adresse, $CP, $tel, $ville, $email, $code_prevenir['Code_contact'], $code_confiance['Code_contact']));
+// $patient_update = $DB->prepare("UPDATE clinique.patient SET Civilité=?, Nom_Naissance=?, Nom_Epouse=?, Prenom=?, Date_naissance=?, Adresse=?, Code_postal=?, Téléphone=?, Ville=?, Email=?, Mineur=0, code_prevenir=?, code_confiance=? WHERE Num_secu=$num_secu;");
+// $patient_update->execute(array($civilite, $nom_naissance, $nom_epouse, $prenom, $date_naissance, $adresse, $CP, $tel, $ville, $email, $code_prevenir['Code_contact'], $code_confiance['Code_contact']));
     
 
 
@@ -155,7 +155,7 @@ $patient_update->execute(array($civilite, $nom_naissance, $nom_epouse, $prenom, 
                 }
             ?> -->
 
-            <input name="submit" class="btn-envoi" type="submit">
+            <input name="submit" class="btn-envoi" value="Enregister l'admission" type="submit">
         </form>
     </section>
     

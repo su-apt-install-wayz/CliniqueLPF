@@ -25,22 +25,13 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-            // $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
-            // $secu->execute(array($_SESSION['patient'][0]));
-            // $secu = $secu->fetch();
-
-            // if(isset($secu['Num_secu'])) {
-            //     $_SESSION['couverture'] = array(
-            //         $secu['organisme'], //0
-            //         $secu['assure'], //1
-            //         $secu['Ald'], //2
-            //         $secu['Nom_mutuelle'], //3
-            //         $secu['num_adherent'], //4
-            //         $secu['chambre_particuliere']); //5                
-            // }
-            // else {
-            //     $_SESSION['couverture'] = array("", "", "", "", "", "");
-            // }
+            $_SESSION['couverture'] = array(
+                $orga_secu, //0
+                $assure, //1
+                $ALD, //2
+                $nom_mutuelle, //3
+                $num_adherent, //4
+                $chambre); //5
 
             header('Location: docs');
             exit;
@@ -135,7 +126,7 @@
                 </optgroup>
             </select>
 
-            <input class="btn-envoi" type="submit" name="submit">
+            <input class="btn-envoi" type="submit" value="Suivant" name="submit">
         </form>
     </section>
     

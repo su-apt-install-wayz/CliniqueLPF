@@ -115,7 +115,7 @@
             </select><br>
         
 
-            <input class="btn-envoi" type="submit" name="submit">
+            <input class="btn-envoi" type="submit" value="Suivant" name="submit">
         </form>
     </section>
     

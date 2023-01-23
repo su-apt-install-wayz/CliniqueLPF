@@ -130,7 +130,7 @@
             <label for="adresse">Adressse :</label>
             <input type="text" class="grand" value="<?= $_SESSION['confiance'][4]?>" name="adresse_confiance" id="adresse" required="required"><br>
 
-            <input class="btn-envoi" type="submit" name="submit">
+            <input class="btn-envoi" type="submit" value="Suivant" name="submit">
         </form>
     </section>
     
