@@ -9,21 +9,22 @@
 
     require_once('./src/info_user.php');
 
+    if ($_SESSION['patient'][1] = 'Homme') {
+        $homme = "selected";
+        $femme = "";
+    }
+    else if  ($_SESSION['patient'][1] = 'Femme'){
+        $homme = "";
+        $femme = "selected";
+    }
+    else {
+        $homme = "";
+        $femme = "";
+    }
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-
-            if ($nom_prevenir == $nom_confiance){
-                $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
-                $insert_prevenir->execute(array($nom_prevenir, $prenom_prevenir, $tel_prevenir, $adresse_prevenir));
-            }
-            else{
-                $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
-                $insert_prevenir->execute(array($nom_prevenir, $prenom_prevenir, $tel_prevenir, $adresse_prevenir));
-                
-                $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
-                $insert_confiance->execute(array($nom_confiance, $prenom_confiance, $tel_confiance, $adresse_confiance));
-            }
 
             $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom = ?");
             $code_prevenir->execute(array($nom_prevenir, $prenom_prevenir));
@@ -33,67 +34,44 @@
             $code_confiance->execute(array($nom_confiance, $prenom_confiance));
             $code_confiance = $code_confiance->fetch();
 
-            if(!empty($code_prevenir['code_contact']) && !empty($code_confiance['code_contact'])) {
-                $insert_patient = $DB->prepare("INSERT INTO patient VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $insert_patient->execute(array($num_secu, $civilite, $nom_naissance, $nom_epouse, $prenom, $date_naissance, $adresse, $CP, $tel, $ville, $email, 0, $code_prevenir['code_contact'], $code_confiance['code_contact']));
-            }
+            $_SESSION['patient'] = array(
+                $num_secu, //0
+                $civilite, //1
+                $nom_naissance, //2
+                $nom_epouse, //3
+                $prenom, //4
+                $date_naissance, //5
+                $adresse, //6
+                $CP, //7
+                $tel, //8
+                $ville, //9
+                $email, //10
+                $age, //11
+                $code_prevenir['code_contact'], //12
+                $code_confiance['code_contact'],
+                $patient_existant = true); //13
 
-            $patient = $DB->prepare("SELECT * FROM patient WHERE Num_secu = ?");
-            $patient->execute(array($num_secu));
-            $patient = $patient->fetch();
+            $_SESSION['prevenir'] = array(
+                $code_prevenir['code_contact'], //0
+                $nom_prevenir, //1
+                $prenom_prevenir, //2
+                $tel_prevenir, //3
+                $adresse_prevenir); //4
 
-            if(isset($patient['Num_secu'])) {
-                $_SESSION['patient'] = array(
-                    $patient['Num_secu'], //0
-                    $patient['Civilité'], //1
-                    $patient['Nom_Naissance'], //2
-                    $patient['Nom_Epouse'], //3
-                    $patient['Prenom'], //4
-                    $patient['Date_naissance'], //5
-                    $patient['Adresse'], //6
-                    $patient['Code_postal'], //7
-                    $patient['Téléphone'], //8
-                    $patient['Ville'], //9
-                    $patient['Email'], //10
-                    $patient['Mineur'], //11
-                    $patient['code_prevenir'], //12
-                    $patient['code_confiance'],); //13
-            }
-
-            $prevenir = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
-            $prevenir->execute(array($code_prevenir['code_contact']));
-            $prevenir = $prevenir->fetch();
-
-            if(isset($prevenir['code_contact'])) {
-                $_SESSION['prevenir'] = array(
-                    $prevenir['code_contact'], //0
-                    $prevenir['Nom'], //1
-                    $prevenir['Prenom'], //2
-                    $prevenir['Téléphone'], //3
-                    $prevenir['Adresse']); //4
-            }
-
-            $confiance = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
-            $confiance->execute(array($code_confiance['code_contact']));
-            $confiance = $confiance->fetch();
-
-            if(isset($confiance['code_contact'])) {
-                $_SESSION['confiance'] = array(
-                    $confiance['code_contact'], //0
-                    $confiance['Nom'], //1
-                    $confiance['Prenom'], //2
-                    $confiance['Téléphone'], //3
-                    $confiance['Adresse']); //4
-            }
-
-            header('Location: hospitalisation');
-            exit;
+            $_SESSION['confiance'] = array(
+                $code_confiance['code_contact'], //0
+                $nom_confiance, //1
+                $prenom_confiance, //2
+                $tel_confiance, //3
+                $adresse_confiance); //4
         }
     }
 
+    var_dump($_SESSION['patient']);
+
 
     $aujourdhui = date("Y-m-d");
-    // $diff = date_diff(date_create($date_naissance_patient), date_create($aujourdhui));
+    // $diff = date_diff(date_create($date_naissance), date_create($aujourdhui));
     // if ($diff->format('%y') >= 18){
     //     $age = 0;
     // }
@@ -119,7 +97,7 @@
 
     <?php
 
-        include_once ('src/sidebar.php');
+        // include_once ('src/sidebar.php');
 
     ?>
 
@@ -164,67 +142,68 @@
         <form action="" method="post">
             <label for="civilite">Civilité :</label>
             <select class="petit" name="civilite" id="civilite" required="required">
-                <option value="Homme">Homme</option>
-                <option value="Femme">Femme</option>
+                <option value="Vide" hidden>Choisir le sexe</option>
+                <option value="Homme" <?= $homme?> >Homme</option>
+                <option value="Femme" <?= $femme?> >Femme</option>
             </select><br>
 
             <label for="nom-naissance">Nom de naissance :</label>
-            <input type="text" class="grand" name="nom_naissance" id="nom-naissance" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['patient'][2]?>" name="nom_naissance" id="nom-naissance" required="required"><br>
 
             <label for="nom-epouse">Nom d'épouse :</label>
-            <input type="text" class="grand" name="nom_epouse" id="nom-epouse"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['patient'][3]?>" name="nom_epouse" id="nom-epouse"><br>
             
             <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" name="prenom" id="prenom" required="required"><br> 
+            <input type="text" class="grand" value="<?= $_SESSION['patient'][4]?>" name="prenom" id="prenom" required="required"><br> 
 
             <label for="num-secu">Numéro de sécurité sociale :</label>
-            <input type="text" class="moyen" value="<?= $_SESSION['num']?>" style="cursor: not-allowed;" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
+            <input type="text" class="moyen" value="<?= $_SESSION['patient'][0]?>" style="cursor: not-allowed;" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
 
             <label for="date-naissance">Date de naissance :</label>
-            <input type="date" class="petit" name="date_naissance" id="date-naissance" max="<?=$aujourdhui?>" required="required"><br>
+            <input type="date" class="petit" value="<?= $_SESSION['patient'][5]?>" name="date_naissance" id="date-naissance" max="<?=$aujourdhui?>" required="required"><br>
 
             <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" name="adresse" id="adresse" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['patient'][6]?>" name="adresse" id="adresse" required="required"><br>
             
             <label for="CP">Code postal :</label>
-            <input type="text" class="petit" name="CP" id="CP" maxlength="5" required="required"><br>
+            <input type="text" class="petit" value="<?= $_SESSION['patient'][7]?>" name="CP" id="CP" maxlength="5" required="required"><br>
 
             <label for="ville">Ville :</label>
-            <input type="text" class="grand" name="ville" id="ville" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['patient'][9]?>" name="ville" id="ville" required="required"><br>
 
             <label for="email">Email :</label>
-            <input type="text" class="moyen" name="email" id="email" required="required"><br>
+            <input type="text" class="moyen" value="<?= $_SESSION['patient'][10]?>" name="email" id="email" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" name="tel" id="tel" maxlength="10" required="required"><br><br><br>
+            <input type="tel" class="petit" value="<?= $_SESSION['patient'][8]?>" name="tel" id="tel" maxlength="10" required="required"><br><br><br>
 
             <h2>Coordonnées Personne à prévenir</h2><br>
 
             <label for="nom-prevenir">Nom :</label>
-            <input type="text" class="grand" name="nom_prevenir" id="nom-prevenir" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['prevenir'][1]?>" name="nom_prevenir" id="nom-prevenir" required="required"><br>
             
             <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" name="prenom_prevenir" id="prenom" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['prevenir'][2]?>" name="prenom_prevenir" id="prenom" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" name="tel_prevenir" id="tel" maxlength="10" required="required"><br>
+            <input type="tel" class="petit" value="<?= $_SESSION['prevenir'][3]?>" name="tel_prevenir" id="tel" maxlength="10" required="required"><br>
 
             <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" name="adresse_prevenir" id="adresse" required="required"><br><br><br>
+            <input type="text" class="grand" value="<?= $_SESSION['prevenir'][4]?>" name="adresse_prevenir" id="adresse" required="required"><br><br><br>
 
             <h2>Coordonnées Personne de confiance</h2><br>
 
             <label for="nom-confiance">Nom :</label>
-            <input type="text" class="grand" name="nom_confiance" id="nom-confiance" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['confiance'][1]?>" name="nom_confiance" id="nom-confiance" required="required"><br>
             
             <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" name="prenom_confiance" id="prenom" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['confiance'][2]?>" name="prenom_confiance" id="prenom" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" name="tel_confiance" id="tel" maxlength="10" required="required"><br>
+            <input type="tel" class="petit" value="<?= $_SESSION['confiance'][3]?>" name="tel_confiance" id="tel" maxlength="10" required="required"><br>
 
             <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" name="adresse_confiance" id="adresse" required="required"><br>
+            <input type="text" class="grand" value="<?= $_SESSION['confiance'][4]?>" name="adresse_confiance" id="adresse" required="required"><br>
 
             <input class="btn-envoi" type="submit" name="submit">
         </form>
