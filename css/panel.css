@@ -21,61 +21,102 @@
 .panel {
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     gap: 10px;
 }
 
-
-
-/* .left {
-    margin: 0 auto;
+.cards {
+    margin: 20px auto 0;
     display: flex;
     width: 100%;
-    padding: 1rem;
-    z-index: 5;
+    max-width: 1600px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
-.right {
+.cards a {
+    color: #1A1B2D;
+}
+
+.card {
+    width: 280px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    background: #fff;
+    z-index: 7;
+    background: url(../images/public/card.png);
+    padding: 1rem;
+    box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.4);
+    transition: all 300ms ease-in-out;
+    cursor: pointer;
+    font-family: 'Poppins';
+    font-style: normal;
     position: relative;
-    margin: auto;
-    display: flex;
+    color: #1A1B2D;
+}
+
+.card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 600px;
-    z-index: 4;
     height: 100%;
-    max-height: 600px;
-    border-radius: 50%;
-    padding: 1rem;
-    background-color: var(--c-blue);
+    border-radius: 15px;
+    z-index: 6;
+    background: rgba(12, 12, 12, 0.11);
+    backdrop-filter: blur(2px);
+    transition: all 300ms ease-in-out;
 }
 
-.right img {
-    margin: auto;
-    max-width: 600px;
+.card h2{
+    font-weight: 600;
+    font-size: 25px;
+    z-index: 7;
+}
+
+.card h5.prof {
+    font-weight: 600;
+    font-size: 13px;
+    color: #444444;
+    z-index: 7;
+    transition: all 300ms ease-in-out;
+}
+
+.card h5.count {
+    margin: 40px auto 0;
     width: 100%;
-    object-fit: cover;
+    font-weight: 600;
+    display: flex;
+    font-size: 40px;
+    z-index: 7;
+    align-items: center;
+    color: #444444;
+    transition: all 300ms ease-in-out;
 }
 
-@media (max-width:1470px) {
-    .right {
-        position: absolute;
-        top: 0;
-        left: 0;
-        background-color: transparent;
-    }
-    .right .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 6;
-        background: rgba(12, 12, 12, 0.11);
-        backdrop-filter: blur(5px);
-    }
-} */
+.card h5.count span {
+    font-size: 20px;
+}
 
+.card:hover {
+    box-shadow: none;
+    background: #3246D3;
+    background: url(../images/public/card_hover.png);
+    color: #fff;
+    transition: all 300ms ease-in-out;
+}
+.card:hover .overlay {
+    display: none;
+}
+
+.card:hover h5.prof, .card:hover h5.count {
+    color: #fff;
+    transition: all 300ms ease-in-out;
+}
 
 
 .level {
