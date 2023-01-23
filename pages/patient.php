@@ -22,17 +22,19 @@
         $femme = "";
     }
 
+    $aujourdhui = date("Y-m-d");
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
 
-            $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom = ?");
-            $code_prevenir->execute(array($nom_prevenir, $prenom_prevenir));
-            $code_prevenir = $code_prevenir->fetch();
-
-            $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom = ?");
-            $code_confiance->execute(array($nom_confiance, $prenom_confiance));
-            $code_confiance = $code_confiance->fetch();
+            $diff = date_diff(date_create($date_naissance), date_create($aujourdhui));
+            if ($diff->format('%y') >= 18){
+                $age = 0;
+            }
+            else{
+                $age = 1;
+            }
 
             $_SESSION['patient'] = array(
                 $num_secu, //0
@@ -47,37 +49,12 @@
                 $ville, //9
                 $email, //10
                 $age, //11
-                $code_prevenir['code_contact'], //12
-                $code_confiance['code_contact'],
                 $patient_existant = true); //13
 
-            $_SESSION['prevenir'] = array(
-                $code_prevenir['code_contact'], //0
-                $nom_prevenir, //1
-                $prenom_prevenir, //2
-                $tel_prevenir, //3
-                $adresse_prevenir); //4
-
-            $_SESSION['confiance'] = array(
-                $code_confiance['code_contact'], //0
-                $nom_confiance, //1
-                $prenom_confiance, //2
-                $tel_confiance, //3
-                $adresse_confiance); //4
+            header('Location: contact');
+            exit;
         }
     }
-
-    var_dump($_SESSION['patient']);
-
-
-    $aujourdhui = date("Y-m-d");
-    // $diff = date_diff(date_create($date_naissance), date_create($aujourdhui));
-    // if ($diff->format('%y') >= 18){
-    //     $age = 0;
-    // }
-    // else{
-    //     $age = 1;
-    // }
 ?>
 
 <!DOCTYPE html>
@@ -97,7 +74,7 @@
 
     <?php
 
-        // include_once ('src/sidebar.php');
+        include_once ('src/sidebar.php');
 
     ?>
 
@@ -150,7 +127,7 @@
             <label for="nom-naissance">Nom de naissance :</label>
             <input type="text" class="grand" value="<?= $_SESSION['patient'][2]?>" name="nom_naissance" id="nom-naissance" required="required"><br>
 
-            <label for="nom-epouse">Nom d'épouse :</label>
+            <label for="nom-epouse">Nom d'épouse (optionnel) :</label>
             <input type="text" class="grand" value="<?= $_SESSION['patient'][3]?>" name="nom_epouse" id="nom-epouse"><br>
             
             <label for="prenom">Prénom :</label>
@@ -176,34 +153,6 @@
 
             <label for="tel">Téléphone :</label>
             <input type="tel" class="petit" value="<?= $_SESSION['patient'][8]?>" name="tel" id="tel" maxlength="10" required="required"><br><br><br>
-
-            <h2>Coordonnées Personne à prévenir</h2><br>
-
-            <label for="nom-prevenir">Nom :</label>
-            <input type="text" class="grand" value="<?= $_SESSION['prevenir'][1]?>" name="nom_prevenir" id="nom-prevenir" required="required"><br>
-            
-            <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" value="<?= $_SESSION['prevenir'][2]?>" name="prenom_prevenir" id="prenom" required="required"><br>
-
-            <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" value="<?= $_SESSION['prevenir'][3]?>" name="tel_prevenir" id="tel" maxlength="10" required="required"><br>
-
-            <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" value="<?= $_SESSION['prevenir'][4]?>" name="adresse_prevenir" id="adresse" required="required"><br><br><br>
-
-            <h2>Coordonnées Personne de confiance</h2><br>
-
-            <label for="nom-confiance">Nom :</label>
-            <input type="text" class="grand" value="<?= $_SESSION['confiance'][1]?>" name="nom_confiance" id="nom-confiance" required="required"><br>
-            
-            <label for="prenom">Prénom :</label>
-            <input type="text" class="grand" value="<?= $_SESSION['confiance'][2]?>" name="prenom_confiance" id="prenom" required="required"><br>
-
-            <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" value="<?= $_SESSION['confiance'][3]?>" name="tel_confiance" id="tel" maxlength="10" required="required"><br>
-
-            <label for="adresse">Adressse :</label>
-            <input type="text" class="grand" value="<?= $_SESSION['confiance'][4]?>" name="adresse_confiance" id="adresse" required="required"><br>
 
             <input class="btn-envoi" type="submit" name="submit">
         </form>

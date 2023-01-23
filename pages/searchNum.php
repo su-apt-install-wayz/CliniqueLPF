@@ -43,13 +43,13 @@
                 $code_prevenir->execute(array($patient['code_prevenir']));
                 $code_prevenir = $code_prevenir->fetch();
 
-                if(isset($prevenir['code_contact'])) {
+                if(isset($code_prevenir['code_contact'])) {
                     $_SESSION['prevenir'] = array(
-                        $prevenir['code_contact'], //0
-                        $prevenir['Nom'], //1
-                        $prevenir['Prenom'], //2
-                        $prevenir['Téléphone'], //3
-                        $prevenir['Adresse']); //4
+                        $code_prevenir['code_contact'], //0
+                        $code_prevenir['Nom'], //1
+                        $code_prevenir['Prenom'], //2
+                        $code_prevenir['Téléphone'], //3
+                        $code_prevenir['Adresse']); //4
                 }
                 else {
                     $_SESSION['prevenir'] = array("", "", "", "", "");
@@ -59,13 +59,13 @@
                 $code_confiance->execute(array($patient['code_confiance']));
                 $code_confiance = $code_confiance->fetch();
 
-                if(isset($confiance['code_contact'])) {
+                if(isset($code_confiance['code_contact'])) {
                     $_SESSION['confiance'] = array(
-                        $confiance['code_contact'], //0
-                        $confiance['Nom'], //1
-                        $confiance['Prenom'], //2
-                        $confiance['Téléphone'], //3
-                        $confiance['Adresse']); //4
+                        $code_confiance['code_contact'], //0
+                        $code_confiance['Nom'], //1
+                        $code_confiance['Prenom'], //2
+                        $code_confiance['Téléphone'], //3
+                        $code_confiance['Adresse']); //4
                 }
                 else {
                     $_SESSION['confiance'] = array("", "", "", "", "");
@@ -76,6 +76,8 @@
             }
             else {
                 $_SESSION['patient'] = array($num_secu, "", "", "", "", "", "", "", "", "", "", "", "", "", $patient_existant = false);
+                $_SESSION['prevenir'] = array("", "", "", "", "");
+                $_SESSION['confiance'] = array("", "", "", "", "");
                 header('Location: patient');
                 exit; 
             }
