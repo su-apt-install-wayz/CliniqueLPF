@@ -92,7 +92,7 @@
     }
 
 
-    // $aujourdhui = date("Y-m-d");
+    $aujourdhui = date("Y-m-d");
     // $diff = date_diff(date_create($date_naissance_patient), date_create($aujourdhui));
     // if ($diff->format('%y') >= 18){
     //     $age = 0;
@@ -178,10 +178,10 @@
             <input type="text" class="grand" name="prenom" id="prenom" required="required"><br> 
 
             <label for="num-secu">Numéro de sécurité sociale :</label>
-            <input type="text" class="moyen" value="<?= $_SESSION['num']?>" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
+            <input type="text" class="moyen" value="<?= $_SESSION['num']?>" style="cursor: not-allowed;" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
 
             <label for="date-naissance">Date de naissance :</label>
-            <input type="date" class="petit" name="date_naissance" id="date-naissance" required="required"><br>
+            <input type="date" class="petit" name="date_naissance" id="date-naissance" max="<?=$aujourdhui?>" required="required"><br>
 
             <label for="adresse">Adressse :</label>
             <input type="text" class="grand" name="adresse" id="adresse" required="required"><br>

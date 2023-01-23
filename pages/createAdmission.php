@@ -2,6 +2,11 @@
 
     include_once('../include.php');
 
+    $_SESSION['patient'] = array();
+    $_SESSION['prevenir'] = array();
+    $_SESSION['confiance'] = array();
+    $_SESSION['couverture'] = array();
+
     if(!isset($_SESSION['personnel'][0])) {
         header('Location: ../index');
         exit;
