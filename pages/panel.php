@@ -32,8 +32,8 @@
     ?>
 
     <section class="global">
+        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][1])?> 🖐</h1>
         <div class="panel">
-            <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][1])?> 🖐</h1>
             <div class="cards">
                 <div class="card">
                     <div class="overlay"></div>
@@ -47,6 +47,9 @@
                     <h5 class="prof">Service</h5>
                     <h5 class="count"><p>24 <span>patients</span></p></h5>
                 </div>
+            </div>
+            <div class="right">
+                <img src="../images/public/illustration.png" alt="">
             </div>
         </div>
     </section>
