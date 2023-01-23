@@ -33,12 +33,7 @@
 
     <section class="global">
         <div class="panel">
-            <div class="left">
-                <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][1])?> 🖐</h1>
-            </div>
-            <div class="right">
-                <img src="../images/public/illustration.png" alt="">
-            </div>
+            <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][1])?> 🖐</h1>
         </div>
     </section>
     
