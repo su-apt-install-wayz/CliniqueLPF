@@ -36,8 +36,8 @@
                     $patient['Email'], //10
                     $patient['Mineur'], //11
                     $patient['code_prevenir'], //12
-                    $patient['code_confiance'],
-                    $patient_existant = true); //13
+                    $patient['code_confiance'], //13
+                    $patient_existant = true); //14
 
                 $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
                 $code_prevenir->execute(array($patient['code_prevenir']));
@@ -49,10 +49,11 @@
                         $code_prevenir['Nom'], //1
                         $code_prevenir['Prenom'], //2
                         $code_prevenir['Téléphone'], //3
-                        $code_prevenir['Adresse']); //4
+                        $code_prevenir['Adresse'], //4
+                        $contact_existant = true); //5
                 }
                 else {
-                    $_SESSION['prevenir'] = array("", "", "", "", "");
+                    $_SESSION['prevenir'] = array("", "", "", "", "", $contact_existant = false);
                 }
 
                 $code_confiance = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
@@ -65,10 +66,11 @@
                         $code_confiance['Nom'], //1
                         $code_confiance['Prenom'], //2
                         $code_confiance['Téléphone'], //3
-                        $code_confiance['Adresse']); //4
+                        $code_confiance['Adresse'], //4
+                        $contact_existant = true); //5
                 }
                 else {
-                    $_SESSION['confiance'] = array("", "", "", "", "");
+                    $_SESSION['confiance'] = array("", "", "", "", "", $contact_existant = false);
                 }
 
                 $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");
@@ -82,10 +84,11 @@
                         $secu['Ald'], //2
                         $secu['Nom_mutuelle'], //3
                         $secu['num_adherent'], //4
-                        $secu['chambre_particuliere']); //5                
+                        $secu['chambre_particuliere'], //5
+                        $secu_existant = true); //6          
                 }
                 else {
-                    $_SESSION['couverture'] = array("", "", "", "", "", "");
+                    $_SESSION['couverture'] = array("", "", "", "", "", "", $secu_existant = false);
                 }
 
                 header('Location: patient');
@@ -93,9 +96,9 @@
             }
             else {
                 $_SESSION['patient'] = array($num_secu, "", "", "", "", "", "", "", "", "", "", "", "", "", $patient_existant = false);
-                $_SESSION['prevenir'] = array("", "", "", "", "");
-                $_SESSION['confiance'] = array("", "", "", "", "");
-                $_SESSION['couverture'] = array("", "", "", "", "", "");
+                $_SESSION['prevenir'] = array("", "", "", "", "", $contact_existant = false);
+                $_SESSION['confiance'] = array("", "", "", "", "", $contact_existant = false);
+                $_SESSION['couverture'] = array("", "", "", "", "", "", $secu_existant = false);
                 header('Location: patient');
                 exit; 
             }

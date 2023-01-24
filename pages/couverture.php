@@ -9,19 +9,6 @@
 
     require_once('./src/info_user.php');
 
-    if ($_SESSION['couverture'][1] = 'oui' || $_SESSION['couverture'][2] = 'oui') {
-        $oui = "selected";
-        $non = "";
-    }
-    else if  ($_SESSION['couverture'][1] = 'non' || $_SESSION['couverture'][2] = 'non'){
-        $oui = "";
-        $non = "selected";
-    }
-    else {
-        $oui = "";
-        $non = "";
-    }
-
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
@@ -31,7 +18,8 @@
                 $ALD, //2
                 $nom_mutuelle, //3
                 $num_adherent, //4
-                $chambre); //5
+                $chambre, //5
+                $secu_existant = false); //6
 
             header('Location: docs');
             exit;
@@ -96,16 +84,75 @@
 
             <label for="assuré">Le patient est-il assuré ?</label>
             <select class="petit" name="assure" id="assure" required="required">
-                <option value="Vide" hidden>Choisir une réponse</option>
-                <option value="oui" <?= $oui?> >Oui</option>
-                <option value="non" <?= $non?> >Non</option>
+                <?php
+                    if(!empty($_SESSION['couverture'][1])) {
+                ?>
+                    <option value="<?= $_SESSION['couverture'][1]?>" ><?= $_SESSION['couverture'][1]?></option>
+                    <?php
+                        if ($_SESSION['couverture'][1]== 'Oui') {
+                    ?>
+                            <option value="Non" >Non</option>
+                    <?php
+                        }
+                        else if($_SESSION['couverture'][1]== 'Non') {
+                    ?>
+                           <option value="Oui" >Oui</option> 
+                    <?php
+                        }
+                        else {
+                    ?>
+                            <option value="Oui" >Oui</option>
+                            <option value="Non" >Non</option>
+                    <?php
+                        }
+                    ?>
+
+                <?php
+                    }
+                    else {
+                ?>
+                        <option value="Oui" >Oui</option>
+                        <option value="Non" >Non</option>
+                <?php
+                    }
+                ?>
+                
             </select><br>
 
             <label for="ALD">Le patient est-il en ALD ?</label>
             <select class="petit" name="ALD" id="ALD" required="required">
-                <option value="Vide" hidden>Choisir une réponse</option>
-                <option value="oui" <?= $oui?> >Oui</option>
-                <option value="non" <?= $non?> >Non</option>
+                <?php
+                    if(!empty($_SESSION['couverture'][2])) {
+                ?>
+                    <option value="<?= $_SESSION['couverture'][2]?>" ><?= $_SESSION['couverture'][2]?></option>
+                    <?php
+                        if ($_SESSION['couverture'][2]== 'Oui') {
+                    ?>
+                            <option value="Non" >Non</option>
+                    <?php
+                        }
+                        else if($_SESSION['couverture'][2]== 'Non') {
+                    ?>
+                           <option value="Oui" >Oui</option> 
+                    <?php
+                        }
+                        else {
+                    ?>
+                            <option value="Non" >Non</option>
+                            <option value="Oui" >Oui</option>
+                    <?php
+                        }
+                    ?>
+
+                <?php
+                    }
+                    else {
+                ?>
+                        <option value="Non" >Non</option>
+                        <option value="Oui" >Oui</option>
+                <?php
+                    }
+                ?>
             </select><br>
 
             <label for="nom-mutuelle">Nom de la mutuelle ou l'assurance:</label>

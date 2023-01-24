@@ -36,6 +36,14 @@
                 $age = 1;
             }
 
+            $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=? and Adresse=?");
+            $code_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4]));
+            $code_prevenir = $code_prevenir->fetch();
+
+            $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=? and Adresse=?");
+            $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
+            $code_confiance = $code_confiance->fetch();
+
             $_SESSION['patient'] = array(
                 $num_secu, //0
                 $civilite, //1
@@ -49,7 +57,9 @@
                 $ville, //9
                 $email, //10
                 $age, //11
-                $patient_existant = true); //13
+                $code_prevenir['code_contact'], //12
+                $code_confiance['code_contact'], //13
+                $patient_existant = false); //14
 
             header('Location: contact');
             exit;
