@@ -59,7 +59,7 @@
                 $age, //11
                 $code_prevenir['code_contact'], //12
                 $code_confiance['code_contact'], //13
-                $patient_existant = false); //14
+                false); //14
 
             header('Location: contact');
             exit;

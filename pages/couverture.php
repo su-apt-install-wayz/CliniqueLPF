@@ -19,7 +19,7 @@
                 $nom_mutuelle, //3
                 $num_adherent, //4
                 $chambre, //5
-                $secu_existant = false); //6
+                false); //6
 
             header('Location: docs');
             exit;

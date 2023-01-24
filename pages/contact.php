@@ -36,7 +36,7 @@
                 $prenom_prevenir, //2
                 $tel_prevenir, //3
                 $adresse_prevenir, //4
-                $contact_existant = false); //5
+                false); //5
 
             $_SESSION['confiance'] = array(
                 $code_contact['code_confiance'], //0
@@ -44,7 +44,7 @@
                 $prenom_confiance, //2
                 $tel_confiance, //3
                 $adresse_confiance, //4
-                $contact_existant = false); //5
+                false); //5
 
             header('Location: hospitalisation');
             exit;
