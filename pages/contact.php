@@ -26,7 +26,7 @@
         extract($_POST);
         if(isset($_POST['submit'])) {
 
-            $code_contact = $DB->prepare("SELECT code_prevenir, code_confiance, Nom Prenom, Téléphone, Adresse, code_contact FROM patient inner join on contact.code_contact=patient.code_prevenir contact WHERE Num_secu = ?");
+            $code_contact = $DB->prepare("SELECT code_prevenir, code_confiance FROM patient WHERE Num_secu = ?;");
             $code_contact->execute(array($_SESSION['patient'][0]));
             $code_contact = $code_contact->fetch();
 

@@ -31,6 +31,12 @@
 
     require_once('./src/info_user.php');
 
+    // var_dump($_SESSION['patient']);
+    // var_dump($_SESSION['prevenir']);
+    // var_dump($_SESSION['confiance']);
+    // var_dump($_SESSION['hospitalisation']);
+    // var_dump($_SESSION['couverture']);
+
     if(!empty($_POST)) {
         extract($_POST);
 
@@ -136,24 +142,27 @@
 
 
         <form action="" method="post" enctype="multipart/form-data">
-            <label for="carte-id">Carte d'identité (recto/verso) :</label>
-            <input class="grand" type="file" title="" name="carte_id" id="carte_id" required="required"><br>
+            <label class="file" for="carte_id"><span>Carte d'identité (recto/verso) :</span>
+                <input name="carte_id" type="file" id="carte_id" required="required">
+            </label>
 
-            <label for="carte-vitale">Carte vitale :</label>
-            <input class="grand" type="file" title="" name="carte_vitale" id="carte_vitale" required="required"><br>
+            <label class="file" for="carte_vitale"><span>Carte vitale :</span>
+                <input name="carte_vitale" type="file" id="carte_vitale" required="required">
+            </label>
 
-            <label for="carte-mutuelle">Carte de mutuelle :</label>
-            <input class="grand" type="file" title="" name="carte_mutuelle" id="carte_mutuelle" required="required"><br>
+            <label class="file" for="carte_mutuelle"><span>Carte de mutuelle :</span>
+                <input name="carte_mutuelle" type="file" id="carte_mutuelle" required="required">
+            </label>
                     
-            <!-- <?php     
-                include_once('./php/config.php');
-                if($_SESSION['mineur']==1) {
-            ?> -->
-                <label for="livret">Livret de famille (mineurs) :</label>
-                <input class="grand" type="file" title="" name="livret" id="livret" required="required"><br>
-            <!-- <?php
+            <?php
+                if($_SESSION['patient'][11]==1) {
+            ?>
+                <label class="file" for="livret"><span>Livret de famille :</span>
+                    <input name="livret" type="file" id="livret" required="required">
+                </label>
+            <?php
                 }
-            ?> -->
+            ?>
 
             <input name="submit" class="btn-envoi" value="Enregister l'admission" type="submit">
         </form>

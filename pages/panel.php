@@ -36,13 +36,11 @@
         <div class="panel">
             <div class="cards">
                 <div class="card">
-                    <div class="overlay"></div>
                     <h2>Neurologie</h2>
                     <h5 class="prof">Service</h5>
                     <h5 class="count"><p>24 <span>patients</span></p></h5>
                 </div>
                 <div class="card">
-                    <div class="overlay"></div>
                     <h2>Neurologie</h2>
                     <h5 class="prof">Service</h5>
                     <h5 class="count"><p>24 <span>patients</span></p></h5>
