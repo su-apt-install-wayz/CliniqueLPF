@@ -44,6 +44,8 @@
             $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
             $code_confiance = $code_confiance->fetch();
 
+            $bool = $_SESSION['patient'][14];
+
             $_SESSION['patient'] = array(
                 $num_secu, //0
                 $civilite, //1
@@ -59,7 +61,7 @@
                 $age, //11
                 $code_prevenir['code_contact'], //12
                 $code_confiance['code_contact'], //13
-                false); //14
+                $bool); //14
 
             header('Location: contact');
             exit;

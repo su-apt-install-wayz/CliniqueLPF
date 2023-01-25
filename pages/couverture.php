@@ -12,6 +12,9 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
+
+            $bool = $_SESSION['couverture'][6];
+
             $_SESSION['couverture'] = array(
                 $orga_secu, //0
                 $assure, //1
@@ -19,7 +22,7 @@
                 $nom_mutuelle, //3
                 $num_adherent, //4
                 $chambre, //5
-                false); //6
+                $bool); //6
 
             header('Location: docs');
             exit;
