@@ -14,6 +14,8 @@
 
     require_once('./src/info_user.php');
 
+    $erreur = "";
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
@@ -121,6 +123,32 @@
                     exit; 
                 }
             }
+            else {
+                $erreur = '<ul class="notifications">
+                                <li class="toast error">
+                                    <div class="column">
+                                        <span class="material-icons-round icon-notif">error</span>
+                                        <span class="message-notif">Format non valide.</span>
+                                    </div>
+                                    <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                                </li>
+                            </ul>
+                            <script>
+                                const toast = document.querySelector(".toast");
+
+                                function hideToast() {
+                                    setTimeout(function() {
+                                        toast.classList.add("hide")
+                                    }, 5000);
+                                }
+
+                                function remove() {
+                                    toast.classList.add("hide");
+                                }
+
+                                hideToast();
+                            </script>';
+            }
             
         }
     }
@@ -135,6 +163,7 @@
 
     <link rel="stylesheet" href="../css/panel.css">
     <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/notification.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
 
@@ -155,6 +184,7 @@
             <input style="margin:auto;" class="moyen" type="text" name="num_secu" id="num_secu" maxlength="15" required="required"><br>
 
             <input style="margin:auto;" class="btn-envoi moyen" type="submit" value="Rechercher pour créer" name="submit">
+            <div class="erreur"><?= $erreur?></div>
         </form>
     </section>
     

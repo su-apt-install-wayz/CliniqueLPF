@@ -20,11 +20,25 @@
 
         if(isset($_POST['submit'])) {
             if($_SESSION['prevenir'][5]==true && $_SESSION['confiance'][5]==true) {
-                $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
-                $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['prevenir'][0]));
+                if ($_SESSION['prevenir'][1] != $_SESSION['confiance'][1] && $_SESSION['prevenir'][2] != $_SESSION['confiance'][2]) {
+                    $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
+                    $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['prevenir'][0]));
 
-                $confiance_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
-                $confiance_update->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4], $_SESSION['confiance'][0]));
+                    $confiance_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
+                    $confiance_update->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4], $_SESSION['confiance'][0]));
+                }
+                else {
+                    $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
+                    $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['prevenir'][0]));
+                    $boolC = $_SESSION['confiance'][5];
+                    $_SESSION['confiance'] = array(
+                        $_SESSION['prevenir'][0], //0
+                        $_SESSION['confiance'][1], //1
+                        $_SESSION['confiance'][2], //2
+                        $_SESSION['confiance'][3], //3
+                        $_SESSION['confiance'][4], //4
+                        $boolC);
+                }
             }
             
             else {

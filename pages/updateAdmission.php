@@ -79,6 +79,32 @@
                                 </script>';
                     }
             }
+            else {
+                $erreur = '<ul class="notifications">
+                                <li class="toast error">
+                                    <div class="column">
+                                        <span class="material-icons-round icon-notif">error</span>
+                                        <span class="message-notif">Format non valide.</span>
+                                    </div>
+                                    <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                                </li>
+                            </ul>
+                            <script>
+                                const toast = document.querySelector(".toast");
+
+                                function hideToast() {
+                                    setTimeout(function() {
+                                        toast.classList.add("hide")
+                                    }, 5000);
+                                }
+
+                                function remove() {
+                                    toast.classList.add("hide");
+                                }
+
+                                hideToast();
+                            </script>';
+            }
         }
     }
 
