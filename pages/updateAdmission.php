@@ -6,6 +6,7 @@
     $_SESSION['prevenir'] = array();
     $_SESSION['confiance'] = array();
     $_SESSION['couverture'] = array();
+    $_SESSION['hospitalisation'] = array();
 
     if(!isset($_SESSION['personnel'][0])) {
         header('Location: ../index');
@@ -32,10 +33,6 @@
                 return true;
             }
 
-            $secu = $DB->prepare("SELECT * FROM patient WHERE Num_secu = ?");
-            $secu->execute(array($num_secu));
-            $secu = $secu->fetch();
-
             if (is_secsocnum($num_secu) ) {
 
                 $hospi = $DB->prepare("SELECT * FROM hospitalisation WHERE Num_secu = ?");
@@ -53,9 +50,9 @@
                 else {
                     echo "pas trouvé";
                 }
+                header('Location: hospitalisation_update');
+                exit; 
             }
-            header('Location: hospitalisation_update');
-            exit; 
         }
     }
 

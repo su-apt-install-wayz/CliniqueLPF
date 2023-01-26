@@ -9,9 +9,13 @@
 
     require_once('./src/info_user.php');
 
-    $medecins_liste = $DB->prepare("SELECT * FROM personnel where role='medecin'");
-    $medecins_liste->execute();
+    $medecins_liste = $DB->prepare("SELECT * FROM personnel where role='medecin' and Code_personnel!=?");
+    $medecins_liste->execute(array($_SESSION['hospitalisation'][3]));
     $medecins_liste = $medecins_liste->fetchAll();
+
+    $medecin= $DB->prepare("SELECT * FROM personnel where Code_personnel=?");
+    $medecin->execute(array($_SESSION['hospitalisation'][3]));
+    $medecin = $medecin->fetch();
 
     $aujourdhui = date("Y-m-d");
 
@@ -24,7 +28,7 @@
                 $heure_intervention, //2
                 $nom_medecin); //3
             
-            header('Location: couverture');
+            header('Location: updateAdmission');
             exit;
         }
     }
@@ -57,6 +61,20 @@
             <select class="moyen" name="pre_admission" id="pre_admission" required="required">
                 <option value="Ambulatoire">Ambulatoire</option>
                 <option value="Hospitalisation">Hospitalisation</option>
+                <?php
+                    if($_SESSION['couverture'][1]== 'Non') {
+                ?>
+                        <option value="Oui" >Oui</option> 
+                <?php
+                    }
+                    else {
+                ?>
+                        <option value="Oui" >Oui</option>
+                        <option value="Non" >Non</option>
+                <?php
+                    }
+                ?>
+
 
             </select><br>
 
@@ -64,18 +82,19 @@
             <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br> -->
 
             <label for="date-hospitalisation">Date d'hospitalisation</label>
-            <input class="petit" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
+            <input class="petit" value="<?= $_SESSION['hospitalisation'][0]?>" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
 
             <br>
 
             <label for="heure-intervention">Heure d'intervention</label>
-            <input class="petit" type="time" name="heure_intervention" id="heure_intervention" required="required">
+            <input class="petit" value="<?= $_SESSION['hospitalisation'][2]?>" type="time" name="heure_intervention" id="heure_intervention" required="required">
 
             <br>
 
                     
             <label for="nom-medecin">Nom du medecin</label>
             <select class="moyen" name='nom_medecin' size='1' id='nom_medecin' required='required'>
+                <option value="<?= $medecin['Nom']?>"><?= $medecin['Nom']?></option>
                 <?php 
                     foreach ($medecins_liste as $liste) {
                 ?>
