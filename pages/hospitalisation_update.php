@@ -22,11 +22,13 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-            $_SESSION['hospitalisation'] = array(
-                $pre_admission, //0
-                $date_hospitalisation, //1
-                $heure_intervention, //2
-                $nom_medecin); //3
+
+            $code_personnel = $DB->prepare("SELECT * FROM personnel WHERE Nom = ?");
+            $code_personnel->execute(array($nom_medecin));
+            $code_personnel = $code_personnel->fetch();
+
+            $update_admission = $DB->prepare("UPDATE hospitalisation SET Date_hospitalisation=?, Pre_admission=?, Heure_intervention=?, code_personnel=? WHERE Num_secu=?;");
+            $update_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $code_personnel['Code_personnel'], $_SESSION['hospitalisation'][4]));
             
             header('Location: updateAdmission');
             exit;
@@ -59,17 +61,16 @@
         <form action="" method="post">
             <label for="pre-admission">Pré-admission :</label>
             <select class="moyen" name="pre_admission" id="pre_admission" required="required">
-                <option value="Ambulatoire">Ambulatoire</option>
-                <option value="Hospitalisation">Hospitalisation</option>
+                <option value="<?= $_SESSION['hospitalisation'][1]?>"><?= $_SESSION['hospitalisation'][1]?></option>
                 <?php
-                    if($_SESSION['couverture'][1]== 'Non') {
+                    if($_SESSION['hospitalisation'][1]== 'Ambulatoire') {
                 ?>
-                        <option value="Oui" >Oui</option> 
+                        <option value="Hospitalisation" >Hospitalisation</option> 
                 <?php
                     }
                     else {
                 ?>
-                        <option value="Oui" >Oui</option>
+                        <option value="Ambulatoire" >Ambulatoire</option>
                         <option value="Non" >Non</option>
                 <?php
                     }
@@ -105,7 +106,7 @@
             </select><br>
         
 
-            <input class="btn-envoi" type="submit" value="Suivant" name="submit">
+            <input class="btn-envoi" type="submit" value="Modifier l'admission" name="submit">
         </form>
     </section>
     

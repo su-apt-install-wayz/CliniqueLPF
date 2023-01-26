@@ -15,6 +15,8 @@
 
     require_once('./src/info_user.php');
 
+    $erreur = "";
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
@@ -45,13 +47,14 @@
                         $hospi['Pre_admission'], //1
                         $hospi['Heure_intervention'], //2
                         $hospi['code_personnel'], //3
-                        true); //4  
+                        $num_secu); //4  
+
+                    header('Location: hospitalisation_update');
+                    exit; 
                 }
                 else {
-                    echo "pas trouvé";
+                    $erreur = "pas trouvé";
                 }
-                header('Location: hospitalisation_update');
-                exit; 
             }
         }
     }
@@ -75,7 +78,7 @@
 
     <?php
 
-        //include_once ('src/sidebar.php');
+        include_once ('src/sidebar.php');
 
     ?>
 
@@ -85,6 +88,7 @@
             <input style="margin:auto;" class="moyen" type="text" name="num_secu" id="num_secu" maxlength="15" required="required"><br>
 
             <input style="margin:auto;" class="btn-envoi moyen" type="submit" value="Rechercher" name="submit">
+            <div class="erreur"><?= $erreur?></div>
         </form>
     </section>
     
