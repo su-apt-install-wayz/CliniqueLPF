@@ -49,7 +49,7 @@
     text-decoration: underline;
 }
 
-.left form #identifiant, #password, #mail {
+.left form #identifiant, #password, #mail, #captcha {
     margin: 10px auto;
     display: flex;
     padding: 20px;
@@ -91,6 +91,22 @@
     right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+.left form .div-input .captcha {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    display: flex;
+    transform: translateY(-50%);
+    background-color: var(--c-blue);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 40px;
+    color: white;
+    text-decoration: line-through;
 }
 
 .left form input[type='submit'] {

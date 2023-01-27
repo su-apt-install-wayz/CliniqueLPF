@@ -14,6 +14,7 @@
             $this->erreur = (String) "";
             $this->valid = (boolean) true;
 
+            
             if($this->valid) {
                 $verif_password = $DB->prepare("SELECT Mot_de_passe FROM personnel WHERE Identifiant = ?");
                 $verif_password->execute(array($identifiant));
