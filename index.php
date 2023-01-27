@@ -46,7 +46,7 @@
             </form>
         </div>
         <div class="right">
-            <img src="./images/public/ICONE.svg" alt="">
+            <img src="./images/public/right.png" alt="">
         </div>
 
         <script src="./js/password.js"></script>
