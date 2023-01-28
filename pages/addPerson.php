@@ -9,10 +9,18 @@
 
     require_once('./src/info_user.php');
 
+    $services_liste = $DB->prepare("SELECT * FROM service");
+    $services_liste->execute();
+    $services_liste = $services_liste->fetchAll();
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['inscription'])) {
-            [$erreur] = $_INSCRIPTION->inscription_user($identifiant, $mail, $password);
+            $code_service = $DB->prepare("select id from service where libelle = ?");
+            $code_service->execute(array($service));
+            $code_service=$code_service->fetch();
+            $code = $code_service['id'];
+            [$erreur] = $_INSCRIPTION->inscription_user($nom, $prenom, $identifiant, $code, $password, $role);
         }
     }
 ?>
@@ -25,7 +33,7 @@
 
     <link rel="stylesheet" href="../css/panel.css">
     <link rel="stylesheet" href="../css/sidebar.css">
-    <link rel="stylesheet" href="../css/formulaire.css">
+    <link rel="stylesheet" href="../css/notification.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
 
@@ -42,23 +50,39 @@
     <section class="global">
         <h1>Ajouter un personnel</h1>
         <form method="POST">
-            <label for="identifiant">Votre identifiant</label>
-            <div class="div-input">
-                <input type="text" class="grand" name="identifiant" id="identifiant" maxlength="20">
-                <span class="chiffre chiffre_id">20</span>
-            </div>
+            <?php if(isset($erreur)) { echo $erreur; } ?>
+            <label for="identifiant">Nom</label>
+            <input type="text" class="grand" name="nom" id="nom" maxlength="20"><br>
 
-            <label for="mail">Votre adresse mail</label>
-            <div class="div-input">
-            <input type="mail" class="grand" name="mail" id="mail" maxlength="30">
-            <span class="chiffre chiffre_mail">30</span>
-            </div>
+            <label for="identifiant">Prénom</label>
+            <input type="text" class="grand" name="prenom" id="prenom" maxlength="20"><br>
 
-            <label for="password">Votre mot de passe</label>
+            <label for="identifiant">Identifiant</label>
+            <input type="text" class="grand" name="identifiant" id="identifiant" maxlength="20"><br>
+
+            <label for="nom-medecin">Service</label>
+            <select class="petit" name='service' size='1' id='service' required='required'>
+                <?php 
+                    foreach ($services_liste as $liste) {
+                ?>
+                <option value="<?= $liste['libelle']?>"><?= $liste['libelle']?></option>
+                <?php
+                    }
+                ?>
+            </select><br>
+
+            <label for="chambre">Rôle</label>
+            <select class="petit" name="role" id="role" required="required">
+                    <option value="secretaire">Secrétaire</option>
+                    <option value="medecin">Médecin</option>
+                    <option value="admin">Administrateur</option>
+            </select><br>
+
+            <label for="password">Mot de passe</label>
             <div class="div-input">
-            <input type="password" class="grand" name="password" id="password" maxlength="32">
-            <span class="material-icons-outlined" onclick='toggle()'>visibility</span>
-            </div>
+                <input type="password" class="grand" name="password" id="password" maxlength="32">
+                <span class="material-icons-outlined" onclick='toggle()'>visibility</span>
+            </div><br>
 
             <div class="password-force">
             <div class="password-pourcent"><span></span></div>
