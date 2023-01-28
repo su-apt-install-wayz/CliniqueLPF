@@ -75,7 +75,7 @@
                     <input type="password" name="password" id="password" maxlength="32">
                     <span class="material-icons-outlined" onclick='toggle()'>visibility</span>
                 </div>
-                <label for="captcha">Vérifie zebi</label>
+                <label for="captcha">Réponse au captcha</label>
                 <div class="div-input">
                     <input type="text" name="captcha" id="captcha" maxlength="4">
                     <div class="captcha"><?= $nombre?></div>
