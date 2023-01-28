@@ -70,7 +70,7 @@
         ?>
 
             <li class="list-item">
-                <a href="#">
+                <a href="addPerson">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_add</span>
                     </div>
@@ -81,7 +81,7 @@
             </li>
 
             <li class="list-item">
-                <a href="#">
+                <a href="addService">
                     <div class="icon">
                         <span class="material-symbols-rounded">post_add</span>
                     </div>
