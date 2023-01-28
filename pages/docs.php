@@ -38,11 +38,6 @@
                     $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
                     $insert_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4]));
                 }
-
-                if (!isset($code_confiance['code_contact'])) {
-                    $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
-                    $insert_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
-                }
             }
 
             else {
