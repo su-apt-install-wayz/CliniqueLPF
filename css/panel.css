@@ -221,6 +221,7 @@ label {
 .grand {
     width: 100%;
     max-width: 900px;
+    height: 45px;
     background-color: white;
     border: none;
     outline: none;
@@ -232,6 +233,7 @@ label {
 .moyen {
     width: 100%;
     max-width: 500px;
+    height: 45px;
     background-color: white;
     border: none;
     outline: none;
@@ -243,6 +245,7 @@ label {
 .petit {
     width: 100%;
     max-width: 200px;
+    height: 45px;
     border: none;
     outline: none;
     border-radius: 5px;

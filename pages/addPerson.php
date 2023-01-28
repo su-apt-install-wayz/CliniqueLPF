@@ -89,7 +89,7 @@
             <div>Force du mot de passe : <span class="password-label"></span></div>
             </div>
 
-            <input type="submit" class="grand" name="inscription" value="Créer cet enregistrement">
+            <input name="inscription" class="btn-envoi" value="Créer cet enregistrement" type="submit">
         </form>
 
         <script src="../js/password.js"></script>
