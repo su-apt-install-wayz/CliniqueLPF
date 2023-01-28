@@ -59,6 +59,30 @@
                     $insert_user = $DB->prepare("INSERT INTO personnel (Nom, Prenom, Identifiant, Mot_de_passe, Service, role) VALUES(?, ?, ?, ?, ?, ?)");
                     $insert_user->execute(array($nom, $prenom, $identifiant, $crypt_password, $service, $role));
                     
+                    $this->erreur = '<ul class="notifications">
+                                        <li class="toast success">
+                                            <div class="column">
+                                                <span class="material-icons-round icon-notif">check_circle</span>
+                                                <span class="message-notif">Personnel créé avec succès.</span>
+                                            </div>
+                                            <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                                        </li>
+                                    </ul>
+                                    <script>
+                                        const toast = document.querySelector(".toast");
+
+                                        function hideToast() {
+                                            setTimeout(function() {
+                                                toast.classList.add("hide")
+                                            }, 5000);
+                                        }
+
+                                        function remove() {
+                                            toast.classList.add("hide");
+                                        }
+
+                                        hideToast();
+                                    </script>';
                 }
             }
 

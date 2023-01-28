@@ -129,7 +129,7 @@
 }
 
 .toast.success::before {
-    background: var(--color-success-2);
+    background: var(--c-active);
 }
 
 .toast.error::before {
@@ -145,7 +145,7 @@
 }
 
 .toast.success span.icon-notif:not(span.close) {
-    color: var(--color-success-2);
+    color: var(--c-active);
 }
 
 .toast.error span.icon-notif:not(span.close) {

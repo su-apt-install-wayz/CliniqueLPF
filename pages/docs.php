@@ -76,6 +76,14 @@
             }
 
             else {
+                $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=?");
+                $code_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3]));
+                $code_prevenir = $code_prevenir->fetch();
+
+                $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=?");
+                $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3]));
+                $code_confiance = $code_confiance->fetch();
+                
                 $insert_patient = $DB->prepare("INSERT INTO patient VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $insert_patient->execute(array($_SESSION['patient'][0], $_SESSION['patient'][1], $_SESSION['patient'][2], $_SESSION['patient'][3], $_SESSION['patient'][4], $_SESSION['patient'][5], $_SESSION['patient'][6], $_SESSION['patient'][7], $_SESSION['patient'][8], $_SESSION['patient'][9], $_SESSION['patient'][10], $_SESSION['patient'][11], $code_prevenir['code_contact'], $code_confiance['code_contact']));
             }
