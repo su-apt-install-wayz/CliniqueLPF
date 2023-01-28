@@ -29,25 +29,20 @@
             $code_contact = $DB->prepare("SELECT code_prevenir, code_confiance FROM patient WHERE Num_secu = ?;");
             $code_contact->execute(array($_SESSION['patient'][0]));
             $code_contact = $code_contact->fetch();
-            
-            $boolP = $_SESSION['prevenir'][5];
-            $boolC = $_SESSION['confiance'][5];
 
             $_SESSION['prevenir'] = array(
                 $code_contact['code_prevenir'], //0
                 $nom_prevenir, //1
                 $prenom_prevenir, //2
                 $tel_prevenir, //3
-                $adresse_prevenir, //4
-                $boolP); //5
+                $adresse_prevenir); //4
 
             $_SESSION['confiance'] = array(
                 $code_contact['code_confiance'], //0
                 $nom_confiance, //1
                 $prenom_confiance, //2
                 $tel_confiance, //3
-                $adresse_confiance, //4
-                $boolC); //5
+                $adresse_confiance); //4
 
             header('Location: hospitalisation');
             exit;

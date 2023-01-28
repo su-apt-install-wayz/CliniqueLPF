@@ -28,10 +28,10 @@
 }
 
 .cards {
-    margin: 20px auto 0;
+    margin: 20px 0;
     display: flex;
     width: 100%;
-    max-width: 1600px;
+    max-width: 1200px;
     flex-wrap: wrap;
     gap: 20px;
 }

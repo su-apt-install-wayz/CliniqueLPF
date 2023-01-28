@@ -68,11 +68,10 @@
                             $code_prevenir['Nom'], //1
                             $code_prevenir['Prenom'], //2
                             $code_prevenir['Téléphone'], //3
-                            $code_prevenir['Adresse'], //4
-                            true); //5
+                            $code_prevenir['Adresse']); //4
                     }
                     else {
-                        $_SESSION['prevenir'] = array("", "", "", "", "", false);
+                        $_SESSION['prevenir'] = array("", "", "", "", "");
                     }
 
                     $code_confiance = $DB->prepare("SELECT * FROM contact WHERE code_contact = ?");
@@ -85,11 +84,10 @@
                             $code_confiance['Nom'], //1
                             $code_confiance['Prenom'], //2
                             $code_confiance['Téléphone'], //3
-                            $code_confiance['Adresse'], //4
-                            true); //5
+                            $code_confiance['Adresse']); //4
                     }
                     else {
-                        $_SESSION['confiance'] = array("", "", "", "", "", false);
+                        $_SESSION['confiance'] = array("", "", "", "", "");
                     }
 
                     $secu = $DB->prepare("SELECT * FROM secu WHERE Num_secu = ?");

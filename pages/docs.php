@@ -19,65 +19,68 @@
         extract($_POST);
 
         if(isset($_POST['submit'])) {
-            if($_SESSION['prevenir'][5]==true || $_SESSION['confiance'][5]==true) {
-                if ($_SESSION['prevenir'][1] != $_SESSION['confiance'][1] && $_SESSION['prevenir'][2] != $_SESSION['confiance'][2]) {
-                    $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=? and Num_secu=?;");
-                    $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['prevenir'][0], $_SESSION['patient'][0]));
 
-                    $confiance_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?  and Num_secu=?;");
-                    $confiance_update->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4], $_SESSION['confiance'][0], $_SESSION['patient'][0]));
+            $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=?");
+            $code_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3]));
+            $code_prevenir = $code_prevenir->fetch();
+
+            $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=?");
+            $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3]));
+            $code_confiance = $code_confiance->fetch();
+
+            if ($_SESSION['prevenir'][1] == $_SESSION['confiance'][1] && $_SESSION['prevenir'][2] == $_SESSION['confiance'][2] && $_SESSION['prevenir'][3] == $_SESSION['confiance'][3]) {
+                if(isset($code_prevenir['code_contact'])) {
+                    $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
+                    $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['prevenir'][0]));
                 }
+    
                 else {
-                    $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?  and Num_secu=?;");
-                    $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4],$_SESSION['prevenir'][0], $_SESSION['patient'][0]));
+                    $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                    $insert_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4]));
+                }
 
-                    $confiance_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?  and Num_secu=?;");
-                    $confiance_update->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4], $_SESSION['confiance'][0], $_SESSION['patient'][0]));
+                if (!isset($code_confiance['code_contact'])) {
+                    $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                    $insert_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
                 }
             }
-            
+
             else {
-                $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=? and Adresse=?");
-                $code_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4]));
-                $code_prevenir = $code_prevenir->fetch();
-
-                $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=? and Adresse=?");
-                $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
-                $code_confiance = $code_confiance->fetch();
-
-                if ($_SESSION['prevenir'][1] != $_SESSION['confiance'][1] && $_SESSION['prevenir'][2] != $_SESSION['confiance'][2]) {
-                    if(!isset($code_prevenir['Nom'])) {
-                        $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse, Num_secu) VALUES(?, ?, ?, ?, ?)");
-                        $insert_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['patient'][0]));
-                    }
-
-                    if(!isset($code_confiance['Nom'])) {
-                        $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse, Num_secu) VALUES(?, ?, ?, ?, ?)");
-                        $insert_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4], $_SESSION['patient'][0]));
-                    }
+                if(isset($code_prevenir['code_contact'])) {
+                    $prevenir_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
+                    $prevenir_update->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $code_prevenir['code_contact']));
                 }
+    
                 else {
-                    if(!isset($code_prevenir['Nom'])) {
-                        $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse, Num_secu) VALUES(?, ?, ?, ?, ?)");
-                        $insert_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4], $_SESSION['patient'][0]));
-                    }
+                    $insert_prevenir = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                    $insert_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4]));
+                }
+    
+                if(isset($code_confiance['code_contact'])) {
+                    $confiance_update = $DB->prepare("UPDATE contact SET Nom=?, Prenom=?, Téléphone=?, Adresse=? WHERE code_contact=?;");
+                    $confiance_update->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4], $code_confiance['code_contact']));
+                }
+    
+                else {
+                    $insert_confiance = $DB->prepare("INSERT INTO contact (Nom, Prenom, Téléphone, Adresse) VALUES(?, ?, ?, ?)");
+                    $insert_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
                 }
             }
 
             if($_SESSION['patient'][14]==true) {
+                $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=?");
+                $code_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3]));
+                $code_prevenir = $code_prevenir->fetch();
+
+                $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=?");
+                $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3]));
+                $code_confiance = $code_confiance->fetch();
+
                 $patient_update = $DB->prepare("UPDATE patient SET Civilité=?, Nom_Naissance=?, Nom_Epouse=?, Prenom=?, Date_naissance=?, Adresse=?, Code_postal=?, Téléphone=?, Ville=?, Email=?, Mineur=?, code_prevenir=?, code_confiance=? WHERE Num_secu=?;");
-                $patient_update->execute(array($_SESSION['patient'][1], $_SESSION['patient'][2], $_SESSION['patient'][3], $_SESSION['patient'][4], $_SESSION['patient'][5], $_SESSION['patient'][6], $_SESSION['patient'][7], $_SESSION['patient'][8], $_SESSION['patient'][9], $_SESSION['patient'][10], $_SESSION['patient'][11], $_SESSION['prevenir'][0], $_SESSION['confiance'][0], $_SESSION['patient'][0]));
+                $patient_update->execute(array($_SESSION['patient'][1], $_SESSION['patient'][2], $_SESSION['patient'][3], $_SESSION['patient'][4], $_SESSION['patient'][5], $_SESSION['patient'][6], $_SESSION['patient'][7], $_SESSION['patient'][8], $_SESSION['patient'][9], $_SESSION['patient'][10], $_SESSION['patient'][11], $code_prevenir['code_contact'], $code_confiance['code_contact'], $_SESSION['patient'][0]));
             }
 
             else {
-                $code_prevenir = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=? and Adresse=?");
-                $code_prevenir->execute(array($_SESSION['prevenir'][1], $_SESSION['prevenir'][2], $_SESSION['prevenir'][3], $_SESSION['prevenir'][4]));
-                $code_prevenir = $code_prevenir->fetch();
-
-                $code_confiance = $DB->prepare("SELECT * FROM contact WHERE Nom = ? and Prenom=? and Téléphone=? and Adresse=?");
-                $code_confiance->execute(array($_SESSION['confiance'][1], $_SESSION['confiance'][2], $_SESSION['confiance'][3], $_SESSION['confiance'][4]));
-                $code_confiance = $code_confiance->fetch();
-
                 $insert_patient = $DB->prepare("INSERT INTO patient VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
                 $insert_patient->execute(array($_SESSION['patient'][0], $_SESSION['patient'][1], $_SESSION['patient'][2], $_SESSION['patient'][3], $_SESSION['patient'][4], $_SESSION['patient'][5], $_SESSION['patient'][6], $_SESSION['patient'][7], $_SESSION['patient'][8], $_SESSION['patient'][9], $_SESSION['patient'][10], $_SESSION['patient'][11], $code_prevenir['code_contact'], $code_confiance['code_contact']));
             }
