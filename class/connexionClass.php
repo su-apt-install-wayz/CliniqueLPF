@@ -87,10 +87,11 @@
                         $_SESSION['personnel'] = array(
                             $connexion['Code_personnel'], //0
                             $connexion['Nom'], //1
-                            $connexion['Identifiant'], //2
-                            $connexion['Mot_de_passe'], //3
-                            $connexion['Service'], //4
-                            $connexion['role'],); //5
+                            $connexion['Prenom'], //2
+                            $connexion['Identifiant'], //3
+                            $connexion['Mot_de_passe'], //4
+                            $connexion['Service'], //5
+                            $connexion['role'],); //6
 
                         header('Location: pages/panel');
                         exit;

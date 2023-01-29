@@ -37,7 +37,7 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
 
-    <title>Bon retour <?= htmlspecialchars($_SESSION['personnel'][1])?> 🖐</title>
+    <title>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 🖐</title>
 </head>
 <body> 
 
@@ -73,9 +73,9 @@
 
             <label for="chambre">Rôle</label>
             <select class="petit" name="role" id="role" required="required">
-                    <option value="secretaire">Secrétaire</option>
-                    <option value="medecin">Médecin</option>
-                    <option value="admin">Administrateur</option>
+                    <option value="Secrétaire">Secrétaire</option>
+                    <option value="Médecin">Médecin</option>
+                    <option value="Administrateur">Administrateur</option>
             </select><br>
 
             <label for="password">Mot de passe</label>

@@ -4,16 +4,16 @@
 
     include_once('../include.php');
 
-    switch ($_SESSION['personnel'][5]) {
-        case "secretaire":
+    switch ($_SESSION['personnel'][6]) {
+        case "Secrétaire":
             $rang_utilisateur = array(1, 'Secrétaire');
             break;
         
-        case "medecin":
+        case "Médecin":
             $rang_utilisateur = array(2, 'Médecin');
             break;
 
-        case "admin":
+        case "Administrateur":
             $rang_utilisateur = array(3, 'Administrateur');
             break;
 
