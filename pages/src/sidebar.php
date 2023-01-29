@@ -83,10 +83,32 @@
             <li class="list-item">
                 <a href="addService">
                     <div class="icon">
-                        <span class="material-symbols-rounded">post_add</span>
+                        <span class="material-symbols-rounded">playlist_add</span>
                     </div>
                     <div class="lien">
                         <p>Ajouter un service</p>
+                    </div>
+                </a>
+            </li>
+
+            <li class="list-item">
+                <a href="delPerson">
+                    <div class="icon">
+                        <span class="material-symbols-rounded">person_remove</span>
+                    </div>
+                    <div class="lien">
+                        <p>Retirer un personnel</p>
+                    </div>
+                </a>
+            </li>
+
+            <li class="list-item">
+                <a href="delService">
+                    <div class="icon">
+                        <span class="material-symbols-rounded">playlist_remove</span>
+                    </div>
+                    <div class="lien">
+                        <p>Supprimer un service</p>
                     </div>
                 </a>
             </li>
