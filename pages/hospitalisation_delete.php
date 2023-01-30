@@ -11,32 +11,22 @@
 
     $erreur = "";
 
-    $medecins_liste = $DB->prepare("SELECT * FROM personnel where role='medecin' and Code_personnel!=?");
-    $medecins_liste->execute(array($_SESSION['hospitalisation'][3]));
-    $medecins_liste = $medecins_liste->fetchAll();
-
     $medecin= $DB->prepare("SELECT * FROM personnel where Code_personnel=?");
     $medecin->execute(array($_SESSION['hospitalisation'][3]));
     $medecin = $medecin->fetch();
-
-    $aujourdhui = date("Y-m-d");
 
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
 
-            $code_personnel = $DB->prepare("SELECT * FROM personnel WHERE Nom = ?");
-            $code_personnel->execute(array($nom_medecin));
-            $code_personnel = $code_personnel->fetch();
-
-            $update_admission = $DB->prepare("UPDATE hospitalisation SET Date_hospitalisation=?, Pre_admission=?, Heure_intervention=?, code_personnel=? WHERE Num_secu=?;");
-            $update_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $code_personnel['Code_personnel'], $_SESSION['hospitalisation'][4]));
+            $delete_admission = $DB->prepare("DELETE FROM hospitalisation WHERE id=? and Num_secu=?;");
+            $delete_admission->execute(array($_SESSION['hospitalisation'][5], $_SESSION['hospitalisation'][4]));
             
             $erreur ='<ul class="notifications">
             <li class="toast success">
                 <div class="column">
                     <span class="material-icons-round icon-notif">check_circle</span>
-                    <span class="message-notif">Admission modifiée avec succès.</span>
+                    <span class="message-notif">Admission supprimée avec succès.</span>
                 </div>
                 <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
             </li>
@@ -56,6 +46,7 @@
 
             hideToast();
         </script>';
+            
         }
     }
 ?>
@@ -83,56 +74,32 @@
     ?>
 
     <section class="global">
-        <?= $erreur?>
         <form action="" method="post">
+            <?= $erreur?>
             <label for="pre-admission">Pré-admission :</label>
-            <select class="moyen" name="pre_admission" id="pre_admission" required="required">
+            <select class="moyen" name="pre_admission" id="pre_admission" disabled required="required">
                 <option value="<?= $_SESSION['hospitalisation'][1]?>"><?= $_SESSION['hospitalisation'][1]?></option>
-                <?php
-                    if($_SESSION['hospitalisation'][1]== 'Ambulatoire') {
-                ?>
-                        <option value="Hospitalisation" >Hospitalisation</option> 
-                <?php
-                    }
-                    else {
-                ?>
-                        <option value="Ambulatoire" >Ambulatoire</option>
-                        <option value="Non" >Non</option>
-                <?php
-                    }
-                ?>
-
 
             </select><br>
 
-            <!-- <label for="num-secu">Numéro de sécurité sociale :</label><br>
-            <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br> -->
-
             <label for="date-hospitalisation">Date d'hospitalisation</label>
-            <input class="petit" value="<?= $_SESSION['hospitalisation'][0]?>" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
+            <input class="petit" value="<?= $_SESSION['hospitalisation'][0]?>" disabled type="date" name="date_hospitalisation" id="date_hospitalisation" required="required">
 
             <br>
 
             <label for="heure-intervention">Heure d'intervention</label>
-            <input class="petit" value="<?= $_SESSION['hospitalisation'][2]?>" type="time" name="heure_intervention" id="heure_intervention" required="required">
+            <input class="petit" value="<?= $_SESSION['hospitalisation'][2]?>" disabled type="time" name="heure_intervention" id="heure_intervention" required="required">
 
             <br>
 
                     
             <label for="nom-medecin">Nom du medecin</label>
-            <select class="moyen" name='nom_medecin' size='1' id='nom_medecin' required='required'>
+            <select class="moyen" name='nom_medecin' size='1' id='nom_medecin' disabled required='required'>
                 <option value="<?= $medecin['Nom']?>"><?= $medecin['Nom']?></option>
-                <?php 
-                    foreach ($medecins_liste as $liste) {
-                ?>
-                <option value="<?= $liste['Nom']?>"><?= $liste['Nom']?></option>
-                <?php
-                    }
-                ?>
             </select><br>
         
 
-            <input class="btn-envoi" type="submit" value="Modifier l'admission" name="submit">
+            <input class="btn-envoi" style="background-color: #ef233c;" type="submit" value="Supprimer l'admission" name="submit">
         </form>
     </section>
     
