@@ -161,7 +161,7 @@
             <input type="text" class="grand" value="<?= $_SESSION['patient'][9]?>" name="ville" id="ville" required="required"><br>
 
             <label for="email">Email :</label>
-            <input type="text" class="moyen" value="<?= $_SESSION['patient'][10]?>" name="email" id="email" required="required"><br>
+            <input type="email" class="moyen" value="<?= $_SESSION['patient'][10]?>" name="email" id="email" required="required"><br>
 
             <label for="tel">Téléphone :</label>
             <input type="tel" class="petit" value="<?= $_SESSION['patient'][8]?>" name="tel" id="tel" maxlength="10" required="required"><br><br><br>

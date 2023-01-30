@@ -11,3 +11,21 @@ identifiant.onkeyup = () => {
 email.onkeyup = () => {
     counter_mail.innerText = maxLength_email - email.value.length;  
 }
+
+$(document).ready(function() {
+    $('#fetchval').on('change', function() {
+        var value = $(this).val();
+        //alert(value);
+        $.ajax({
+            url: 'filtre.php',
+            type: 'POST',
+            data: 'request=' + value,
+            beforeSend:function() {
+                $(".list-produit").html("<span> En cours... </span>");
+            },
+            success: function(data) {
+                $(".list-produit").html(data);
+            }
+        });
+    });
+});
