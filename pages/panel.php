@@ -8,6 +8,13 @@
     }
 
     require_once('./src/info_user.php');
+
+    $stats = $DB->prepare("select distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
+    inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
+    inner join service on service.id=personnel.Service
+    group by service.id;");
+    $stats->execute();
+    $stats = $stats->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -32,40 +39,21 @@
     ?>
 
     <section class="global">
-        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][1])?> 🖐</h1>
+        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 🖐</h1>
         <div class="panel">
             <div class="cards">
+                <?php
+                    foreach ($stats as $liste) {
+                ?>
                 <div class="card">
-                    <h2>Neurologie</h2>
+                    <h2><?= $liste['libelle']?></h2>
                     <h5 class="prof">Service</h5>
-                    <h5 class="count"><p>24 <span>patients</span></p></h5>
+                    <h5 class="count"><p><?= $liste['nbr_patient']?> <span>hospitalisation(s)</span></p></h5>
                 </div>
-                <div class="card">
-                    <h2>Neurologie</h2>
-                    <h5 class="prof">Service</h5>
-                    <h5 class="count"><p>24 <span>patients</span></p></h5>
-                </div>
+                <?php
+                    }
+                ?>
             </div>
-
-            <div class="clock">
-                <div class="hour">
-                    <div class="hr" id="hr">
-                        
-                    </div>
-                </div>
-                <div class="min">
-                    <div class="mn" id="mn">
-
-                    </div>
-                </div>
-                <div class="sec">
-                    <div class="sc" id="sc">
-
-                    </div>
-                </div>
-            </div>
-
-            <script src="../js/main.js"></script>
         </div>
     </section>
     
