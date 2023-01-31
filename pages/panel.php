@@ -46,6 +46,26 @@
                     <h5 class="count"><p>24 <span>patients</span></p></h5>
                 </div>
             </div>
+
+            <div class="clock">
+                <div class="hour">
+                    <div class="hr" id="hr">
+                        
+                    </div>
+                </div>
+                <div class="min">
+                    <div class="mn" id="mn">
+
+                    </div>
+                </div>
+                <div class="sec">
+                    <div class="sc" id="sc">
+
+                    </div>
+                </div>
+            </div>
+
+            <script src="../js/main.js"></script>
         </div>
     </section>
     
