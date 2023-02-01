@@ -18,90 +18,6 @@
     fill: var(--c-blue);  
 }
 
-.panel {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    gap: 10px;
-}
-
-.cards {
-    margin: 20px 0;
-    display: flex;
-    width: 100%;
-    max-width: 1200px;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.cards a {
-    color: #1A1B2D;
-}
-
-.card {
-    width: 280px;
-    height: 180px;
-    display: flex;
-    flex-direction: column;
-    border-radius: 15px;
-    background: var(--c-blue);
-    z-index: 7;
-    background: url(../images/public/card.png);
-    padding: 1rem;
-    box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.4);
-    transition: all 300ms ease-in-out;
-    cursor: pointer;
-    font-family: 'Poppins';
-    font-style: normal;
-    position: relative;
-    color: #1A1B2D;
-}
-
-.card h2{
-    font-weight: 600;
-    font-size: 25px;
-    z-index: 7;
-}
-
-.card h5.prof {
-    font-weight: 600;
-    font-size: 13px;
-    color: #444444;
-    z-index: 7;
-    transition: all 300ms ease-in-out;
-}
-
-.card h5.count {
-    margin: 40px auto 0;
-    width: 100%;
-    font-weight: 600;
-    display: flex;
-    font-size: 40px;
-    z-index: 7;
-    align-items: center;
-    color: #444444;
-    transition: all 300ms ease-in-out;
-}
-
-.card h5.count span {
-    font-size: 15px;
-}
-
-.card:hover {
-    box-shadow: none;
-    background: #3246D3;
-    background: url(../images/public/card_hover.png);
-    color: #fff;
-    transition: all 300ms ease-in-out;
-}
-
-.card:hover h5.prof, .card:hover h5.count {
-    color: #fff;
-    transition: all 300ms ease-in-out;
-}
-
 .level {
     margin: 50px auto;
     display: flex;
@@ -197,6 +113,10 @@
     height: 2px;
     background-color: black;
 }
+
+
+
+
 
 form {
     margin: auto;
@@ -330,6 +250,9 @@ label.file:hover {
 }
 
 
+
+
+
 form .password-force .password-pourcent {
     margin: 5px auto;
     width: 100%;
@@ -359,4 +282,105 @@ form .div-input .material-icons-outlined, .chiffre {
     right: 10px;
     transform: translateY(-50%);
     cursor: pointer;
+}
+
+
+
+
+.panel {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 10px;
+}
+
+.cards {
+    margin: 20px 0;
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.cards a {
+    color: #1A1B2D;
+}
+
+.card {
+    width: 280px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    background: var(--c-blue);
+    z-index: 7;
+    background: url(../images/public/card.png);
+    padding: 1rem;
+    box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.4);
+    transition: all 300ms ease-in-out;
+    cursor: pointer;
+    font-family: 'Poppins';
+    font-style: normal;
+    position: relative;
+    color: #1A1B2D;
+}
+
+.card h2{
+    font-weight: 600;
+    font-size: 25px;
+    z-index: 7;
+}
+
+.card h5.prof {
+    font-weight: 600;
+    font-size: 13px;
+    color: #444444;
+    z-index: 7;
+    transition: all 300ms ease-in-out;
+}
+
+.card h5.count {
+    margin: 40px auto 0;
+    width: 100%;
+    font-weight: 600;
+    display: flex;
+    font-size: 40px;
+    z-index: 7;
+    align-items: center;
+    color: #444444;
+    transition: all 300ms ease-in-out;
+}
+
+.card h5.count span {
+    font-size: 15px;
+}
+
+.card:hover {
+    box-shadow: none;
+    background: #3246D3;
+    background: url(../images/public/card_hover.png);
+    color: #fff;
+    transition: all 300ms ease-in-out;
+}
+
+.card:hover h5.prof, .card:hover h5.count {
+    color: #fff;
+    transition: all 300ms ease-in-out;
+}
+
+
+.stats {
+    margin: 20px 0;
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    padding: 1rem;
+}
+
+#myChart {
+    width: 100% !important;
+    height: 400px !important;
 }

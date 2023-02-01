@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="../css/sidebar.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <title>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 🖐</title>
 </head>
@@ -53,6 +55,41 @@
                 <?php
                     }
                 ?>
+            </div>
+
+            <div class="stats">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <script>
+                    const ctx = document.getElementById('myChart');
+
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                        <?php
+                            foreach ($stats as $liste) {
+                        ?>
+                        labels: [<?= json_encode($liste['libelle'])?>],
+                        <?php
+                            }
+                        ?>
+                        datasets: [{
+                            label: '# of Votes',
+                            data: [<?= json_encode($liste['nbr_patient'])?>],
+                            borderWidth: 0
+                        }]
+                        },
+                        options: {
+                        scales: {
+                            y: {
+                            beginAtZero: true
+                            }
+                        }
+                        }
+                    });
+                </script>
             </div>
         </div>
     </section>
