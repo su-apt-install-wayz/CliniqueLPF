@@ -46,6 +46,8 @@
             <div class="cards">
                 <?php
                     foreach ($stats as $liste) {
+                        $libelle[] = $liste['libelle'];
+                        $nbre[] = $liste['nbr_patient'];
                 ?>
                 <div class="card">
                     <h2><?= $liste['libelle']?></h2>
@@ -64,21 +66,18 @@
 
                 <script>
                     const ctx = document.getElementById('myChart');
-
+                    <?php
+                        foreach ($stats as $liste) {
+                    ?>
                     new Chart(ctx, {
-                        type: 'bar',
+                        type: 'pie',
                         data: {
-                        <?php
-                            foreach ($stats as $liste) {
-                        ?>
                         labels: [<?= json_encode($liste['libelle'])?>],
-                        <?php
-                            }
-                        ?>
                         datasets: [{
-                            label: '# of Votes',
+                            label: 'Hospitalisations',
                             data: [<?= json_encode($liste['nbr_patient'])?>],
-                            borderWidth: 0
+                            borderWidth: 1,
+                            hoverOffset: 4
                         }]
                         },
                         options: {
@@ -89,6 +88,9 @@
                         }
                         }
                     });
+                    <?php
+                        }
+                    ?>
                 </script>
             </div>
         </div>
