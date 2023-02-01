@@ -87,7 +87,7 @@
                 ?>
             </select>
 
-            <input style="margin: 30px auto 0; max-width: 500px;" type="submit" name="submit" value="Supprimer le personnel">
+            <input style="margin: 30px auto 0; max-width: 500px; background: #ef233c;" type="submit" name="submit" value="Supprimer le personnel">
         </form>
     </section>
     

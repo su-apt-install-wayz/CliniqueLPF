@@ -69,6 +69,10 @@ ul.list .list-item:hover {
     background: var(--c-blue);
 }
 
+ul.list .btn-deco:hover {
+    background-color: #ef233c;
+}
+
 ul.list .list-item a {
     margin: auto;
     display: flex;
