@@ -384,12 +384,10 @@ form .div-input .material-icons-outlined, .chiffre {
 
 #myChart {
     width: 100% !important;
-    max-width: 300px;
-    height: 300px;
+    height: 350px !important;
 }
 
 #myChart2 {
-    width: 100%;
-    max-width: 800px;
-    height: 300px;
+    width: 100% !important;
+    height: 350px !important;
 }

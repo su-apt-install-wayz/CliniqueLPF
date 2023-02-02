@@ -72,7 +72,7 @@
 
 
                     new Chart(ctx, {
-                        type: 'pie',
+                        type: 'doughnut',
                         data: {
                         labels: <?= json_encode($libelle)?>,
                         datasets: [{
