@@ -63,23 +63,27 @@
                 <div>
                     <canvas id="myChart"></canvas>
                 </div>
+                <div>
+                    <canvas id="myChart2"></canvas>
+                </div>
 
                 <script>
                     const ctx = document.getElementById('myChart');
-                    <?php
-                        foreach ($stats as $liste) {
-                    ?>
+
+
                     new Chart(ctx, {
                         type: 'pie',
                         data: {
-                        labels: [<?= json_encode($liste['libelle'])?>],
+                        labels: <?= json_encode($libelle)?>,
                         datasets: [{
                             label: 'Hospitalisations',
-                            data: [<?= json_encode($liste['nbr_patient'])?>],
+                            data: <?= json_encode($nbre)?>,
                             borderWidth: 1,
                             hoverOffset: 4
                         }]
                         },
+
+                    
                         options: {
                         scales: {
                             y: {
@@ -88,9 +92,31 @@
                         }
                         }
                     });
-                    <?php
+
+                    const ctx2 = document.getElementById('myChart2');
+
+
+                    new Chart(ctx2, {
+                        type: 'bar',
+                        data: {
+                        labels: <?= json_encode($libelle)?>,
+                        datasets: [{
+                            label: 'Hospitalisations',
+                            data: <?= json_encode($nbre)?>,
+                            borderWidth: 1,
+                            hoverOffset: 4
+                        }]
+                        },
+
+                    
+                        options: {
+                        scales: {
+                            y: {
+                            beginAtZero: true
+                            }
                         }
-                    ?>
+                        }
+                    });
                 </script>
             </div>
         </div>
