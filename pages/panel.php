@@ -103,6 +103,7 @@
                         datasets: [{
                             label: 'Hospitalisations',
                             data: <?= json_encode($nbre)?>,
+                            backgroundColor: ['#3246D3'],
                             borderWidth: 1,
                             hoverOffset: 4
                         }]
