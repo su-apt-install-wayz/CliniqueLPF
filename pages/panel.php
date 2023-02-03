@@ -84,12 +84,15 @@
                         },
 
                     
-                        options: {
                         scales: {
-                            y: {
-                            beginAtZero: true
-                            }
+
+                        yAxes: [{
+                        beginAtZero: true,
+                        gridLines:{
+                        display:false
                         }
+                        }]
+
                         }
                     });
 
