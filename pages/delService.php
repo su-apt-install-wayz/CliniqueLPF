@@ -24,36 +24,37 @@
                 <input style="background: #ef233c;" type="submit" name="delService" value="Oui">
                 <input style="background: #3246D3;" type="submit" name="non" value="Non">
                 </form>';
+                $_SESSION['service'] = $service;
+        }
 
-            if (isset($_POST['delService'])) {
-                $delete_service = $DB->prepare("DELETE FROM service WHERE libelle=?;");
-                $delete_service->execute([$service]);
+        if (isset($_POST['delService'])) {
+            $delete_service = $DB->prepare("DELETE FROM service WHERE libelle=?;");
+            $delete_service->execute([$_SESSION['service']]);
 
-                $erreur = '<ul class="notifications">
-                    <li class="toast success">
-                        <div class="column">
-                            <span class="material-icons-round icon-notif">check_circle</span>
-                            <span class="message-notif">Service supprimé avec succès.</span>
-                        </div>
-                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
-                    </li>
-                </ul>
-                <script>
-                    const toast = document.querySelector(".toast");
+            $erreur = '<ul class="notifications">
+                <li class="toast success">
+                    <div class="column">
+                        <span class="material-icons-round icon-notif">check_circle</span>
+                        <span class="message-notif">Service supprimé avec succès.</span>
+                    </div>
+                    <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                </li>
+            </ul>
+            <script>
+                const toast = document.querySelector(".toast");
 
-                    function hideToast() {
-                        setTimeout(function() {
-                            toast.classList.add("hide")
-                        }, 5000);
-                    }
+                function hideToast() {
+                    setTimeout(function() {
+                        toast.classList.add("hide")
+                    }, 5000);
+                }
 
-                    function remove() {
-                        toast.classList.add("hide");
-                    }
+                function remove() {
+                    toast.classList.add("hide");
+                }
 
-                    hideToast();
-                </script>';
-            }
+                hideToast();
+            </script>';
         }
     }
 ?>
@@ -76,7 +77,7 @@
 
     <?php
 
-        // include_once ('src/sidebar.php');
+        include_once ('src/sidebar.php');
 
     ?>
 
