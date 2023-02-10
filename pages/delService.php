@@ -10,6 +10,7 @@
     require_once('./src/info_user.php');
 
     $erreur = "";
+    $pop = "";
 
     $services_liste = $DB->prepare("SELECT * FROM service");
     $services_liste->execute();
@@ -18,33 +19,41 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-            $delete_service = $DB->prepare("DELETE FROM service WHERE libelle=?;");
-            $delete_service->execute([$service]);
+            $pop = '<form action="" class="pop" method="post">
+                <h2>Etes-vous sûr de vouloir supprimer le service ?</h2>
+                <input style="background: #ef233c;" type="submit" name="delService" value="Oui">
+                <input style="background: #3246D3;" type="submit" name="non" value="Non">
+                </form>';
 
-            $erreur = '<ul class="notifications">
-            <li class="toast success">
-                <div class="column">
-                    <span class="material-icons-round icon-notif">check_circle</span>
-                    <span class="message-notif">Service supprimé avec succès.</span>
-                </div>
-                <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
-            </li>
-        </ul>
-        <script>
-            const toast = document.querySelector(".toast");
+            if (isset($_POST['delService'])) {
+                $delete_service = $DB->prepare("DELETE FROM service WHERE libelle=?;");
+                $delete_service->execute([$service]);
 
-            function hideToast() {
-                setTimeout(function() {
-                    toast.classList.add("hide")
-                }, 5000);
+                $erreur = '<ul class="notifications">
+                    <li class="toast success">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">check_circle</span>
+                            <span class="message-notif">Service supprimé avec succès.</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
+
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
+
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
+
+                    hideToast();
+                </script>';
             }
-
-            function remove() {
-                toast.classList.add("hide");
-            }
-
-            hideToast();
-        </script>';
         }
     }
 ?>
@@ -67,11 +76,12 @@
 
     <?php
 
-        include_once ('src/sidebar.php');
+        // include_once ('src/sidebar.php');
 
     ?>
 
     <section class="global">
+        <?= $pop?>
         <h1>Supprimer un service</h1>
         <form action="" method="post">
             <?= $erreur?>
