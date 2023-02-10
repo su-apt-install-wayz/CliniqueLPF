@@ -10,6 +10,7 @@
     require_once('./src/info_user.php');
 
     $erreur = "";
+    $pop = "";
 
     $personnel_liste = $DB->prepare("SELECT * FROM personnel where Nom !=? and Prenom!=?");
     $personnel_liste->execute([$_SESSION['personnel'][1], $_SESSION['personnel'][2]]);
@@ -17,34 +18,44 @@
 
     if(!empty($_POST)) {
         extract($_POST);
-        if(isset($_POST['submit'])) {          
+        if(isset($_POST['submit'])) {   
+            $pop = '<form action="" class="pop" method="post">
+                <h2>Etes-vous sûr de vouloir supprimer cette personne ?</h2>
+                <input style="background: #ef233c;" type="submit" name="delPerson" value="Oui">
+                <input style="background: #3246D3;" type="submit" name="non" value="Non">
+                </form>';
+                $_SESSION['service'] = $service;
+        }
+
+        if (isset($_POST['delPerson'])) {
+
             $delete_personnel = $DB->prepare("DELETE FROM personnel WHERE Identifiant=?;");
             $delete_personnel->execute([$personnel]);
 
             $erreur = '<ul class="notifications">
-            <li class="toast success">
-                <div class="column">
-                    <span class="material-icons-round icon-notif">check_circle</span>
-                    <span class="message-notif">Personnel supprimé avec succès.</span>
-                </div>
-                <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
-            </li>
-        </ul>
-        <script>
-            const toast = document.querySelector(".toast");
+                <li class="toast success">
+                    <div class="column">
+                        <span class="material-icons-round icon-notif">check_circle</span>
+                        <span class="message-notif">Personnel supprimé avec succès.</span>
+                    </div>
+                    <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                </li>
+            </ul>
+            <script>
+                const toast = document.querySelector(".toast");
 
-            function hideToast() {
-                setTimeout(function() {
-                    toast.classList.add("hide")
-                }, 5000);
-            }
+                function hideToast() {
+                    setTimeout(function() {
+                        toast.classList.add("hide")
+                    }, 5000);
+                }
 
-            function remove() {
-                toast.classList.add("hide");
-            }
+                function remove() {
+                    toast.classList.add("hide");
+                }
 
-            hideToast();
-        </script>';
+                hideToast();
+            </script>';
         }
     }
 ?>
