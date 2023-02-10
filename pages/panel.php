@@ -9,9 +9,26 @@
 
     require_once('./src/info_user.php');
 
+    $semChoix=date('W');
+    $anneeChoix=date('Y');
+
+    $timeStampPremierJanvier = strtotime($anneeChoix . '-01-01');
+    $jourPremierJanvier = date('w', $timeStampPremierJanvier);
+    
+    //-- recherche du N° de semaine du 1er janvier -------------------
+    $numSemainePremierJanvier = date('W', $timeStampPremierJanvier);
+    
+    //-- nombre à ajouter en fonction du numéro précédent ------------
+    $decallage = ($numSemainePremierJanvier == 1) ? $semChoix - 1 : $semChoix;
+    //-- timestamp du jour dans la semaine recherchée ----------------
+    $timeStampDate = strtotime('+' . $decallage . ' weeks', $timeStampPremierJanvier);
+    //-- recherche du lundi de la semaine en fonction de la ligne précédente ---------
+    $jourDebutSemaine = ($jourPremierJanvier == 1) ? date('Y-m-d', $timeStampDate) : date('Y-m-d', strtotime('last monday', $timeStampDate));
+    $jourFinSemaine = ($jourPremierJanvier == 1) ? date('Y-m-d', $timeStampDate) : date('Y-m-d',strtotime('sunday', $timeStampDate));
+
     $stats = $DB->prepare("select distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
     inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
-    inner join service on service.id=personnel.Service
+    inner join service on service.id=personnel.Service where hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourFinSemaine'
     group by service.id;");
     $stats->execute();
     $stats = $stats->fetchAll();
@@ -43,6 +60,7 @@
     <section class="global">
         <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 🖐</h1>
         <div class="panel">
+            <p>Pour cette semaine :</p>
             <div class="cards">
                 <?php
                     foreach ($stats as $liste) {
