@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: clinique
 -- ------------------------------------------------------
--- Server version	8.0.31
+-- Server version	5.7.36
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,11 +25,11 @@ DROP TABLE IF EXISTS `contact`;
 CREATE TABLE `contact` (
   `Nom` varchar(50) DEFAULT NULL,
   `Prenom` varchar(50) DEFAULT NULL,
-  `Téléphone` bigint DEFAULT NULL,
+  `Téléphone` bigint(20) DEFAULT NULL,
   `Adresse` varchar(50) DEFAULT NULL,
-  `code_contact` bigint NOT NULL AUTO_INCREMENT,
+  `code_contact` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`code_contact`)
-) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES ('bourst','arthur',2222222222,'neuville',72),('moulin','jf',7878978978,'neuville',73),('boufflers','alexandre',9999999999,'neuville',75),('telle','maxens',2222222222,'neuville',77),('deloge','hugo',6666666666,'neuville',78),('catteuw','amaury',8888888888,'neuville',79),('mora','florian',3333333333,'neuville',81),('wustenberghs','theo',640544398,'wasnes',82),('moi','pas toi',888888888,'8 rue de la bastille',83);
+INSERT INTO `contact` VALUES ('deloge','hugo',6666666666,'neuville',1),('moulin','jf',707070707,'neuville',2),('ouillade','bernard',9999999999,'neuville',3);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -51,15 +51,17 @@ DROP TABLE IF EXISTS `hospitalisation`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `hospitalisation` (
   `Date_hospitalisation` date NOT NULL,
-  `Pre_admission` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `Heure_intervention` varchar(18) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `code_personnel` int DEFAULT NULL,
-  `Num_secu` bigint DEFAULT NULL,
+  `Pre_admission` varchar(50) DEFAULT NULL,
+  `Heure_intervention` varchar(18) DEFAULT NULL,
+  `code_personnel` int(11) DEFAULT NULL,
+  `Num_secu` bigint(20) DEFAULT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`),
   KEY `Hospitalisation_FK` (`Num_secu`),
   KEY `Hospitalisation_FK_1` (`code_personnel`),
   CONSTRAINT `Hospitalisation_FK` FOREIGN KEY (`Num_secu`) REFERENCES `patient` (`Num_secu`),
   CONSTRAINT `hospitalisation_FK_1` FOREIGN KEY (`code_personnel`) REFERENCES `personnel` (`Code_personnel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +70,7 @@ CREATE TABLE `hospitalisation` (
 
 LOCK TABLES `hospitalisation` WRITE;
 /*!40000 ALTER TABLE `hospitalisation` DISABLE KEYS */;
-INSERT INTO `hospitalisation` VALUES ('2031-06-27','Hospitalisation','01:03',5,283127599910792);
+INSERT INTO `hospitalisation` VALUES ('2023-02-26','Ambulatoire','11:23',5,185087666666666,84),('2023-02-26','Ambulatoire','11:23',5,185087666666666,85),('2023-02-26','Ambulatoire','11:23',5,185087666666666,86),('2023-02-26','Ambulatoire','11:23',5,185087666666666,87),('2023-02-26','Ambulatoire','11:23',5,185087666666666,88),('2023-02-26','Ambulatoire','11:23',5,185087666666666,89),('2023-02-26','Ambulatoire','11:23',5,185087666666666,90),('2023-02-26','Ambulatoire','11:23',5,185087666666666,91),('2023-02-26','Ambulatoire','11:23',5,185087666666666,92),('2023-02-26','Ambulatoire','11:23',5,185087666666666,93),('2023-02-26','Ambulatoire','11:23',5,185087666666666,94),('2023-03-08','Ambulatoire','11:23',2,185087666666666,95),('2023-03-08','Ambulatoire','11:23',2,185087666666666,96),('2023-03-08','Ambulatoire','11:23',2,185087666666666,97),('2023-03-08','Ambulatoire','11:23',2,185087666666666,98),('2023-03-08','Ambulatoire','11:23',2,185087666666666,99),('2023-03-08','Ambulatoire','11:23',2,185087666666666,100),('2023-03-08','Ambulatoire','11:23',2,185087666666666,101),('2023-03-08','Ambulatoire','11:23',2,185087666666666,102),('2023-03-08','Ambulatoire','11:23',2,185087666666666,103),('2023-03-08','Ambulatoire','11:23',2,185087666666666,104),('2023-02-25','Ambulatoire','11:26',6,185087666666666,105),('2023-02-25','Ambulatoire','11:26',6,185087666666666,106),('2023-02-25','Ambulatoire','11:26',6,185087666666666,107),('2023-02-25','Ambulatoire','11:26',6,185087666666666,108),('2023-02-25','Ambulatoire','11:26',6,185087666666666,109),('2023-02-25','Ambulatoire','11:26',6,185087666666666,110),('2023-02-25','Ambulatoire','11:26',6,185087666666666,111),('2023-02-25','Ambulatoire','11:26',6,185087666666666,112),('2023-02-25','Ambulatoire','11:26',6,185087666666666,113);
 /*!40000 ALTER TABLE `hospitalisation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,26 +82,26 @@ DROP TABLE IF EXISTS `patient`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `patient` (
-  `Num_secu` bigint NOT NULL,
+  `Num_secu` bigint(20) NOT NULL,
   `Civilité` varchar(50) DEFAULT NULL,
   `Nom_Naissance` varchar(50) DEFAULT NULL,
   `Nom_Epouse` varchar(50) DEFAULT NULL,
   `Prenom` varchar(50) DEFAULT NULL,
   `Date_naissance` varchar(19) DEFAULT NULL,
   `Adresse` varchar(50) DEFAULT NULL,
-  `Code_postal` int DEFAULT NULL,
-  `Téléphone` bigint DEFAULT NULL,
+  `Code_postal` int(11) DEFAULT NULL,
+  `Téléphone` bigint(20) DEFAULT NULL,
   `Ville` varchar(50) DEFAULT NULL,
   `Email` varchar(50) DEFAULT NULL,
   `Mineur` tinyint(1) DEFAULT NULL,
-  `code_prevenir` bigint DEFAULT NULL,
-  `code_confiance` bigint DEFAULT NULL,
+  `code_prevenir` bigint(20) DEFAULT NULL,
+  `code_confiance` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`Num_secu`),
   KEY `Patient_FK` (`code_prevenir`),
   KEY `Patient_FK_1` (`code_confiance`),
   CONSTRAINT `Patient_FK` FOREIGN KEY (`code_prevenir`) REFERENCES `contact` (`code_contact`),
   CONSTRAINT `Patient_FK_1` FOREIGN KEY (`code_confiance`) REFERENCES `contact` (`code_contact`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -108,7 +110,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (283127599910792,'Homme','bosc--oliveau','','lauriane','2008-01-16','9 rue de la bastille',34882,842540199,'paris','laulaudu34@gpas2mail.gouv',1,82,83);
+INSERT INTO `patient` VALUES (185087666666666,'Homme','bourst','','arthur','2003-11-17','42 rue des colombes',59554,782900156,'neuville','arthur.bourst@proton.me',0,3,2);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -120,17 +122,17 @@ DROP TABLE IF EXISTS `personnel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `personnel` (
-  `Code_personnel` int NOT NULL AUTO_INCREMENT,
+  `Code_personnel` int(11) NOT NULL AUTO_INCREMENT,
   `Nom` varchar(50) DEFAULT NULL,
   `Prenom` varchar(50) DEFAULT NULL,
   `Identifiant` varchar(100) DEFAULT NULL,
   `Mot_de_passe` varchar(100) DEFAULT NULL,
-  `Service` int DEFAULT NULL,
+  `Service` int(11) DEFAULT NULL,
   `role` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Code_personnel`),
   KEY `personnel_FK` (`Service`),
   CONSTRAINT `personnel_FK` FOREIGN KEY (`Service`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,7 +141,7 @@ CREATE TABLE `personnel` (
 
 LOCK TABLES `personnel` WRITE;
 /*!40000 ALTER TABLE `personnel` DISABLE KEYS */;
-INSERT INTO `personnel` VALUES (1,'ledieu','alexandre','alexandre','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'secretaire'),(2,'françois','robyn','robyn','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',6,'medecin'),(3,'wustenberghs','theo','theo','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',7,'admin'),(4,'bourst','arthur','bourst','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'medecin'),(5,'moulin','jf','jf','$argon2id$v=19$m=65536,t=4,p=1$VzBVNlVKUHlwTjNWVzQyMQ$hnDnb0Ve3a1RAGBpTpVIRxxqM7rPG1zCwmLoU0bHgi0',6,'medecin'),(6,'telle','maxens','maxens','$argon2id$v=19$m=65536,t=4,p=1$MmpBdVpHVzFxcWphTGc0RA$F2vMLE8zKl1Qj561QfVCIVhynIVxEDGcMgt7rtFbILQ',7,'medecin'),(15,'bosc--oliveau','lauriane','lauriane','$argon2id$v=19$m=65536,t=4,p=1$TDdHTnd2L1RzbUViaElBbw$pBRaub12pmqpU2wq7ytuo8okEBJ/FMmR+ZR1CnUAauA',5,'medecin');
+INSERT INTO `personnel` VALUES (1,'ledieu','alexandre','alexandre','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'Secrétaire'),(2,'françois','robyn','robyn','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',6,'Médecin'),(3,'wustenberghs','theo','theo','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',7,'Administrateur'),(4,'bourst','arthur','bourst','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'Médecin'),(5,'moulin','jf','jf','$argon2id$v=19$m=65536,t=4,p=1$VzBVNlVKUHlwTjNWVzQyMQ$hnDnb0Ve3a1RAGBpTpVIRxxqM7rPG1zCwmLoU0bHgi0',6,'Médecin'),(6,'telle','maxens','maxens','$argon2id$v=19$m=65536,t=4,p=1$MmpBdVpHVzFxcWphTGc0RA$F2vMLE8zKl1Qj561QfVCIVhynIVxEDGcMgt7rtFbILQ',7,'Médecin');
 /*!40000 ALTER TABLE `personnel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,11 +157,11 @@ CREATE TABLE `piece_jointe` (
   `Carte_vitale` varchar(50) DEFAULT NULL,
   `Carte_mutuelle` varchar(50) DEFAULT NULL,
   `Livret_de_famille` varchar(50) DEFAULT NULL,
-  `Num_secu` bigint NOT NULL,
+  `Num_secu` bigint(20) NOT NULL,
   PRIMARY KEY (`Num_secu`),
   KEY `Piece_jointe_FK` (`Num_secu`),
   CONSTRAINT `Piece_jointe_FK` FOREIGN KEY (`Num_secu`) REFERENCES `patient` (`Num_secu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +182,7 @@ DROP TABLE IF EXISTS `preadmission`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `preadmission` (
   `choix` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,16 +203,16 @@ DROP TABLE IF EXISTS `secu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `secu` (
-  `Num_secu` bigint NOT NULL,
+  `Num_secu` bigint(20) NOT NULL,
   `organisme` varchar(50) DEFAULT NULL,
   `assure` varchar(3) DEFAULT NULL,
   `Ald` varchar(3) DEFAULT NULL,
   `Nom_mutuelle` varchar(50) DEFAULT NULL,
-  `num_adherent` int NOT NULL,
+  `num_adherent` int(11) NOT NULL,
   `chambre_particuliere` varchar(3) DEFAULT NULL,
   KEY `Renseignements_FK` (`Num_secu`),
   CONSTRAINT `Renseignements_FK` FOREIGN KEY (`Num_secu`) REFERENCES `patient` (`Num_secu`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +221,7 @@ CREATE TABLE `secu` (
 
 LOCK TABLES `secu` WRITE;
 /*!40000 ALTER TABLE `secu` DISABLE KEYS */;
-INSERT INTO `secu` VALUES (283127599910792,'mma','Non','Non','0 traqua',1234,'1');
+INSERT INTO `secu` VALUES (185087666666666,'stelantis','Oui','Non','viamedis',333,'1');
 /*!40000 ALTER TABLE `secu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,10 +233,10 @@ DROP TABLE IF EXISTS `service`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `service` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -243,7 +245,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (5,'Chirurgie'),(6,'Neurologie'),(7,'Radiologie'),(13,'Gogologie');
+INSERT INTO `service` VALUES (5,'Chirurgie'),(6,'Neurologie'),(7,'Radiologie');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,4 +262,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-01-28 20:39:57
+-- Dump completed on 2023-02-10  8:15:22
