@@ -24,13 +24,13 @@
                 <input style="background: #ef233c;" type="submit" name="delPerson" value="Oui">
                 <input style="background: #3246D3;" type="submit" name="non" value="Non">
                 </form>';
-                $_SESSION['service'] = $service;
+                $_SESSION['personne'] = $personnel;
         }
 
         if (isset($_POST['delPerson'])) {
 
             $delete_personnel = $DB->prepare("DELETE FROM personnel WHERE Identifiant=?;");
-            $delete_personnel->execute([$personnel]);
+            $delete_personnel->execute([$_SESSION['personne']]);
 
             $erreur = '<ul class="notifications">
                 <li class="toast success">
@@ -87,6 +87,7 @@
     <section class="global">
         <h1>Retirer un personnel</h1>
         <?= $erreur?>
+        <?= $pop?>
         <form action="" method="post">
             <select class="moyen" style="margin: 30px auto 0; max-width: 500px;" size='1' name="personnel" required='required'>
                 <?php 
