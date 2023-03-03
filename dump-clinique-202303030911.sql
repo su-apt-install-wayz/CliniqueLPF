@@ -61,7 +61,7 @@ CREATE TABLE `hospitalisation` (
   KEY `Hospitalisation_FK_1` (`code_personnel`),
   CONSTRAINT `Hospitalisation_FK` FOREIGN KEY (`Num_secu`) REFERENCES `patient` (`Num_secu`),
   CONSTRAINT `hospitalisation_FK_1` FOREIGN KEY (`code_personnel`) REFERENCES `personnel` (`Code_personnel`)
-) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=160 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,6 @@ CREATE TABLE `hospitalisation` (
 
 LOCK TABLES `hospitalisation` WRITE;
 /*!40000 ALTER TABLE `hospitalisation` DISABLE KEYS */;
-INSERT INTO `hospitalisation` VALUES ('2023-02-26','Ambulatoire','11:23',5,185087666666666,84),('2023-02-26','Ambulatoire','11:23',5,185087666666666,85),('2023-02-26','Ambulatoire','11:23',5,185087666666666,86),('2023-02-26','Ambulatoire','11:23',5,185087666666666,87),('2023-02-26','Ambulatoire','11:23',5,185087666666666,88),('2023-02-26','Ambulatoire','11:23',5,185087666666666,89),('2023-02-26','Ambulatoire','11:23',5,185087666666666,90),('2023-02-26','Ambulatoire','11:23',5,185087666666666,91),('2023-02-26','Ambulatoire','11:23',5,185087666666666,92),('2023-02-26','Ambulatoire','11:23',5,185087666666666,93),('2023-02-26','Ambulatoire','11:23',5,185087666666666,94),('2023-03-08','Ambulatoire','11:23',2,185087666666666,95),('2023-03-08','Ambulatoire','11:23',2,185087666666666,96),('2023-03-08','Ambulatoire','11:23',2,185087666666666,97),('2023-03-08','Ambulatoire','11:23',2,185087666666666,98),('2023-03-08','Ambulatoire','11:23',2,185087666666666,99),('2023-03-08','Ambulatoire','11:23',2,185087666666666,100),('2023-03-08','Ambulatoire','11:23',2,185087666666666,101),('2023-03-08','Ambulatoire','11:23',2,185087666666666,102),('2023-03-08','Ambulatoire','11:23',2,185087666666666,103),('2023-03-08','Ambulatoire','11:23',2,185087666666666,104),('2023-02-25','Ambulatoire','11:26',6,185087666666666,105),('2023-02-25','Ambulatoire','11:26',6,185087666666666,106),('2023-02-25','Ambulatoire','11:26',6,185087666666666,107),('2023-02-25','Ambulatoire','11:26',6,185087666666666,108),('2023-02-25','Ambulatoire','11:26',6,185087666666666,109),('2023-02-25','Ambulatoire','11:26',6,185087666666666,110),('2023-02-25','Ambulatoire','11:26',6,185087666666666,111),('2023-02-25','Ambulatoire','11:26',6,185087666666666,112),('2023-02-25','Ambulatoire','11:26',6,185087666666666,113);
 /*!40000 ALTER TABLE `hospitalisation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +131,7 @@ CREATE TABLE `personnel` (
   PRIMARY KEY (`Code_personnel`),
   KEY `personnel_FK` (`Service`),
   CONSTRAINT `personnel_FK` FOREIGN KEY (`Service`) REFERENCES `service` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +235,7 @@ CREATE TABLE `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,4 +261,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-10  8:15:22
+-- Dump completed on 2023-03-03  9:11:08
