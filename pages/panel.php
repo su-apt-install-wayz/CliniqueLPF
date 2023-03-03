@@ -48,7 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-    <title>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 🖐</title>
+    <title>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 👋</title>
 </head>
 <body> 
 
@@ -59,7 +59,7 @@
     ?>
 
     <section class="global">
-        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 🖐</h1>
+        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 👋</h1>
         <div class="panel">
             <p>Pour cette semaine :</p>
             <div class="cards">
