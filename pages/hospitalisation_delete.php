@@ -10,6 +10,7 @@
     require_once('./src/info_user.php');
 
     $erreur = "";
+    $pop = "";
 
     $medecin= $DB->prepare("SELECT * FROM personnel where Code_personnel=?");
     $medecin->execute(array($_SESSION['hospitalisation'][3]));
@@ -19,34 +20,43 @@
         extract($_POST);
         if(isset($_POST['submit'])) {
 
+            $pop = '<div class="popup">
+            <form action="" class="pop" method="post">
+                <h2>Etes-vous sûr de vouloir supprimer cette hospitalisation ?</h2>
+                <input style="background: #ef233c;" type="submit" name="delAdmission" value="Oui">
+                <input style="background: #3246D3;" type="submit" name="non" value="Non">
+                </form></div>';
+            
+        }
+
+        if (isset($_POST['delAdmission'])) {
             $delete_admission = $DB->prepare("DELETE FROM hospitalisation WHERE id=? and Num_secu=?;");
             $delete_admission->execute(array($_SESSION['hospitalisation'][5], $_SESSION['hospitalisation'][4]));
             
             $erreur ='<ul class="notifications">
-            <li class="toast success">
-                <div class="column">
-                    <span class="material-icons-round icon-notif">check_circle</span>
-                    <span class="message-notif">Admission supprimée avec succès.</span>
-                </div>
-                <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
-            </li>
-        </ul>
-        <script>
-            const toast = document.querySelector(".toast");
+                    <li class="toast success">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">check_circle</span>
+                            <span class="message-notif">Admission supprimée avec succès.</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
 
-            function hideToast() {
-                setTimeout(function() {
-                    toast.classList.add("hide")
-                }, 5000);
-            }
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
 
-            function remove() {
-                toast.classList.add("hide");
-            }
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
 
-            hideToast();
-        </script>';
-            
+                    hideToast();
+                </script>';
         }
     }
 ?>
@@ -72,10 +82,11 @@
         include_once ('src/sidebar.php');
 
     ?>
-
+    
+    <?= $pop?>
     <section class="global">
+        <?= $erreur?>
         <form action="" method="post">
-            <?= $erreur?>
             <label for="pre-admission">Pré-admission :</label>
             <select class="moyen" name="pre_admission" id="pre_admission" disabled required="required">
                 <option value="<?= $_SESSION['hospitalisation'][1]?>"><?= $_SESSION['hospitalisation'][1]?></option>

@@ -32,6 +32,7 @@
     group by service.id;");
     $stats->execute();
     $stats = $stats->fetchAll();
+
 ?>
 
 <!DOCTYPE html>

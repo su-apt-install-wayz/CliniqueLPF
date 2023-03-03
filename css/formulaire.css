@@ -62,6 +62,22 @@
     box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.25);
 }
 
+@keyframes shake {
+    25% {
+        transform: translateX(8px);
+    }
+    50% {
+        transform: translateX(-8px);
+    }
+    75% {
+        transform: translateX(8px);
+    }
+}
+
+.left form .div-input #captcha:invalid {
+    animation: shake 300ms;
+}
+
 .left form .password-force .password-pourcent {
     margin: 5px auto;
     width: 100%;

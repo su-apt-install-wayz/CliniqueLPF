@@ -19,11 +19,12 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {   
-            $pop = '<form action="" class="pop" method="post">
+            $pop = '<div class="popup">
+            <form action="" class="pop" method="post">
                 <h2>Etes-vous sûr de vouloir supprimer cette personne ?</h2>
                 <input style="background: #ef233c;" type="submit" name="delPerson" value="Oui">
                 <input style="background: #3246D3;" type="submit" name="non" value="Non">
-                </form>';
+                </form></div>';
                 $_SESSION['personne'] = $personnel;
         }
 
@@ -83,11 +84,11 @@
         include_once ('src/sidebar.php');
 
     ?>
-
+    
+    <?= $pop?>
     <section class="global">
         <h1>Retirer un personnel</h1>
         <?= $erreur?>
-        <?= $pop?>
         <form action="" method="post">
             <select class="moyen" style="margin: 30px auto 0; max-width: 500px;" size='1' name="personnel" required='required'>
                 <?php 

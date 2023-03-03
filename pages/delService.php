@@ -19,11 +19,12 @@
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {
-            $pop = '<form action="" class="pop" method="post">
+            $pop = '<div class="popup">
+            <form action="" class="pop" method="post">
                 <h2>Etes-vous sûr de vouloir supprimer le service ?</h2>
                 <input style="background: #ef233c;" type="submit" name="delService" value="Oui">
                 <input style="background: #3246D3;" type="submit" name="non" value="Non">
-                </form>';
+                </form></div>';
                 $_SESSION['service'] = $service;
         }
 
@@ -80,9 +81,9 @@
         include_once ('src/sidebar.php');
 
     ?>
-
+    
+    <?= $pop?>
     <section class="global">
-        <?= $pop?>
         <h1>Supprimer un service</h1>
         <form action="" method="post">
             <?= $erreur?>

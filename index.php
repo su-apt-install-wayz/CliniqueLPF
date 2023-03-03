@@ -77,7 +77,7 @@
                 </div>
                 <label for="captcha">Réponse au captcha</label>
                 <div class="div-input">
-                    <input type="text" name="captcha" id="captcha" maxlength="4">
+                    <input type="text" name="captcha" id="captcha" pattern="[0-9]*" maxlength="4">
                     <div class="captcha"><?= $nombre?></div>
                 </div>
 
