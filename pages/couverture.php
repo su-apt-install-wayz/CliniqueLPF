@@ -3,7 +3,7 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index');
+        header('Location: ../index.php');
         exit;
     }
 
@@ -24,7 +24,7 @@
                 $chambre, //5
                 $bool); //6
 
-            header('Location: docs');
+            header('Location: docs.php');
             exit;
         }
     }

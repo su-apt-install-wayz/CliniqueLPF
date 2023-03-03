@@ -3,7 +3,7 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index');
+        header('Location: ../index.php');
         exit;
     }
 
@@ -24,7 +24,7 @@
                 $heure_intervention, //2
                 $nom_medecin); //3
             
-            header('Location: couverture');
+            header('Location: couverture.php');
             exit;
         }
     }

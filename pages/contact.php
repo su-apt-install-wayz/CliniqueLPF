@@ -3,7 +3,7 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index');
+        header('Location: ../index.php');
         exit;
     }
 
@@ -44,7 +44,7 @@
                 $tel_confiance, //3
                 $adresse_confiance); //4
 
-            header('Location: hospitalisation');
+            header('Location: hospitalisation.php');
             exit;
         }
     }

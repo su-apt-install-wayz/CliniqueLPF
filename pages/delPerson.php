@@ -3,7 +3,7 @@
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index');
+        header('Location: ../index.php');
         exit;
     }
 
@@ -84,7 +84,7 @@
         include_once ('src/sidebar.php');
 
     ?>
-    
+
     <?= $pop?>
     <section class="global">
         <h1>Retirer un personnel</h1>

@@ -8,7 +8,7 @@
     $_SESSION['couverture'] = array();
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index');
+        header('Location: ../index.php');
         exit;
     }
 
@@ -108,7 +108,7 @@
                         $_SESSION['couverture'] = array("", "", "", "", "", "", false);
                     }
 
-                    header('Location: patient');
+                    header('Location: patient.php');
                     exit;                
                 }
                 
@@ -117,7 +117,7 @@
                     $_SESSION['prevenir'] = array("", "", "", "", "", false);
                     $_SESSION['confiance'] = array("", "", "", "", "", false);
                     $_SESSION['couverture'] = array("", "", "", "", "", "", false);
-                    header('Location: patient');
+                    header('Location: patient.php');
                     exit; 
                 }
             }

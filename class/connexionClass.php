@@ -93,7 +93,7 @@
                             $connexion['Service'], //5
                             $connexion['role'],); //6
 
-                        header('Location: pages/panel');
+                        header('Location: pages/panel.php');
                         exit;
                     }
                 }

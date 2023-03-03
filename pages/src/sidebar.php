@@ -4,7 +4,7 @@
 
     <aside>
         <div class="titre">
-            <a href="panel"><h1>Clinique<span class="degrade"> LPF</span></h1></a>
+            <a href="panel.php"><h1>Clinique<span class="degrade"> LPF</span></h1></a>
         </div>
         <ul class="list">
 
@@ -13,7 +13,7 @@
         ?>
 
             <li class="list-item">
-                <a href="searchNum">
+                <a href="searchNum.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_add</span>
                     </div>
@@ -23,7 +23,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="updateAdmission">
+                <a href="updateAdmission.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">edit_note</span>
                     </div>
@@ -33,7 +33,7 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="deleteAdmission">
+                <a href="deleteAdmission.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_remove</span>
                     </div>
@@ -70,7 +70,7 @@
         ?>
 
             <li class="list-item">
-                <a href="addPerson">
+                <a href="addPerson.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_add</span>
                     </div>
@@ -81,7 +81,7 @@
             </li>
 
             <li class="list-item">
-                <a href="addService">
+                <a href="addService.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">playlist_add</span>
                     </div>
@@ -92,7 +92,7 @@
             </li>
 
             <li class="list-item">
-                <a href="delPerson">
+                <a href="delPerson.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">person_remove</span>
                     </div>
@@ -103,7 +103,7 @@
             </li>
 
             <li class="list-item">
-                <a href="delService">
+                <a href="delService.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">playlist_remove</span>
                     </div>

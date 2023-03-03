@@ -9,7 +9,7 @@
     $_SESSION['hospitalisation'] = array();
 
     if(!isset($_SESSION['personnel'][0])) {
-        header('Location: ../index');
+        header('Location: ../index.php');
         exit;
     }
 
@@ -49,7 +49,7 @@
                         $hospi['code_personnel'], //3
                         $num_secu); //4  
 
-                    header('Location: hospitalisation_update');
+                    header('Location: hospitalisation_update.php');
                     exit; 
                 }
                 else {

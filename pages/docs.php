@@ -157,7 +157,7 @@
         //         }
         //     }
 
-        // header('Location: patient');
+        // header('Location: patient.php');
         // exit;
     }
 ?>
