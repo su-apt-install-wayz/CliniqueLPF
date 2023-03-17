@@ -42,6 +42,16 @@
                     </div>
                 </a>
             </li>
+            <li class="list-item">
+                <a href="generatePDF.php">
+                    <div class="icon">
+                        <span class="material-symbols-rounded">picture_as_pdf</span>
+                    </div>
+                    <div class="lien">
+                        <p>Générer PDF</p>
+                    </div>
+                </a>
+            </li>
 
         <?php
             }
