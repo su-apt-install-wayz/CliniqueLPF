@@ -52,7 +52,7 @@
         ?>
         
             <li class="list-item">
-                <a href="#">
+                <a href="stats.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">query_stats</span>
                     </div>

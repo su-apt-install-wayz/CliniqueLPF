@@ -9,28 +9,15 @@
 
     require_once('./src/info_user.php');
 
-    $semChoix=date('W');
-    $anneeChoix=date('Y');
+    $medecin = $DB->prepare("SELECT count(*) as nbr_medecin, role FROM personnel inner join service on service.id = personnel.Service and Service = ? group by role;    ");
+    $medecin->execute(array($_SESSION['personnel'][5]));
+    $medecin = $medecin->fetchAll();
 
-    $timeStampPremierJanvier = strtotime($anneeChoix . '-01-01');
-    $jourPremierJanvier = date('w', $timeStampPremierJanvier);
-    
-    //-- recherche du N° de semaine du 1er janvier -------------------
-    $numSemainePremierJanvier = date('W', $timeStampPremierJanvier);
-    
-    //-- nombre à ajouter en fonction du numéro précédent ------------
-    $decallage = ($numSemainePremierJanvier == 1) ? $semChoix - 1 : $semChoix;
-    //-- timestamp du jour dans la semaine recherchée ----------------
-    $timeStampDate = strtotime('+' . $decallage . ' weeks', $timeStampPremierJanvier);
-    //-- recherche du lundi de la semaine en fonction de la ligne précédente ---------
-    $jourDebutSemaine = ($jourPremierJanvier == 1) ? date('Y-m-d', $timeStampDate) : date('Y-m-d', strtotime('last monday', $timeStampDate));
-    $jourFinSemaine = ($jourPremierJanvier == 1) ? date('Y-m-d', $timeStampDate) : date('Y-m-d',strtotime('sunday', $timeStampDate));
 
-    $stats = $DB->prepare("select distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
+    $stats = $DB->prepare("select count(hospitalisation.Num_secu) as nbr_patient, statut from hospitalisation 
     inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
-    inner join service on service.id=personnel.Service where hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourFinSemaine'
-    group by service.id;");
-    $stats->execute();
+    where personnel.Nom = ? and personnel.Prenom = ? group by hospitalisation.statut;");
+    $stats->execute(array($_SESSION['personnel'][1], $_SESSION['personnel'][2]));
     $stats = $stats->fetchAll();
 
 ?>
@@ -59,78 +46,37 @@
     ?>
 
     <section class="global">
-        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 👋</h1>
         <div class="panel">
-
-            <div class="stats">
+            <h1>Vos statistiques</h1>
+            <div class="cards">
                 <?php
                     foreach ($stats as $liste) {
-                        $libelle[] = $liste['libelle'];
-                        $nbre[] = $liste['nbr_patient'];
-                    } 
                 ?>
-                <div>
-                    <canvas id="myChart"></canvas>
+                <div class="card">
+                    <h2><?= $liste['statut']?></h2>
+                    <h5 class="prof">Service</h5>
+                    <h5 class="count"><p><?= $liste['nbr_patient']?> <span>hospitalisation(s)</span></p></h5>
                 </div>
-                <div>
-                    <canvas id="myChart2"></canvas>
+                <?php
+                    }
+                ?>
+            </div>
+            <h1>Votre service</h1>
+            <div class="cards">
+                <?php
+                    foreach ($medecin as $liste2) {
+                        if($liste2['role']=='Administrateur'){
+                            $liste2['role'] = 'Admin';
+                        }
+                ?>
+                <div class="card">
+                    <h2><?= $liste2['role']?></h2>
+                    <h5 class="prof">Service</h5>
+                    <h5 class="count"><p><?= $liste2['nbr_medecin']?> <span><?= $liste2['role']?>(s)</span></p></h5>
                 </div>
-
-                <script>
-                    const ctx = document.getElementById('myChart');
-
-
-                    new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                        labels: <?= json_encode($libelle)?>,
-                        datasets: [{
-                            label: 'Hospitalisations',
-                            data: <?= json_encode($nbre)?>,
-                            borderWidth: 1,
-                            hoverOffset: 4
-                        }]
-                        },
-
-                    
-                        scales: {
-
-                        yAxes: [{
-                        beginAtZero: true,
-                        gridLines:{
-                        display:false
-                        }
-                        }]
-
-                        }
-                    });
-
-                    const ctx2 = document.getElementById('myChart2');
-
-
-                    new Chart(ctx2, {
-                        type: 'bar',
-                        data: {
-                        labels: <?= json_encode($libelle)?>,
-                        datasets: [{
-                            label: 'Hospitalisations',
-                            data: <?= json_encode($nbre)?>,
-                            backgroundColor: ['#3246D3'],
-                            borderWidth: 1,
-                            hoverOffset: 4
-                        }]
-                        },
-
-                    
-                        options: {
-                        scales: {
-                            y: {
-                            beginAtZero: true
-                            }
-                        }
-                        }
-                    });
-                </script>
+                <?php
+                    }
+                ?>
             </div>
         </div>
     </section>
