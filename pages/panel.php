@@ -77,6 +77,42 @@
                     }
                 ?>
             </div>
+
+            <div class="stats">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+
+                <script>
+                    const ctx = document.getElementById('myChart');
+
+
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                        labels: <?= json_encode($libelle)?>,
+                        datasets: [{
+                            label: 'Hospitalisations',
+                            data: <?= json_encode($nbre)?>,
+                            borderWidth: 1,
+                            hoverOffset: 4
+                        }]
+                        },
+
+                    
+                        scales: {
+
+                        yAxes: [{
+                        beginAtZero: true,
+                        gridLines:{
+                        display:false
+                        }
+                        }]
+
+                        }
+                    });
+                </script>
+            </div>
         </div>
     </section>
     

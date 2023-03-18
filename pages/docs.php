@@ -92,7 +92,7 @@
             $code_personnel->execute(array($_SESSION['hospitalisation'][3]));
             $code_personnel = $code_personnel->fetch();
             
-            $insert_admission = $DB->prepare("INSERT INTO hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu) VALUES(?, ?, ?, ?, ?);");
+            $insert_admission = $DB->prepare("INSERT INTO hospitalisation (Date_hospitalisation, Pre_admission, Heure_intervention, code_personnel, Num_secu, statut) VALUES(?, ?, ?, ?, ?, 'A faire');");
             $insert_admission->execute(array($_SESSION['hospitalisation'][1], $_SESSION['hospitalisation'][0], $_SESSION['hospitalisation'][2], $code_personnel['Code_personnel'], $_SESSION['patient'][0]));
 
             if($_SESSION['couverture'][6]==true) {
@@ -125,9 +125,9 @@
             $extensionUpload_CNI = strtolower(substr(strrchr($_FILES['carte_id']['name'], '.'), 1));
             $extensionUpload_CV = strtolower(substr(strrchr($_FILES['carte_vitale']['name'], '.'), 1));
             $extensionUpload_CM = strtolower(substr(strrchr($_FILES['carte_mutuelle']['name'], '.'), 1));
-            $extensionUpload_livret = strtolower(substr(strrchr($_FILES['carte_mutuelle']['name'], '.'), 1));
+            $extensionUpload_livret = strtolower(substr(strrchr($_FILES['livret']['name'], '.'), 1));
 
-                if(in_array($extensionUpload_CNI, $extensionValides) && in_array($extensionUpload_CV, $extensionValides) && in_array($extensionUpload_CM, $extensionValides)) {
+                if(in_array($extensionUpload_CNI, $extensionValides) && in_array($extensionUpload_CV, $extensionValides) && in_array($extensionUpload_CM, $extensionValides) && in_array($extensionUpload_livret, $extensionValides)) {
                     $dossier = '../images/private/patients/'.$_SESSION['patient'][0].'/';
 
                     if(!is_dir($dossier)) {
@@ -137,20 +137,26 @@
                     $img_CNI = $num_secu . '_cni.' . $extensionUpload_CNI;
                     $img_CV = $num_secu . '_cv.' . $extensionUpload_CV;
                     $img_CM = $num_secu . '_cm.' . $extensionUpload_CM;
+                    $img_livret = $num_secu . '_livret.' . $extensionUpload_livret;
                         
                     $chemin_CNI = $dossier . $img_CNI;
                     $chemin_CV = $dossier . $img_CV;
                     $chemin_CM = $dossier . $img_CM;
+                    $chemin_livret = $dossier . $img_livret;
 
                     $resultat_CNI = move_uploaded_file($_FILES['carte_id']['tmp_name'], $chemin_CNI);
                     $resultat_CV = move_uploaded_file($_FILES['carte_vitale']['tmp_name'], $chemin_CV);
                     $resultat_CM = move_uploaded_file($_FILES['carte_mutuelle']['tmp_name'], $chemin_CM);
 
+                    if ($_SESSION['patient'][11]==1) {
+                        $resultat_livret = move_uploaded_file($_FILES['livret']['tmp_name'], $chemin_livret);
+                    }
+
                 }
 
                 if(is_readable($chemin_CNI) && is_readable($chemin_CV) && is_readable($chemin_CM)) {
-                    $insert_files = $DB->prepare("INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Num_secu)  VALUES (?, ?, ?, ?);");
-                    $insert_files->execute(array($img_CNI, $img_CV, $img_CM, $num_secu));
+                    $insert_files = $DB->prepare("INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Livret_de_famille Num_secu)  VALUES (?, ?, ?, ?, ?);");
+                    $insert_files->execute(array($img_CNI, $img_CV, $img_CM, $img_livret, $num_secu));
                     $valid = true;
                 } else {
                     $valid = false;
