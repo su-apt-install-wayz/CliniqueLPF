@@ -428,7 +428,7 @@ form .div-input .material-icons-outlined, .chiffre {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1300px;
     height: 100%;
     gap: 10px;
 }

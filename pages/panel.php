@@ -26,12 +26,22 @@
     $jourDebutSemaine = ($jourPremierJanvier == 1) ? date('Y-m-d', $timeStampDate) : date('Y-m-d', strtotime('last monday', $timeStampDate));
     $jourFinSemaine = ($jourPremierJanvier == 1) ? date('Y-m-d', $timeStampDate) : date('Y-m-d',strtotime('sunday', $timeStampDate));
 
+    $finCinqiemeSemaine = strtotime("+4 weeks", strtotime($jourFinSemaine));
+    $jourDernierCinqiemeSemaine = date("Y-m-d", $finCinqiemeSemaine);   
+
+
     $stats = $DB->prepare("select distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
     inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
     inner join service on service.id=personnel.Service where hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourFinSemaine'
     group by service.id;");
     $stats->execute();
     $stats = $stats->fetchAll();
+
+    $admissions = $DB->prepare("SELECT hospitalisation.id, Date_hospitalisation, Pre_admission, Heure_intervention, hospitalisation.Num_secu, personnel.Nom, patient.Nom_Naissance, patient.Prenom FROM clinique.hospitalisation inner join patient on hospitalisation.Num_secu = patient.Num_secu
+    inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel
+    WHERE statut = 'A faire' and personnel.role = 'Médecin' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine';");
+    $admissions->execute();
+    $admissions = $admissions->fetchAll();
 
 ?>
 
@@ -116,18 +126,23 @@
 
             <div class="admissions">
                 <h1>Pré-admissions sur les 5 prochaines semaines</h1>
+                <p>Trié par date décroissante</p>
+
+                <?php
+                    foreach ($admissions as $liste2) {
+                ?>
                 <div class="ligne">
-                    <p>283127599910792</p>
-                    <p>Boufflers</p>
-                    <p>Alexandre</p>
-                    <p>Ambulatoire</p>
-                    <p>2023-03-19</p>
-                    <p>09:48</p>
-                    <p>Dr. François</p>
+                    <p><?= $liste2['Num_secu']?></p>
+                    <p><?= $liste2['Nom_Naissance']?></p>
+                    <p><?= $liste2['Prenom']?></p>
+                    <p><?= $liste2['Pre_admission']?></p>
+                    <p><?= $liste2['Date_hospitalisation']?></p>
+                    <p><?= $liste2['Heure_intervention']?></p>
+                    <p>Dr. <?= $liste2['Nom']?></p>
                 </div>
-                <div class="ligne"></div>
-                <div class="ligne"></div>
-                <div class="ligne"></div>
+                <?php
+                    }
+                ?>
             </div>
         </div>
     </section>
