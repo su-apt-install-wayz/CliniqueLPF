@@ -12,8 +12,12 @@
     $erreur = "";
     $pop = "";
 
+    $admission = $DB->prepare("SELECT * from hospitalisation where id = ?;");
+    $admission->execute(array($_GET['id']));
+    $admission = $admission->fetch();
+
     $medecin= $DB->prepare("SELECT * FROM personnel where Code_personnel=?");
-    $medecin->execute(array($_SESSION['hospitalisation'][3]));
+    $medecin->execute(array($admission['code_personnel']));
     $medecin = $medecin->fetch();
 
     if(!empty($_POST)) {
@@ -31,7 +35,7 @@
 
         if (isset($_POST['delAdmission'])) {
             $delete_admission = $DB->prepare("DELETE FROM hospitalisation WHERE id=? and Num_secu=?;");
-            $delete_admission->execute(array($_SESSION['hospitalisation'][5], $_SESSION['hospitalisation'][4]));
+            $delete_admission->execute(array($admission['id'], $admission['Num_secu']));
             
             $erreur ='<ul class="notifications">
                     <li class="toast success">
@@ -89,17 +93,17 @@
         <form action="" method="post">
             <label for="pre-admission">Pré-admission :</label>
             <select class="moyen" name="pre_admission" id="pre_admission" disabled required="required">
-                <option value="<?= $_SESSION['hospitalisation'][1]?>"><?= $_SESSION['hospitalisation'][1]?></option>
+                <option value="<?= $admission['Pre_admission']?>"><?= $admission['Pre_admission']?></option>
 
             </select><br>
 
             <label for="date-hospitalisation">Date d'hospitalisation</label>
-            <input class="petit" value="<?= $_SESSION['hospitalisation'][0]?>" disabled type="date" name="date_hospitalisation" id="date_hospitalisation" required="required">
+            <input class="petit" value="<?= $admission['Date_hospitalisation']?>" disabled type="date" name="date_hospitalisation" id="date_hospitalisation" required="required">
 
             <br>
 
             <label for="heure-intervention">Heure d'intervention</label>
-            <input class="petit" value="<?= $_SESSION['hospitalisation'][2]?>" disabled type="time" name="heure_intervention" id="heure_intervention" required="required">
+            <input class="petit" value="<?= $admission['Heure_intervention']?>" disabled type="time" name="heure_intervention" id="heure_intervention" required="required">
 
             <br>
 

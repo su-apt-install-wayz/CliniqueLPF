@@ -11,12 +11,16 @@
 
     $erreur = "";
 
+    $admission = $DB->prepare("SELECT * from hospitalisation where id = ?;");
+    $admission->execute(array($_GET['id']));
+    $admission = $admission->fetch();
+
     $medecins_liste = $DB->prepare("SELECT * FROM personnel where role='medecin' and Code_personnel!=?");
-    $medecins_liste->execute(array($_SESSION['hospitalisation'][3]));
+    $medecins_liste->execute(array($admission['code_personnel']));
     $medecins_liste = $medecins_liste->fetchAll();
 
     $medecin= $DB->prepare("SELECT * FROM personnel where Code_personnel=?");
-    $medecin->execute(array($_SESSION['hospitalisation'][3]));
+    $medecin->execute(array($admission['code_personnel']));
     $medecin = $medecin->fetch();
 
     $aujourdhui = date("Y-m-d");
@@ -29,8 +33,8 @@
             $code_personnel->execute(array($nom_medecin));
             $code_personnel = $code_personnel->fetch();
 
-            $update_admission = $DB->prepare("UPDATE hospitalisation SET Date_hospitalisation=?, Pre_admission=?, Heure_intervention=?, code_personnel=? WHERE Num_secu=?;");
-            $update_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $code_personnel['Code_personnel'], $_SESSION['hospitalisation'][4]));
+            $update_admission = $DB->prepare("UPDATE hospitalisation SET Date_hospitalisation=?, Pre_admission=?, Heure_intervention=?, code_personnel=? WHERE id=?;");
+            $update_admission->execute(array($date_hospitalisation, $pre_admission, $heure_intervention, $code_personnel['Code_personnel'], $admission['id']));
             
             $erreur ='<ul class="notifications">
             <li class="toast success">
@@ -87,9 +91,9 @@
         <form action="" method="post">
             <label for="pre-admission">Pré-admission :</label>
             <select class="moyen" name="pre_admission" id="pre_admission" required="required">
-                <option value="<?= $_SESSION['hospitalisation'][1]?>"><?= $_SESSION['hospitalisation'][1]?></option>
+                <option value="<?= $admission['Pre_admission']?>"><?= $admission['Pre_admission']?></option>
                 <?php
-                    if($_SESSION['hospitalisation'][1]== 'Ambulatoire') {
+                    if($admission['Pre_admission']== 'Ambulatoire') {
                 ?>
                         <option value="Hospitalisation" >Hospitalisation</option> 
                 <?php
@@ -109,12 +113,12 @@
             <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br> -->
 
             <label for="date-hospitalisation">Date d'hospitalisation</label>
-            <input class="petit" value="<?= $_SESSION['hospitalisation'][0]?>" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
+            <input class="petit" value="<?= $admission['Date_hospitalisation']?>" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
 
             <br>
 
             <label for="heure-intervention">Heure d'intervention</label>
-            <input class="petit" value="<?= $_SESSION['hospitalisation'][2]?>" type="time" name="heure_intervention" id="heure_intervention" required="required">
+            <input class="petit" value="<?=$admission['Heure_intervention']?>" type="time" name="heure_intervention" id="heure_intervention" required="required">
 
             <br>
 

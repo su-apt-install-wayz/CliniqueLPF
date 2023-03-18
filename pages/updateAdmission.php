@@ -49,7 +49,7 @@
                         $hospi['code_personnel'], //3
                         $num_secu); //4  
 
-                    header('Location: hospitalisation_update.php');
+                    header('Location: searchAdmission.php');
                     exit; 
                 }
                 else {
@@ -136,7 +136,7 @@
     <h1>Modifier une admission</h1>
         <form style="margin:auto; width: 100%; max-width: 500px;" action="" method="post">
             <label style="margin:auto;" for="num_secu">Numéro de sécurité sociale :</label><br>
-            <input style="margin:auto;" class="moyen" type="text" name="num_secu" id="num_secu" maxlength="15" required="required">
+            <input style="margin:auto;" class="moyen" type="text" name="num_secu" id="num_secu" maxlength="15" required="required"><br>
 
             <input style="margin:20px auto;" class="btn-envoi moyen" type="submit" value="Rechercher pour modifier" name="submit">
             <div class="erreur"><?= $erreur?></div>

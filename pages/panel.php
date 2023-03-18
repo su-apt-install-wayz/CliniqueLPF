@@ -88,42 +88,6 @@
                 ?>
             </div>
 
-            <!-- <div class="stats">
-                <div>
-                    <canvas id="myChart"></canvas>
-                </div>
-
-                <script>
-                    const ctx = document.getElementById('myChart');
-
-
-                    new Chart(ctx, {
-                        type: 'doughnut',
-                        data: {
-                        labels: <?= json_encode($libelle)?>,
-                        datasets: [{
-                            label: 'Hospitalisations',
-                            data: <?= json_encode($nbre)?>,
-                            borderWidth: 1,
-                            hoverOffset: 4
-                        }]
-                        },
-
-                    
-                        scales: {
-
-                        yAxes: [{
-                        beginAtZero: true,
-                        gridLines:{
-                        display:false
-                        }
-                        }]
-
-                        }
-                    });
-                </script>
-            </div> -->
-
             <div class="admissions">
                 <h1>Pré-admissions sur les 5 prochaines semaines</h1>
                 <p>Trié par date décroissante</p>
@@ -139,6 +103,8 @@
                     <p><?= $liste2['Date_hospitalisation']?></p>
                     <p><?= $liste2['Heure_intervention']?></p>
                     <p>Dr. <?= $liste2['Nom']?></p>
+                    <a href="hospitalisation_update.php?id=<?= $liste2['id']?>">Modifier</a>
+                    <a style="background-color: #ef233c;" href="hospitalisation_delete.php?id=<?= $liste2['id']?>">Supprimer</a>
                 </div>
                 <?php
                     }

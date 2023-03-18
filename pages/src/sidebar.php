@@ -33,16 +33,6 @@
                 </a>
             </li>
             <li class="list-item">
-                <a href="deleteAdmission.php">
-                    <div class="icon">
-                        <span class="material-symbols-rounded">person_remove</span>
-                    </div>
-                    <div class="lien">
-                        <p>Supprimer admission</p>
-                    </div>
-                </a>
-            </li>
-            <li class="list-item">
                 <a href="generatePDF.php">
                     <div class="icon">
                         <span class="material-symbols-rounded">picture_as_pdf</span>

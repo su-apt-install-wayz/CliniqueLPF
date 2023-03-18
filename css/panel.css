@@ -447,3 +447,53 @@ form .div-input .material-icons-outlined, .chiffre {
     background-color: #fff;
     box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.2);
 }
+
+.admissions .ligne a {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--c-blue);
+    color: white;
+}
+
+.liste_admissions {
+    margin: 20px 0;
+    display: flex;
+    width: 100%;
+    max-width: 1500px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.admissions_carte {
+    width: 300px;
+    height: 250px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.2);
+}
+
+.admissions_carte .boutons {
+    margin: 50px auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.admissions_carte .boutons a {
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--c-blue);
+    color: white;
+}
