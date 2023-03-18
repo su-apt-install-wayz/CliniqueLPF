@@ -30,7 +30,7 @@
     $jourDernierCinqiemeSemaine = date("Y-m-d", $finCinqiemeSemaine);   
 
 
-    $stats = $DB->prepare("select distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
+    $stats = $DB->prepare("SELECT distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
     inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
     inner join service on service.id=personnel.Service where hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourFinSemaine'
     group by service.id;");
