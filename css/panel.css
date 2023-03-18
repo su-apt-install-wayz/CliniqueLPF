@@ -437,10 +437,12 @@ form .div-input .material-icons-outlined, .chiffre {
     margin: 5px auto 0;
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    column-gap: 20px;
     align-items: center;
     padding: 1rem;
-    height: 60px;
+    min-height: 100px;
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 5px 5px 20px rgba(153, 153, 153, 0.2);
