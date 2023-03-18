@@ -78,7 +78,7 @@
                 ?>
             </div>
 
-            <div class="stats">
+            <!-- <div class="stats">
                 <div>
                     <canvas id="myChart"></canvas>
                 </div>
@@ -112,6 +112,22 @@
                         }
                     });
                 </script>
+            </div> -->
+
+            <div class="admissions">
+                <h1>Pré-admissions sur les 5 prochaines semaines</h1>
+                <div class="ligne">
+                    <p>283127599910792</p>
+                    <p>Boufflers</p>
+                    <p>Alexandre</p>
+                    <p>Ambulatoire</p>
+                    <p>2023-03-19</p>
+                    <p>09:48</p>
+                    <p>Dr. François</p>
+                </div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
+                <div class="ligne"></div>
             </div>
         </div>
     </section>
