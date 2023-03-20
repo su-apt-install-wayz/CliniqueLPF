@@ -29,7 +29,7 @@ CREATE TABLE `contact` (
   `Adresse` varchar(50) DEFAULT NULL,
   `code_contact` bigint(20) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`code_contact`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `contact` (
 
 LOCK TABLES `contact` WRITE;
 /*!40000 ALTER TABLE `contact` DISABLE KEYS */;
-INSERT INTO `contact` VALUES ('deloge','hugo',6666666666,'neuville',1),('moulin','jf',707070707,'neuville',2),('ouillade','bernard',9999999999,'neuville',3);
+INSERT INTO `contact` VALUES ('deloge','hugo',6666666666,'neuville',1),('moulin','jf',707070707,'neuville',2),('ouillade','bernard',9999999999,'neuville',3),('boubou','alexandre',606060606,'COLOMBES',4),('bourst','arthur',707070707,'42 rue des colombes',5);
 /*!40000 ALTER TABLE `contact` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,12 +56,13 @@ CREATE TABLE `hospitalisation` (
   `code_personnel` int(11) DEFAULT NULL,
   `Num_secu` bigint(20) DEFAULT NULL,
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `statut` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Hospitalisation_FK` (`Num_secu`),
   KEY `Hospitalisation_FK_1` (`code_personnel`),
   CONSTRAINT `Hospitalisation_FK` FOREIGN KEY (`Num_secu`) REFERENCES `patient` (`Num_secu`),
   CONSTRAINT `hospitalisation_FK_1` FOREIGN KEY (`code_personnel`) REFERENCES `personnel` (`Code_personnel`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +71,7 @@ CREATE TABLE `hospitalisation` (
 
 LOCK TABLES `hospitalisation` WRITE;
 /*!40000 ALTER TABLE `hospitalisation` DISABLE KEYS */;
+INSERT INTO `hospitalisation` VALUES ('2023-03-11','Ambulatoire','12:34',2,185087666666666,1,'A faire'),('2023-03-11','Ambulatoire','12:34',2,185087666666666,2,'A faire'),('2023-03-11','Ambulatoire','12:34',2,185087666666666,3,'Terminé'),('2023-03-18','Ambulatoire','12:34',2,185087666666666,4,'En cours'),('2023-03-18','Ambulatoire','12:34',2,185087666666666,5,'A faire'),('2023-03-18','Hospitalisation','23:22',5,123025912357574,6,NULL);
 /*!40000 ALTER TABLE `hospitalisation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,7 +111,7 @@ CREATE TABLE `patient` (
 
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
-INSERT INTO `patient` VALUES (185087666666666,'Homme','bourst','','arthur','2003-11-17','42 rue des colombes',59554,782900156,'neuville','arthur.bourst@proton.me',0,3,2);
+INSERT INTO `patient` VALUES (123025912357574,'Homme','wustenberghs','','theo','2003-02-23','49 rue jean moulin',59252,640544398,'wasnes','theo.wustenberghs@proton.me',0,4,5),(185087666666666,'Homme','bourst','','arthur','2003-11-17','42 rue des colombes',59554,782900156,'neuville','arthur.bourst@proton.me',0,3,2);
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +142,7 @@ CREATE TABLE `personnel` (
 
 LOCK TABLES `personnel` WRITE;
 /*!40000 ALTER TABLE `personnel` DISABLE KEYS */;
-INSERT INTO `personnel` VALUES (1,'ledieu','alexandre','alexandre','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'Secrétaire'),(2,'françois','robyn','robyn','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',6,'Médecin'),(3,'wustenberghs','theo','theo','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',7,'Administrateur'),(4,'bourst','arthur','bourst','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'Médecin'),(5,'moulin','jf','jf','$argon2id$v=19$m=65536,t=4,p=1$VzBVNlVKUHlwTjNWVzQyMQ$hnDnb0Ve3a1RAGBpTpVIRxxqM7rPG1zCwmLoU0bHgi0',6,'Médecin'),(6,'telle','maxens','maxens','$argon2id$v=19$m=65536,t=4,p=1$MmpBdVpHVzFxcWphTGc0RA$F2vMLE8zKl1Qj561QfVCIVhynIVxEDGcMgt7rtFbILQ',7,'Médecin');
+INSERT INTO `personnel` VALUES (1,'ledieu','alexandre','alexandre','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',6,'Secrétaire'),(2,'françois','robyn','robyn','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',6,'Médecin'),(3,'wustenberghs','theo','theo','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',6,'Administrateur'),(4,'bourst','arthur','bourst','$argon2id$v=19$m=65536,t=4,p=1$UU1JWE5YdjRMaWNTLkNQcg$Tqat4ijOwE088pm+iVsOyagRVRvbmEuM5JefbZJzb0c',5,'Médecin'),(5,'moulin','jf','jf','$argon2id$v=19$m=65536,t=4,p=1$VzBVNlVKUHlwTjNWVzQyMQ$hnDnb0Ve3a1RAGBpTpVIRxxqM7rPG1zCwmLoU0bHgi0',6,'Médecin'),(6,'telle','maxens','maxens','$argon2id$v=19$m=65536,t=4,p=1$MmpBdVpHVzFxcWphTGc0RA$F2vMLE8zKl1Qj561QfVCIVhynIVxEDGcMgt7rtFbILQ',7,'Médecin');
 /*!40000 ALTER TABLE `personnel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -169,6 +171,7 @@ CREATE TABLE `piece_jointe` (
 
 LOCK TABLES `piece_jointe` WRITE;
 /*!40000 ALTER TABLE `piece_jointe` DISABLE KEYS */;
+INSERT INTO `piece_jointe` VALUES ('123025912357574_cni.png','123025912357574_cv.png','123025912357574_cm.png',NULL,123025912357574),('185087666666666_cni.png','185087666666666_cv.png','185087666666666_cm.png',NULL,185087666666666);
 /*!40000 ALTER TABLE `piece_jointe` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,7 +223,7 @@ CREATE TABLE `secu` (
 
 LOCK TABLES `secu` WRITE;
 /*!40000 ALTER TABLE `secu` DISABLE KEYS */;
-INSERT INTO `secu` VALUES (185087666666666,'stelantis','Oui','Non','viamedis',333,'1');
+INSERT INTO `secu` VALUES (185087666666666,'stelantis','Oui','Non','viamedis',333,'1'),(123025912357574,'mma','Oui','Non','mma',123,'3');
 /*!40000 ALTER TABLE `secu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -235,7 +238,7 @@ CREATE TABLE `service` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `libelle` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -244,7 +247,7 @@ CREATE TABLE `service` (
 
 LOCK TABLES `service` WRITE;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
-INSERT INTO `service` VALUES (5,'Chirurgie'),(6,'Neurologie'),(7,'Radiologie');
+INSERT INTO `service` VALUES (5,'Chirurgie'),(6,'Neurologie'),(7,'Radiologie'),(8,'pneumologie'),(9,'cardiologie'),(10,'rhumatologie'),(11,'ophtalmologie');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -261,4 +264,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-06 15:58:27
+-- Dump completed on 2023-03-20 15:54:04
