@@ -6,7 +6,7 @@
     private $host    = 'localhost'; //nom de l'host  
     private $name    = 'clinique';    //nom de la base de donnée
     private $user    = 'root';      //utilisateur 
-    private $pass    = '';          //mot de passe de la BDD
+    private $pass    = 'Sio2022';          //mot de passe de la BDD
     private $connexion;
 
     
