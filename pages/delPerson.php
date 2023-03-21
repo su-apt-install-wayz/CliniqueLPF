@@ -16,6 +16,10 @@
     $personnel_liste->execute([$_SESSION['personnel'][1], $_SESSION['personnel'][2]]);
     $personnel_liste = $personnel_liste->fetchAll();
 
+    $personnel_ad = $DB->prepare("SELECT * FROM hospitalisation inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel where Identifiant = ?");
+    $personnel_ad->execute(array($_SESSION['personne']));
+    $personnel_ad = $personnel_ad->fetch();
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {   
@@ -30,33 +34,62 @@
 
         if (isset($_POST['delPerson'])) {
 
-            $delete_personnel = $DB->prepare("DELETE FROM personnel WHERE Identifiant=?;");
-            $delete_personnel->execute([$_SESSION['personne']]);
+            if(isset($personnel_ad['code_personnel'])) {
+                $erreur = '<ul class="notifications">
+                    <li class="toast error">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">error</span>
+                            <span class="message-notif">Le personnel a encore des admissions.</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
 
-            $erreur = '<ul class="notifications">
-                <li class="toast success">
-                    <div class="column">
-                        <span class="material-icons-round icon-notif">check_circle</span>
-                        <span class="message-notif">Personnel supprimé avec succès.</span>
-                    </div>
-                    <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
-                </li>
-            </ul>
-            <script>
-                const toast = document.querySelector(".toast");
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
 
-                function hideToast() {
-                    setTimeout(function() {
-                        toast.classList.add("hide")
-                    }, 5000);
-                }
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
 
-                function remove() {
-                    toast.classList.add("hide");
-                }
+                    hideToast();
+                </script>';
+            }
 
-                hideToast();
-            </script>';
+            else {
+                $delete_personnel = $DB->prepare("DELETE FROM personnel WHERE Identifiant=?;");
+                $delete_personnel->execute([$_SESSION['personne']]);
+
+                $erreur = '<ul class="notifications">
+                    <li class="toast success">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">check_circle</span>
+                            <span class="message-notif">Personnel supprimé avec succès.</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
+
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
+
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
+
+                    hideToast();
+                </script>';
+            }
         }
     }
 ?>
