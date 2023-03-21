@@ -111,7 +111,7 @@
             <input type="text" class="grand" value="<?= $_SESSION['prevenir'][2]?>" name="prenom_prevenir" id="prenom" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" value="<?= $_SESSION['prevenir'][3]?>" name="tel_prevenir" id="tel" maxlength="10" required="required"><br>
+            <input type="tel" class="petit" value="<?= $_SESSION['prevenir'][3]?>" name="tel_prevenir" id="tel" maxlength="10" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" required="required"><br>
 
             <label for="adresse">Adressse :</label>
             <input type="text" class="grand" value="<?= $_SESSION['prevenir'][4]?>" name="adresse_prevenir" id="adresse" required="required"><br><br><br>
@@ -125,7 +125,7 @@
             <input type="text" class="grand" value="<?= $_SESSION['confiance'][2]?>" name="prenom_confiance" id="prenom" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" value="<?= $_SESSION['confiance'][3]?>" name="tel_confiance" id="tel" maxlength="10" required="required"><br>
+            <input type="tel" class="petit" value="<?= $_SESSION['confiance'][3]?>" name="tel_confiance" id="tel" maxlength="10" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" required="required"><br>
 
             <label for="adresse">Adressse :</label>
             <input type="text" class="grand" value="<?= $_SESSION['confiance'][4]?>" name="adresse_confiance" id="adresse" required="required"><br>

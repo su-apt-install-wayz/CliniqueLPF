@@ -155,7 +155,7 @@
             <input type="text" class="grand" value="<?= $_SESSION['patient'][6]?>" name="adresse" id="adresse" required="required"><br>
             
             <label for="CP">Code postal :</label>
-            <input type="text" class="petit" value="<?= $_SESSION['patient'][7]?>" name="CP" id="CP" maxlength="5" required="required"><br>
+            <input type="number" class="petit" value="<?= $_SESSION['patient'][7]?>" name="CP" id="CP" maxlength="5" required="required"><br>
 
             <label for="ville">Ville :</label>
             <input type="text" class="grand" value="<?= $_SESSION['patient'][9]?>" name="ville" id="ville" required="required"><br>
@@ -164,7 +164,7 @@
             <input type="email" class="moyen" value="<?= $_SESSION['patient'][10]?>" name="email" id="email" required="required"><br>
 
             <label for="tel">Téléphone :</label>
-            <input type="tel" class="petit" value="<?= $_SESSION['patient'][8]?>" name="tel" id="tel" maxlength="10" required="required"><br><br><br>
+            <input type="tel" class="petit" value="<?= $_SESSION['patient'][8]?>" name="tel" id="tel" maxlength="10" pattern="[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}[0-9]{2}" required="required"><br><br><br>
 
             <input class="btn-envoi" type="submit" value="Suivant" name="submit">
         </form>

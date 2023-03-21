@@ -162,7 +162,7 @@
             <input class="grand" value="<?= $_SESSION['couverture'][3]?>" type="text" name="nom_mutuelle" id="nom_mutuelle" required="required"><br>
                             
             <label for="num-adherent">Numéro d'adhérent :</label>
-            <input class="moyen" value="<?= $_SESSION['couverture'][4]?>" type="text" name="num_adherent" id="num_adherent" required="required"><br>
+            <input class="moyen" value="<?= $_SESSION['couverture'][4]?>" type="number" name="num_adherent" id="num_adherent" required="required"><br>
 
             <label for="chambre">Chambre :</label>
             <select class="petit" name="chambre" id="chambre" required="required">
