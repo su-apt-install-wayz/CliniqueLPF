@@ -103,8 +103,14 @@
                     <p><?= $liste2['Date_hospitalisation']?></p>
                     <p><?= $liste2['Heure_intervention']?></p>
                     <p>Dr. <?= $liste2['Nom']?></p>
-                    <a href="hospitalisation_update.php?id=<?= $liste2['id']?>">Modifier</a>
-                    <a style="background-color: #ef233c;" href="hospitalisation_delete.php?id=<?= $liste2['id']?>">Supprimer</a>
+                    <?php
+                        if($_SESSION['personnel'][6]=='Secrétaire') {
+                    ?>
+                        <a href="hospitalisation_update.php?id=<?= $liste2['id']?>">Modifier</a>
+                        <a style="background-color: #ef233c;" href="hospitalisation_delete.php?id=<?= $liste2['id']?>">Supprimer</a>
+                    <?php
+                        }
+                    ?>
                 </div>
                 <?php
                     }
