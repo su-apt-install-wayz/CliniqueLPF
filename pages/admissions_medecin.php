@@ -32,7 +32,7 @@
     $admissions = $DB->prepare("SELECT hospitalisation.id, Date_hospitalisation, Pre_admission, Heure_intervention, hospitalisation.Num_secu, personnel.Nom, personnel.Prenom, patient.Nom_Naissance, patient.Prenom FROM clinique.hospitalisation inner join patient on hospitalisation.Num_secu = patient.Num_secu
     inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel
     WHERE statut = 'A faire' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine'
-    and hospitalisation.code_personnel = ?");
+    and hospitalisation.code_personnel = ? group by Date_hospitalisation ASC");
     $admissions->execute(array($_GET['id']));
     $admissions = $admissions->fetchAll();
 

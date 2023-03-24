@@ -12,6 +12,8 @@
     $semChoix=date('W');
     $anneeChoix=date('Y');
 
+    $aujourdhui = date("Y-m-d");
+
     $timeStampPremierJanvier = strtotime($anneeChoix . '-01-01');
     $jourPremierJanvier = date('w', $timeStampPremierJanvier);
     
@@ -39,7 +41,7 @@
 
     $admissions = $DB->prepare("SELECT hospitalisation.id, Date_hospitalisation, Pre_admission, Heure_intervention, hospitalisation.Num_secu, personnel.Nom, patient.Nom_Naissance, patient.Prenom FROM clinique.hospitalisation inner join patient on hospitalisation.Num_secu = patient.Num_secu
     inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel
-    WHERE statut = 'A faire' and personnel.role = 'Médecin' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine';");
+    WHERE statut = 'A faire' and personnel.role = 'Médecin' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine' group by Date_hospitalisation ASC;");
     $admissions->execute();
     $admissions = $admissions->fetchAll();
 
@@ -109,6 +111,15 @@
                         <a href="hospitalisation_update.php?id=<?= $liste2['id']?>">Modifier</a>
                         <a style="background-color: #ef233c;" href="hospitalisation_delete.php?id=<?= $liste2['id']?>">Supprimer</a>
                     <?php
+                        }
+                    ?>
+                    <?php
+                        if($_SESSION['personnel'][6]=='Médecin') {
+                            if($liste2['Date_hospitalisation'] < $aujourdhui) {
+                    ?>
+                            <a href="hospitalisation_cloture.php?id=<?= $liste2['id']?>">Clôturer</a>
+                    <?php
+                            }
                         }
                     ?>
                 </div>

@@ -459,6 +459,14 @@ form .div-input .material-icons-outlined, .chiffre {
     color: white;
 }
 
+.admissions .ligne form {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+}
+
 .liste_admissions {
     margin: 20px 0;
     display: flex;
