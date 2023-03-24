@@ -38,7 +38,7 @@
 
     $stats = $DB->prepare("SELECT distinct count(hospitalisation.Num_secu) as nbr_patient , personnel.Nom , service.libelle , hospitalisation.code_personnel from hospitalisation
     inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
-    inner join service on service.id=personnel.Service  where statut = 'A faire' 
+    inner join service on service.id=personnel.Service  where statut = 'A faire' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine'
     group by hospitalisation.code_personnel;");
     $stats->execute();
     $stats = $stats->fetchAll();
