@@ -33,9 +33,12 @@
     inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel
     WHERE statut = 'A faire' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine'
     and hospitalisation.code_personnel = ?");
-    
-   $admissions->execute(array($_GET['id']));
+    $admissions->execute(array($_GET['id']));
     $admissions = $admissions->fetchAll();
+
+    $medecin = $DB->prepare("SELECT Nom, Prenom from personnel where Code_personnel = ?");
+    $medecin->execute(array($_GET['id']));
+    $medecin = $medecin->fetch();
 
 ?>
 
@@ -63,17 +66,16 @@
     ?>
 
     <section class="global">
-        <?php
-            foreach ($admissions as $liste2) {
-        ?>
-        <h1>Admissions pour le médecin <span style="color: #3246D3;"><?= $liste2['Nom']?></span></h1>
+        <h1>Admissions pour le médecin <span style="color: #3246D3;"><?= $medecin['Nom']?></span></h1>
         <div class="panel">
 
             <div class="admissions">
               
             <p>Pour les 5 prochaines semaines :</p>
 
-                
+                <?php
+                    foreach ($admissions as $liste2) {
+                ?>
                 <div class="ligne">
                     <p><?= $liste2['Num_secu']?></p>
                     <p><?= $liste2['Nom_Naissance']?></p>
