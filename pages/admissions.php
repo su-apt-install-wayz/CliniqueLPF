@@ -36,6 +36,13 @@
     $admissions->execute();
     $admissions = $admissions->fetchAll();
 
+    $stats = $DB->prepare("SELECT distinct count(hospitalisation.Num_secu) as nbr_patient , personnel.Nom , service.libelle , hospitalisation.code_personnel from hospitalisation
+    inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
+    inner join service on service.id=personnel.Service  where statut = 'A faire' 
+    group by hospitalisation.code_personnel;");
+    $stats->execute();
+    $stats = $stats->fetchAll();
+
 ?>
 
 <!DOCTYPE html>
@@ -62,17 +69,17 @@
     ?>
 
     <section class="global">
-        <h1>Bon retour <?= htmlspecialchars($_SESSION['personnel'][2])?> 👋</h1>
+        <h1>Liste des médecins</h1>
         <div class="panel">
-            <p>Pour cette semaine :</p>
+  
             <div class="cards">
                 <?php
                     foreach ($stats as $liste) {
                 ?>
-                <a href="">
+                <a href="admissions_medecin.php?id=<?=$liste['code_personnel']?>">
                     <div class="card">
-                        <h2><?= $liste['libelle']?></h2>
-                        <h5 class="prof">Service</h5>
+                        <h2>Dr. <?= $liste['Nom']?></h2>
+                        <h5 class="prof"><?= $liste['libelle']?></h5>
                         <h5 class="count"><p><?= $liste['nbr_patient']?> <span>hospitalisation(s)</span></p></h5>
                     </div>
                 </a>

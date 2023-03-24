@@ -29,18 +29,12 @@
     $finCinqiemeSemaine = strtotime("+4 weeks", strtotime($jourFinSemaine));
     $jourDernierCinqiemeSemaine = date("Y-m-d", $finCinqiemeSemaine);   
 
-
-    $stats = $DB->prepare("SELECT distinct count(hospitalisation.Num_secu) as nbr_patient , service.libelle from hospitalisation 
-    inner join personnel on personnel.Code_personnel=hospitalisation.code_personnel 
-    inner join service on service.id=personnel.Service where hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourFinSemaine'
-    group by service.id;");
-    $stats->execute();
-    $stats = $stats->fetchAll();
-
-    $admissions = $DB->prepare("SELECT hospitalisation.id, Date_hospitalisation, Pre_admission, Heure_intervention, hospitalisation.Num_secu, personnel.Nom, patient.Nom_Naissance, patient.Prenom FROM clinique.hospitalisation inner join patient on hospitalisation.Num_secu = patient.Num_secu
+    $admissions = $DB->prepare("SELECT hospitalisation.id, Date_hospitalisation, Pre_admission, Heure_intervention, hospitalisation.Num_secu, personnel.Nom, personnel.Prenom, patient.Nom_Naissance, patient.Prenom FROM clinique.hospitalisation inner join patient on hospitalisation.Num_secu = patient.Num_secu
     inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel
-    WHERE statut = 'A faire' and personnel.role = 'Médecin' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine';");
-    $admissions->execute();
+    WHERE statut = 'A faire' and hospitalisation.Date_hospitalisation >= '$jourDebutSemaine' and hospitalisation.Date_hospitalisation <= '$jourDernierCinqiemeSemaine'
+    and hospitalisation.code_personnel = ?");
+    
+   $admissions->execute(array($_GET['id']));
     $admissions = $admissions->fetchAll();
 
 ?>
@@ -69,15 +63,17 @@
     ?>
 
     <section class="global">
-        <h1>Admissions pour le médecin </h1>
+        <?php
+            foreach ($admissions as $liste2) {
+        ?>
+        <h1>Admissions pour le médecin <span style="color: #3246D3;"><?= $liste2['Nom']?></span></h1>
         <div class="panel">
 
             <div class="admissions">
-                <h1>Pré-admissions sur les 5 prochaines semaines</h1>
+              
+            <p>Pour les 5 prochaines semaines :</p>
 
-                <?php
-                    foreach ($admissions as $liste2) {
-                ?>
+                
                 <div class="ligne">
                     <p><?= $liste2['Num_secu']?></p>
                     <p><?= $liste2['Nom_Naissance']?></p>
