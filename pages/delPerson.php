@@ -16,10 +16,6 @@
     $personnel_liste->execute([$_SESSION['personnel'][1], $_SESSION['personnel'][2]]);
     $personnel_liste = $personnel_liste->fetchAll();
 
-    $personnel_ad = $DB->prepare("SELECT * FROM hospitalisation inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel where Identifiant = ?");
-    $personnel_ad->execute(array($_SESSION['personne']));
-    $personnel_ad = $personnel_ad->fetch();
-
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['submit'])) {   
@@ -31,6 +27,10 @@
                 </form></div>';
                 $_SESSION['personne'] = $personnel;
         }
+
+        $personnel_ad = $DB->prepare("SELECT * FROM hospitalisation inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel where Identifiant = ?");
+        $personnel_ad->execute(array($_SESSION['personne']));
+        $personnel_ad = $personnel_ad->fetch();
 
         if (isset($_POST['delPerson'])) {
 
