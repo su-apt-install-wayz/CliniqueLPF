@@ -1,5 +1,7 @@
 <?php 
 
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
     include_once('../include.php');
 
     if(!isset($_SESSION['personnel'][0])) {
@@ -8,6 +10,8 @@
     }
 
     require_once('./src/info_user.php');
+
+    $erreur = '';
 
     // var_dump($_SESSION['patient']);
     // var_dump($_SESSION['prevenir']);
@@ -108,14 +112,74 @@
         }
 
 
-
-
-
-
         $valid = true;
             
         $num_secu = $_SESSION['patient'][0];
+
+        if($_SESSION['patient'][11]==1) {
+            if(isset($_FILES['livret']) && !empty($_FILES['livret'])) {
+                $extensionValides = array('jpg', 'png', 'jpeg', 'pdf');
+
+                $extensionUpload_livret = strtolower(substr(strrchr($_FILES['livret']['name'], '.'), 1));
+
+                if(in_array($upload_livret, $extensionValides)) {
+
+                    $dossier = '../images/private/patients/'.$_SESSION['patient'][0].'/';
+
+                    if(!is_dir($dossier)) {
+                        mkdir($dossier);
+                    }
+                
+                    $img_livret = $num_secu . '_livret.' . $extensionUpload_livret;
+
+                    $chemin_livret = $dossier . $img_livret;
+
+                    $resultat_livret = move_uploaded_file($_FILES['livret']['tmp_name'], $chemin_livret);
+
+                    if(is_readable($chemin_livret)) {
+                        $valid = true;
+                    } else {
+                        $valid = false;
+                    }
+                }
+                else {
+                    $valid = false;
+                    $erreur = '<ul class="notifications">
+                    <li class="toast error">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">error</span>
+                            <span class="message-notif">Mauvais format de fichier</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
+
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
+
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
+
+                    hideToast();
+                </script>';
+                }
+            }
+            else {
+                $valid = false;
+            }
+        } 
+        else {
+            $img_livret = 'none';
+        }
             
+
+
         if(isset($_FILES['carte_id']) && !empty($_FILES['carte_id']['name']) && isset($_FILES['carte_vitale']) && !empty($_FILES['carte_vitale']['name']) && isset($_FILES['carte_mutuelle']) && !empty($_FILES['carte_mutuelle']['name'])) {
             $filename_petit = $_FILES['carte_id']['tmp_name'];
 
@@ -125,47 +189,72 @@
             $extensionUpload_CNI = strtolower(substr(strrchr($_FILES['carte_id']['name'], '.'), 1));
             $extensionUpload_CV = strtolower(substr(strrchr($_FILES['carte_vitale']['name'], '.'), 1));
             $extensionUpload_CM = strtolower(substr(strrchr($_FILES['carte_mutuelle']['name'], '.'), 1));
-            $extensionUpload_livret = strtolower(substr(strrchr($_FILES['livret']['name'], '.'), 1));
 
-                if(in_array($extensionUpload_CNI, $extensionValides) && in_array($extensionUpload_CV, $extensionValides) && in_array($extensionUpload_CM, $extensionValides) && in_array($extensionUpload_livret, $extensionValides)) {
-                    $dossier = '../images/private/patients/'.$_SESSION['patient'][0].'/';
+            if(in_array($extensionUpload_CNI, $extensionValides) && in_array($extensionUpload_CV, $extensionValides) && in_array($extensionUpload_CM, $extensionValides)) {
+                $dossier = '../images/private/patients/'.$_SESSION['patient'][0].'/';
 
-                    if(!is_dir($dossier)) {
-                        mkdir($dossier);
-                    }
-
-                    $img_CNI = $num_secu . '_cni.' . $extensionUpload_CNI;
-                    $img_CV = $num_secu . '_cv.' . $extensionUpload_CV;
-                    $img_CM = $num_secu . '_cm.' . $extensionUpload_CM;
-                    $img_livret = $num_secu . '_livret.' . $extensionUpload_livret;
-                        
-                    $chemin_CNI = $dossier . $img_CNI;
-                    $chemin_CV = $dossier . $img_CV;
-                    $chemin_CM = $dossier . $img_CM;
-                    $chemin_livret = $dossier . $img_livret;
-
-                    $resultat_CNI = move_uploaded_file($_FILES['carte_id']['tmp_name'], $chemin_CNI);
-                    $resultat_CV = move_uploaded_file($_FILES['carte_vitale']['tmp_name'], $chemin_CV);
-                    $resultat_CM = move_uploaded_file($_FILES['carte_mutuelle']['tmp_name'], $chemin_CM);
-
-                    if ($_SESSION['patient'][11]==1) {
-                        $resultat_livret = move_uploaded_file($_FILES['livret']['tmp_name'], $chemin_livret);
-                    }
-
+                if(!is_dir($dossier)) {
+                    mkdir($dossier);
                 }
 
+                $img_CNI = $num_secu . '_cni.' . $extensionUpload_CNI;
+                $img_CV = $num_secu . '_cv.' . $extensionUpload_CV;
+                $img_CM = $num_secu . '_cm.' . $extensionUpload_CM;
+                        
+                $chemin_CNI = $dossier . $img_CNI;
+                $chemin_CV = $dossier . $img_CV;
+                $chemin_CM = $dossier . $img_CM;
+
+                $resultat_CNI = move_uploaded_file($_FILES['carte_id']['tmp_name'], $chemin_CNI);
+                $resultat_CV = move_uploaded_file($_FILES['carte_vitale']['tmp_name'], $chemin_CV);
+                $resultat_CM = move_uploaded_file($_FILES['carte_mutuelle']['tmp_name'], $chemin_CM);
+
                 if(is_readable($chemin_CNI) && is_readable($chemin_CV) && is_readable($chemin_CM)) {
-                    $insert_files = $DB->prepare("INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Livret_de_famille Num_secu)  VALUES (?, ?, ?, ?, ?);");
+                    $delete_files = $DB->prepare("DELETE FROM piece_jointe where Num_secu = ?;");
+                    $delete_files->execute(array($num_secu));
+
+                    $insert_files = $DB->prepare("INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Livret_de_famille, Num_secu)  VALUES (?, ?, ?, ?, ?);");
                     $insert_files->execute(array($img_CNI, $img_CV, $img_CM, $img_livret, $num_secu));
                     $valid = true;
                 } else {
                     $valid = false;
                 }
+                header('Location: patient.php');
+                exit;
             }
+            else {
+                $valid = false;
+                $erreur = '<ul class="notifications">
+                    <li class="toast error">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">error</span>
+                            <span class="message-notif">Mauvais format de fichier</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
 
-        header('Location: patient.php');
-        exit;
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
+
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
+
+                    hideToast();
+                </script>';
+            }        
+        }
+        else {
+            $valid = false;
+        }     
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -176,6 +265,7 @@
 
     <link rel="stylesheet" href="../css/panel.css">
     <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel="stylesheet" href="../css/notification.css">
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
 
@@ -185,7 +275,7 @@
 
     <?php
 
-        include_once ('src/sidebar.php');
+        // include_once ('src/sidebar.php');
 
     ?>
 
@@ -219,7 +309,7 @@
             </div>
         </div>
 
-
+        <?= $erreur?>
         <form action="" method="post" enctype="multipart/form-data">
             <label class="file" for="carte_id"><span>Carte d'identité (recto/verso) :</span>
                 <input name="carte_id" type="file" id="carte_id" required="required">
