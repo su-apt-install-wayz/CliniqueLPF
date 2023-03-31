@@ -13,12 +13,6 @@
 
     $erreur = '';
 
-    // var_dump($_SESSION['patient']);
-    // var_dump($_SESSION['prevenir']);
-    // var_dump($_SESSION['confiance']);
-    // var_dump($_SESSION['hospitalisation']);
-    // var_dump($_SESSION['couverture']);
-
     if(!empty($_POST)) {
         extract($_POST);
 
@@ -122,7 +116,7 @@
 
                 $extensionUpload_livret = strtolower(substr(strrchr($_FILES['livret']['name'], '.'), 1));
 
-                if(in_array($upload_livret, $extensionValides)) {
+                if(in_array($extensionUpload_livret, $extensionValides)) {
 
                     $dossier = '../images/private/patients/'.$_SESSION['patient'][0].'/';
 
@@ -216,11 +210,12 @@
                     $insert_files = $DB->prepare("INSERT INTO piece_jointe (Carte_identité, Carte_vitale, Carte_mutuelle, Livret_de_famille, Num_secu)  VALUES (?, ?, ?, ?, ?);");
                     $insert_files->execute(array($img_CNI, $img_CV, $img_CM, $img_livret, $num_secu));
                     $valid = true;
+
+                    header('Location: panel.php');
+                    exit;
                 } else {
                     $valid = false;
                 }
-                header('Location: patient.php');
-                exit;
             }
             else {
                 $valid = false;
@@ -275,7 +270,7 @@
 
     <?php
 
-        // include_once ('src/sidebar.php');
+        include_once ('src/sidebar.php');
 
     ?>
 
