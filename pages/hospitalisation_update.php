@@ -24,6 +24,7 @@
     $medecin = $medecin->fetch();
 
     $aujourdhui = date("Y-m-d");
+    $futur=date('Y-m-d', strtotime('+1 year'));
 
     if(!empty($_POST)) {
         extract($_POST);
@@ -113,7 +114,7 @@
             <input type="text" name="num-secu" id="num-secu" maxlength="15" required="required"><br> -->
 
             <label for="date-hospitalisation">Date d'hospitalisation</label>
-            <input class="petit" value="<?= $admission['Date_hospitalisation']?>" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" id="date_hospitalisation" required="required">
+            <input class="petit" value="<?= $admission['Date_hospitalisation']?>" type="date" name="date_hospitalisation" min="<?= $aujourdhui?>" max="<?= $futur?>" id="date_hospitalisation" required="required">
 
             <br>
 

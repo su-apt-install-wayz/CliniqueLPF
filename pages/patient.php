@@ -23,6 +23,7 @@
     }
 
     $aujourdhui = date("Y-m-d");
+    $passe = date("Y-m-d", strtotime('-100 year'));
 
     if(!empty($_POST)) {
         extract($_POST);
@@ -149,13 +150,13 @@
             <input type="text" class="moyen" value="<?= $_SESSION['patient'][0]?>" style="cursor: not-allowed;" name="num_secu" id="num-secu" maxlength="15" required="required"><br>
 
             <label for="date-naissance">Date de naissance :</label>
-            <input type="date" class="petit" value="<?= $_SESSION['patient'][5]?>" name="date_naissance" id="date-naissance" max="<?=$aujourdhui?>" required="required"><br>
+            <input type="date" class="petit" value="<?= $_SESSION['patient'][5]?>" name="date_naissance" id="date-naissance" min="<?=$passe?>" max="<?=$aujourdhui?>" required="required"><br>
 
             <label for="adresse">Adressse :</label>
             <input type="text" class="grand" value="<?= $_SESSION['patient'][6]?>" name="adresse" id="adresse" required="required"><br>
             
             <label for="CP">Code postal :</label>
-            <input type="number" class="petit" value="<?= $_SESSION['patient'][7]?>" name="CP" id="CP" maxlength="5" required="required"><br>
+            <input type="text" class="petit" value="<?= $_SESSION['patient'][7]?>" name="CP" id="CP" maxlength="5" pattern="[0-9]{5}" required="required"><br>
 
             <label for="ville">Ville :</label>
             <input type="text" class="grand" value="<?= $_SESSION['patient'][9]?>" name="ville" id="ville" required="required"><br>
