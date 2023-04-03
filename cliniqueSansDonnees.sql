@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : ven. 31 mars 2023 à 14:52
+-- Généré le : lun. 03 avr. 2023 à 16:02
 -- Version du serveur :  10.5.15-MariaDB-0+deb11u1
 -- Version de PHP : 7.4.33
 
@@ -40,8 +40,8 @@ CREATE TABLE `contact` (
 --
 
 INSERT INTO `contact` (`Nom`, `Prenom`, `Téléphone`, `Adresse`, `code_contact`) VALUES
-('Bourst', 'Arthur', 744158966, '3 avenue De Gaulle', 11),
-('Courtin', 'Theo', 758033325, '12 rue des cafetiers', 12);
+('Courtin', 'Theo', 744178936, '12 rue des cafetiers', 14),
+('Milito', 'Nathan', 788899654, '5 rue des chossures', 21);
 
 -- --------------------------------------------------------
 
@@ -64,8 +64,8 @@ CREATE TABLE `hospitalisation` (
 --
 
 INSERT INTO `hospitalisation` (`Date_hospitalisation`, `Pre_admission`, `Heure_intervention`, `code_personnel`, `Num_secu`, `id`, `statut`) VALUES
-('2023-04-08', 'Hospitalisation', '04:23', 9, 185087666666666, 14, 'A faire'),
-('2023-04-08', 'Ambulatoire', '19:05', 7, 112121212121212, 15, 'A faire');
+('2023-04-07', 'Ambulatoire', '15:15', 7, 185087666666666, 23, 'A faire'),
+('2023-04-08', 'Ambulatoire', '20:25', 7, 111122222222222, 31, 'A faire');
 
 -- --------------------------------------------------------
 
@@ -95,8 +95,8 @@ CREATE TABLE `patient` (
 --
 
 INSERT INTO `patient` (`Num_secu`, `Civilité`, `Nom_Naissance`, `Nom_Epouse`, `Prenom`, `Date_naissance`, `Adresse`, `Code_postal`, `Téléphone`, `Ville`, `Email`, `Mineur`, `code_prevenir`, `code_confiance`) VALUES
-(112121212121212, 'Homme', 'Catteeuw', '', 'Amaury', '2003-09-30', '5 rue des cocotiers', 59860, 644100522, 'Solesmes', 'amaury@gmail.fr', 0, 12, 12),
-(185087666666666, 'Homme', 'Boufflers', '', 'Alexandre', '2003-09-14', '26 rue des Potiers', 59000, 613569254, 'Neuville', 'boubou@gmail.com', 0, 11, 11);
+(111122222222222, 'Homme', 'Francois', '', 'Robyn', '2003-05-22', '5 rue des bijoutiers', 62860, 755363658, 'Bourlon', 'roro@gmail.com', 0, 21, 21),
+(185087666666666, 'Homme', 'Boufflers', '', 'Alexandre', '2008-04-12', '5 rue des cocotiers', 59860, 788569635, 'Cambrai', 'boubou@gmail.com', 1, 14, 14);
 
 -- --------------------------------------------------------
 
@@ -139,6 +139,14 @@ CREATE TABLE `piece_jointe` (
   `Num_secu` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Déchargement des données de la table `piece_jointe`
+--
+
+INSERT INTO `piece_jointe` (`Carte_identité`, `Carte_vitale`, `Carte_mutuelle`, `Livret_de_famille`, `Num_secu`) VALUES
+('111122222222222_cni.png', '111122222222222_cv.png', '111122222222222_cm.png', 'none', 111122222222222),
+('185087666666666_cni.png', '185087666666666_cv.png', '185087666666666_cm.png', '185087666666666_livret.png', 185087666666666);
+
 -- --------------------------------------------------------
 
 --
@@ -179,7 +187,7 @@ CREATE TABLE `secu` (
 
 INSERT INTO `secu` (`Num_secu`, `organisme`, `assure`, `Ald`, `Nom_mutuelle`, `num_adherent`, `chambre_particuliere`) VALUES
 (185087666666666, 'AXA', 'Oui', 'Non', 'MMA', 1, '1'),
-(112121212121212, 'AXA', 'Oui', 'Oui', 'MMA', 2, '2');
+(111122222222222, 'MMA', 'Oui', 'Non', 'AXA', 12, '1');
 
 -- --------------------------------------------------------
 
@@ -265,13 +273,13 @@ ALTER TABLE `service`
 -- AUTO_INCREMENT pour la table `contact`
 --
 ALTER TABLE `contact`
-  MODIFY `code_contact` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `code_contact` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pour la table `hospitalisation`
 --
 ALTER TABLE `hospitalisation`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT pour la table `personnel`
