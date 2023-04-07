@@ -29,33 +29,69 @@
         }
 
         if (isset($_POST['delService'])) {
-            $delete_service = $DB->prepare("DELETE FROM service WHERE libelle=?;");
-            $delete_service->execute([$_SESSION['service']]);
 
-            $erreur = '<ul class="notifications">
-                <li class="toast success">
-                    <div class="column">
-                        <span class="material-icons-round icon-notif">check_circle</span>
-                        <span class="message-notif">Service supprimé avec succès.</span>
-                    </div>
-                    <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
-                </li>
-            </ul>
-            <script>
-                const toast = document.querySelector(".toast");
+            $service_rempli = $DB->prepare("SELECT hospitalisation.code_personnel from hospitalisation inner join personnel on personnel.Code_personnel = hospitalisation.code_personnel
+            inner join service on personnel.Service = service.id where service.libelle = ? ");
+            $service_rempli->execute(array($_SESSION['service']));
+            $service_rempli = $service_rempli->fetch();
 
-                function hideToast() {
-                    setTimeout(function() {
-                        toast.classList.add("hide")
-                    }, 5000);
-                }
+            if(isset($service_rempli['code_personnel'])) {
+                $erreur = '<ul class="notifications">
+                    <li class="toast error">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">error</span>
+                            <span class="message-notif">Le service contient des médecins.</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
 
-                function remove() {
-                    toast.classList.add("hide");
-                }
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
 
-                hideToast();
-            </script>';
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
+
+                    hideToast();
+                </script>';
+            }
+
+            else {
+
+                $delete_service = $DB->prepare("DELETE FROM service WHERE libelle=?;");
+                $delete_service->execute([$_SESSION['service']]);
+
+                $erreur = '<ul class="notifications">
+                    <li class="toast success">
+                        <div class="column">
+                            <span class="material-icons-round icon-notif">check_circle</span>
+                            <span class="message-notif">Service supprimé avec succès.</span>
+                        </div>
+                        <span class="material-icons-outlined icon-notif close" onclick="remove()">close</span>
+                    </li>
+                </ul>
+                <script>
+                    const toast = document.querySelector(".toast");
+
+                    function hideToast() {
+                        setTimeout(function() {
+                            toast.classList.add("hide")
+                        }, 5000);
+                    }
+
+                    function remove() {
+                        toast.classList.add("hide");
+                    }
+
+                    hideToast();
+                </script>';
+            }
         }
     }
 ?>

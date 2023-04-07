@@ -95,6 +95,14 @@
                 <p>Trié par date décroissante</p>
 
                 <?php
+                    if($_SESSION['personnel'][6]=='Médecin') {
+                ?>
+                <a href="date_admission.php">Voir par jour</a>
+                <?php
+                    }
+                ?>
+
+                <?php
                     foreach ($admissions as $liste2) {
                 ?>
                 <div class="ligne">

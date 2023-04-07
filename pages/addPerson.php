@@ -13,14 +13,17 @@
     $services_liste->execute();
     $services_liste = $services_liste->fetchAll();
 
+    $aujourdhui = date("Y-m-d");
+    $passe = date("Y-m-d", strtotime('-100 year'));
+
     if(!empty($_POST)) {
         extract($_POST);
         if(isset($_POST['inscription'])) {
-            $code_service = $DB->prepare("select id from service where libelle = ?");
-            $code_service->execute(array($service));
-            $code_service=$code_service->fetch();
-            $code = $code_service['id'];
-            [$erreur] = $_INSCRIPTION->inscription_user($nom, $prenom, $identifiant, $code, $password, $role);
+            // $code_service = $DB->prepare("select id from service where libelle = ?");
+            // $code_service->execute(array($service));
+            // $code_service=$code_service->fetch();
+            // $code = $code_service['id'];
+            [$erreur] = $_INSCRIPTION->inscription_user($nom, $prenom, $identifiant, $service, $password, $role, $naissance);
         }
     }
 ?>
@@ -52,20 +55,23 @@
         <form method="POST">
             <?php if(isset($erreur)) { echo $erreur; } ?>
             <label for="identifiant">Nom</label>
-            <input type="text" class="grand" name="nom" id="nom" maxlength="20"><br>
+            <input type="text" class="grand" name="nom" id="nom" maxlength="20" required="required"><br>
 
             <label for="identifiant">Prénom</label>
-            <input type="text" class="grand" name="prenom" id="prenom" maxlength="20"><br>
+            <input type="text" class="grand" name="prenom" id="prenom" maxlength="20" required="required"><br>
+
+            <label for="naissance">Date de naissance</label>
+            <input type="date" class="petit" name="naissance" id="naissance" min="<?=$passe?>" max="<?=$aujourdhui?>" required="required"><br>
 
             <label for="identifiant">Identifiant</label>
-            <input type="text" class="grand" name="identifiant" id="identifiant" maxlength="20"><br>
+            <input type="text" class="grand" name="identifiant" id="identifiant" maxlength="20" required="required"><br>
 
             <label for="nom-medecin">Service</label>
             <select class="petit" name='service' size='1' id='service' required='required'>
                 <?php 
                     foreach ($services_liste as $liste) {
                 ?>
-                <option value="<?= $liste['libelle']?>"><?= $liste['libelle']?></option>
+                <option value="<?= $liste['id']?>"><?= $liste['libelle']?></option>
                 <?php
                     }
                 ?>
