@@ -433,6 +433,17 @@ form .div-input .material-icons-outlined, .chiffre {
     gap: 10px;
 }
 
+.admissions a {
+    width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--c-blue);
+    color: white;
+}
+
 .admissions .ligne {
     margin: 5px auto 0;
     width: 100%;
